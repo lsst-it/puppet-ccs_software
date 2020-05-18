@@ -32,7 +32,7 @@ describe 'ccs_software' do
     end
   end
 
-  describe 'with installations + location parameter' do
+  describe 'with installations + env parameter' do
     let(:params) do
       {
         installations: {
@@ -40,7 +40,7 @@ describe 'ccs_software' do
           '1.0.0': {},
           'ETCCB-269': {},
         },
-        location: 'ComCam',
+        env: 'ComCam',
       }
     end
 
@@ -65,18 +65,18 @@ describe 'ccs_software' do
     end
   end
 
-  describe 'with installations + location key' do
+  describe 'with installations + env key' do
     let(:params) do
       {
         installations: {
           master: {
-            location: 'ComCam',
+            env: 'ComCam',
           },
           '1.0.0': {
-            location: 'ComCam',
+            env: 'ComCam',
           },
           'ETCCB-269': {
-            location: 'ComCam',
+            env: 'ComCam',
           },
         },
       }
@@ -113,7 +113,7 @@ describe 'ccs_software' do
     end
   end
 
-  describe 'without location param or installation key' do
+  describe 'without env param or installation key' do
     let(:params) do
       {
         installations: {
@@ -122,7 +122,7 @@ describe 'ccs_software' do
       }
     end
 
-    it { is_expected.to compile.and_raise_error(%r{installation has does not have a location}) }
+    it { is_expected.to compile.and_raise_error(%r{installation has does not have a env}) }
   end
 
   describe 'without hostname param or installation key' do
@@ -138,7 +138,7 @@ describe 'ccs_software' do
         installations: {
           master: {},
         },
-        location: 'ComCam',
+        env: 'ComCam',
       }
     end
 
@@ -155,7 +155,7 @@ describe 'ccs_software' do
             path: '/opt/lsst/ccsadmin/package-lists/master',
           },
         },
-        location: 'ComCam',
+        env: 'ComCam',
       }
     end
 
