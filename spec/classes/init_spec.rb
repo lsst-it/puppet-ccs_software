@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'ccs_software' do
-  describe "without any parameters" do
-    it { should compile.with_all_deps }
+  describe 'without any parameters' do
+    it { is_expected.to compile.with_all_deps }
 
     [
       '/opt/lsst',
@@ -11,6 +13,34 @@ describe 'ccs_software' do
       '/opt/lsst/ccsadm/dev-package-lists',
     ].each do |dir|
       it { is_expected.to contain_file(dir).with(ensure: 'directory') }
+    end
+  end
+
+  describe 'with envs parameter' do
+    let(:params) do
+      {
+        envs: {
+          master: {},
+          '1.0.0': {},
+          'ETCCB-269': {},
+        },
+      }
+    end
+
+    [
+      'master',
+      '1.0.0',
+      'ETCCB-269',
+    ].each do |c|
+      it do
+        is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/dev-package-lists/#{c}").with(
+          ensure: 'latest',
+          provider: 'git',
+          source: 'https://github.com/lsst-camera-dh/dev-package-lists',
+          revision: c,
+          user: 'ccs',
+        )
+      end
     end
   end
 end
