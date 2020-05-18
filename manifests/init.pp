@@ -37,6 +37,7 @@ class ccs_software(
   }
 
   $envs.each |String $e, Hash $conf| {
+    # create a new clone for each env
     $clone_path = $conf['path'] ? {
       undef   => "${pkglist_path}/${e}",
       default => $conf['path'],
@@ -52,12 +53,13 @@ class ccs_software(
       default => $conf['ref'],
     }
 
-    vcsrepo { $clone_path:
+    # ensure the vcsrepo to allow the same clone path to be path of multiple envs
+    ensure_resource('vcsrepo', $clone_path, {
       ensure   => latest,
       provider => git,
       source   => $repo,
       revision => $ref,
       user     => $user,
-    }
+    })
   }
 }

@@ -53,4 +53,30 @@ describe 'ccs_software' do
       end
     end
   end
+
+  describe 'with envs with conflicting refs/paths' do
+    let(:params) do
+      {
+        envs: {
+          master: {},
+          test: {
+            ref: 'master',
+            path: '/opt/lsst/ccsadmin/package-lists/master',
+          },
+        },
+      }
+    end
+
+    it do
+      is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/package-lists/master').with(
+        ensure: 'latest',
+        provider: 'git',
+        source: 'https://github.com/lsst-camera-dh/dev-package-lists',
+        revision: 'master',
+        user: 'ccs',
+      )
+    end
+
+    it { is_expected.to_not contain_vcsrepo('/opt/lsst/ccsadm/package-lists/test') }
+  end
 end
