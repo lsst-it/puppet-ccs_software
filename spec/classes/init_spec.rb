@@ -32,10 +32,10 @@ describe 'ccs_software' do
     end
   end
 
-  describe 'with envs + location parameter' do
+  describe 'with installations + location parameter' do
     let(:params) do
       {
-        envs: {
+        installations: {
           master: {},
           '1.0.0': {},
           'ETCCB-269': {},
@@ -60,15 +60,15 @@ describe 'ccs_software' do
       end
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
-          .that_notifies("Exec[install.py of #{c} env]")
+          .that_notifies("Exec[install.py of #{c} installation]")
       end
     end
   end
 
-  describe 'with envs + location key' do
+  describe 'with installations + location key' do
     let(:params) do
       {
-        envs: {
+        installations: {
           master: {
             location: 'ComCam',
           },
@@ -98,11 +98,11 @@ describe 'ccs_software' do
       end
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
-          .that_notifies("Exec[install.py of #{c} env]")
+          .that_notifies("Exec[install.py of #{c} installation]")
       end
 
       it do
-        is_expected.to contain_exec("install.py of #{c} env").with(
+        is_expected.to contain_exec("install.py of #{c} installation").with(
           command: "/opt/lsst/ccsadm/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/#{c} /opt/lsst/ccsadm/package-lists/#{c}/ComCam/foo/ccsApplications.txt",
           creates: "/opt/lsst/ccs/#{c}",
           user: 'ccs',
@@ -113,19 +113,19 @@ describe 'ccs_software' do
     end
   end
 
-  describe 'without location param or env key' do
+  describe 'without location param or installation key' do
     let(:params) do
       {
-        envs: {
+        installations: {
           master: {},
         },
       }
     end
 
-    it { is_expected.to compile.and_raise_error(%r{env has does not have a location}) }
+    it { is_expected.to compile.and_raise_error(%r{installation has does not have a location}) }
   end
 
-  describe 'without hostname param or env key' do
+  describe 'without hostname param or installation key' do
     # the hostname param default comes from the $facts['hostname']
     let(:facts) do
       {
@@ -135,20 +135,20 @@ describe 'ccs_software' do
 
     let(:params) do
       {
-        envs: {
+        installations: {
           master: {},
         },
         location: 'ComCam',
       }
     end
 
-    it { is_expected.to compile.and_raise_error(%r{env has does not have a hostname}) }
+    it { is_expected.to compile.and_raise_error(%r{installation has does not have a hostname}) }
   end
 
-  describe 'with envs with conflicting refs/paths' do
+  describe 'with installations with conflicting refs/paths' do
     let(:params) do
       {
-        envs: {
+        installations: {
           master: {},
           test: {
             ref: 'master',
