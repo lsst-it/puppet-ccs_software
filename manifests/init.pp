@@ -6,11 +6,14 @@ class ccs_software(
   String             $pkglist_repo = 'https://github.com/lsst-camera-dh/dev-package-lists',
   String             $release_repo = 'https://github.com/lsst-camera-dh/release',
   String             $release_ref  = 'master',
+  Optional[String]   $location     = undef,
+  Optional[String]   $hostname     = $facts['hostname'],
 ) {
   $ccs_path     = "${base_path}/ccs"
   $ccsadm_path  = "${base_path}/ccsadm"
   $pkglist_path = "${ccsadm_path}/package-lists"
   $release_path = "${ccsadm_path}/release"
+  $install_bin  = "${release_path}/bin/install.py"
 
   $dirs = [
     $base_path,
@@ -60,6 +63,35 @@ class ccs_software(
       source   => $repo,
       revision => $ref,
       user     => $user,
+      notify   => Exec["install.py of ${e} env"],
     })
+
+    # install each env
+    $env_path = "${ccs_path}/${e}"
+    $_real_location = $conf['location'] ? {
+      undef   => $location,
+      default => $conf['location'],
+    }
+    $_real_hostname = $conf['hostname'] ? {
+      undef   => $hostname,
+      default => $conf['hostname'],
+    }
+
+    if (empty($_real_location)) {
+      fail('env has does not have a location key and the $location param is not set')
+    }
+    if (empty($_real_hostname)) {
+      fail('env has does not have a hostname key and the $hostname param is not set')
+    }
+
+    $ccsapps_path = "${clone_path}/${_real_location}/${_real_hostname}/ccsApplications.txt"
+
+    exec { "install.py of ${e} env":
+      command => "${install_bin} --ccs_inst_dir ${env_path} ${ccsapps_path}",
+      creates => $env_path,
+      user    => $user,
+      group   => $group,
+      tries   => 3,
+    }
   }
 }
