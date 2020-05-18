@@ -86,3 +86,4 @@ EOM
   end
 end
 
+task :beaker => "spec_prep"
