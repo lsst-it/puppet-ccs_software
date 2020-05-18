@@ -7,7 +7,7 @@ class ccs_software(
 ) {
   $ccs_path     = "${base_path}/ccs"
   $ccsadm_path  = "${base_path}/ccsadm"
-  $pkglist_path = "${ccsadm_path}/dev-package-lists"
+  $pkglist_path = "${ccsadm_path}/package-lists"
 
   $dirs = [
     $base_path,

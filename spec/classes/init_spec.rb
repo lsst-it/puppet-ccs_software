@@ -10,7 +10,7 @@ describe 'ccs_software' do
       '/opt/lsst',
       '/opt/lsst/ccs',
       '/opt/lsst/ccsadm',
-      '/opt/lsst/ccsadm/dev-package-lists',
+      '/opt/lsst/ccsadm/package-lists',
     ].each do |dir|
       it { is_expected.to contain_file(dir).with(ensure: 'directory') }
     end
@@ -33,7 +33,7 @@ describe 'ccs_software' do
       'ETCCB-269',
     ].each do |c|
       it do
-        is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/dev-package-lists/#{c}").with(
+        is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
           ensure: 'latest',
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
