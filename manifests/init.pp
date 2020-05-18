@@ -1,13 +1,16 @@
 class ccs_software(
-  Hash[String, Hash]  $envs         = {},
-  String              $base_path    = '/opt/lsst',
-  String              $user         = 'ccs',
-  String              $group        = 'ccs',
-  String              $pkglist_repo = 'https://github.com/lsst-camera-dh/dev-package-lists'
+  Hash[String, Hash] $envs         = {},
+  String             $base_path    = '/opt/lsst',
+  String             $user         = 'ccs',
+  String             $group        = 'ccs',
+  String             $pkglist_repo = 'https://github.com/lsst-camera-dh/dev-package-lists',
+  String             $release_repo = 'https://github.com/lsst-camera-dh/release',
+  String             $release_ref  = 'master',
 ) {
   $ccs_path     = "${base_path}/ccs"
   $ccsadm_path  = "${base_path}/ccsadm"
   $pkglist_path = "${ccsadm_path}/package-lists"
+  $release_path = "${ccsadm_path}/release"
 
   $dirs = [
     $base_path,
@@ -22,6 +25,15 @@ class ccs_software(
     group  => $group,
     mode   => '0755',
     backup => false,
+  }
+
+  # provides bin/install.py
+  vcsrepo { $release_path:
+    ensure   => latest,
+    provider => git,
+    source   => $release_repo,
+    revision => $release_ref,
+    user     => $user,
   }
 
   $envs.each |String $e, Hash $conf| {
