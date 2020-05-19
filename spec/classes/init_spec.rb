@@ -152,8 +152,8 @@ describe 'ccs_software' do
         installations: {
           master: {},
           test: {
-            ref: 'master',
-            path: '/opt/lsst/ccsadmin/package-lists/master',
+            repo_ref: 'master',
+            repo_path: '/opt/lsst/ccsadmin/package-lists/master',
           },
         },
         env: 'ComCam',

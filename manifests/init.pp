@@ -1,13 +1,13 @@
 class ccs_software(
-  Hash[String, Hash] $installations = {},
-  String             $base_path     = '/opt/lsst',
-  String             $user          = 'ccs',
-  String             $group         = 'ccs',
-  String             $pkglist_repo  = 'https://github.com/lsst-camera-dh/dev-package-lists',
-  String             $release_repo  = 'https://github.com/lsst-camera-dh/release',
-  String             $release_ref   = 'master',
-  Optional[String]   $env           = undef,
-  Optional[String]   $hostname      = $facts['hostname'],
+  Hash[String, Hash] $installations    = {},
+  String             $base_path        = '/opt/lsst',
+  String             $user             = 'ccs',
+  String             $group            = 'ccs',
+  String             $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
+  String             $release_repo_url = 'https://github.com/lsst-camera-dh/release',
+  String             $release_repo_ref = 'master',
+  Optional[String]   $env              = undef,
+  Optional[String]   $hostname         = $facts['hostname'],
 ) {
   $ccs_path     = "${base_path}/ccs"
   $ccsadm_path  = "${base_path}/ccsadm"
@@ -34,26 +34,26 @@ class ccs_software(
   vcsrepo { $release_path:
     ensure   => latest,
     provider => git,
-    source   => $release_repo,
-    revision => $release_ref,
+    source   => $release_repo_url,
+    revision => $release_repo_ref,
     user     => $user,
   }
 
   $installations.each |String $i, Hash $conf| {
     # create a new dev-packages clone for each installation
-    $clone_path = $conf['path'] ? {
+    $clone_path = $conf['repo_path'] ? {
       undef   => "${pkglist_path}/${i}",
-      default => $conf['path'],
+      default => $conf['repo_path'],
     }
-    # use $pkglist_repo as the default repo url
-    $repo = $conf['repo'] ? {
-      undef   => $pkglist_repo,
-      default => $conf['repo'],
+    # use $pkglist_repo_url as the default package-lists repo url
+    $repo = $conf['repo_url'] ? {
+      undef   => $pkglist_repo_url,
+      default => $conf['repo_url'],
     }
     # use installation name as the git ref
-    $ref = $conf['ref'] ? {
+    $ref = $conf['repo_ref'] ? {
       undef   => $i,
-      default => $conf['ref'],
+      default => $conf['repo_ref'],
     }
 
     # ensure the vcsrepo to allow the same clone path to be path of multiple installations
