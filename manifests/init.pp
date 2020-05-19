@@ -87,11 +87,12 @@ class ccs_software(
     $ccsapps_path = "${clone_path}/${_real_env}/${_real_hostname}/ccsApplications.txt"
 
     exec { "install.py of ${i} installation":
-      command => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
-      creates => $installation_path,
-      user    => $user,
-      group   => $group,
-      tries   => 3,
+      command   => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
+      creates   => $installation_path,
+      user      => $user,
+      group     => $group,
+      tries     => 3,
+      logoutput => true,
     }
   }
 }

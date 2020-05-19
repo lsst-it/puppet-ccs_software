@@ -108,6 +108,7 @@ describe 'ccs_software' do
           user: 'ccs',
           group: 'ccs',
           tries: 3,
+          logoutput: true,
         )
       end
     end
