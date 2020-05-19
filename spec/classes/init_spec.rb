@@ -25,8 +25,6 @@ describe 'ccs_software' do
       is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/release').with(
         ensure: 'latest',
         provider: 'git',
-        source: 'https://github.com/lsst-camera-dh/release',
-        revision: 'master',
         user: 'ccs',
       )
     end

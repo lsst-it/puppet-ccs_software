@@ -4,8 +4,8 @@ class ccs_software(
   String             $user             = 'ccs',
   String             $group            = 'ccs',
   String             $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
-  String             $release_repo_url = 'https://github.com/lsst-camera-dh/release',
-  String             $release_repo_ref = 'master',
+  String             $release_repo_url = 'https://github.com/lsst-it/release',
+  String             $release_repo_ref = 'IT-2233/working',
   Optional[String]   $env              = undef,
   Optional[String]   $hostname         = $facts['hostname'],
 ) {
