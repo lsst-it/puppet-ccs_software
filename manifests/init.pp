@@ -40,6 +40,8 @@ class ccs_software(
   }
 
   $installations.each |String $i, Hash $conf| {
+    $exec_title = "install.py ${i}"
+
     # create a new dev-packages clone for each installation
     $clone_path = $conf['repo_path'] ? {
       undef   => "${pkglist_path}/${i}",
@@ -63,7 +65,7 @@ class ccs_software(
       source   => $repo,
       revision => $ref,
       user     => $user,
-      notify   => Exec["install.py of ${i} installation"],
+      notify   => Exec[$exec_title],
     })
 
     # create installation
@@ -86,7 +88,7 @@ class ccs_software(
 
     $ccsapps_path = "${clone_path}/${_real_env}/${_real_hostname}/ccsApplications.txt"
 
-    exec { "install.py of ${i} installation":
+    exec { $exec_title:
       command   => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
       creates   => $installation_path,
       user      => $user,

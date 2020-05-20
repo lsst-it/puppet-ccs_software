@@ -58,7 +58,7 @@ describe 'ccs_software' do
       end
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
-          .that_notifies("Exec[install.py of #{c} installation]")
+          .that_notifies("Exec[install.py #{c}]")
       end
     end
   end
@@ -96,11 +96,11 @@ describe 'ccs_software' do
       end
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
-          .that_notifies("Exec[install.py of #{c} installation]")
+          .that_notifies("Exec[install.py #{c}]")
       end
 
       it do
-        is_expected.to contain_exec("install.py of #{c} installation").with(
+        is_expected.to contain_exec("install.py #{c}").with(
           command: "/opt/lsst/ccsadm/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/#{c} /opt/lsst/ccsadm/package-lists/#{c}/ComCam/foo/ccsApplications.txt",
           creates: "/opt/lsst/ccs/#{c}",
           user: 'ccs',
