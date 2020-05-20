@@ -101,6 +101,7 @@ class ccs_software(
       group     => $group,
       tries     => 3,
       logoutput => true,
+      cwd       => $base_path,
       require   => Package[$deps],
     }
   }
