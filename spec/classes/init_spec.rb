@@ -174,4 +174,26 @@ describe 'ccs_software' do
 
     it { is_expected.not_to contain_vcsrepo('/opt/lsst/ccsadm/package-lists/test') }
   end
+
+  describe 'installation with aliases' do
+    let(:params) do
+      {
+        installations: {
+          test: {
+            aliases: ['foo', 'bar', 'baz'],
+          },
+        },
+        env: 'ComCam',
+      }
+    end
+
+    ['foo', 'bar', 'baz'].each do |a|
+      it do
+        is_expected.to contain_file("/opt/lsst/ccs/#{a}").with(
+          ensure: 'link',
+          target: '/opt/lsst/ccs/test',
+        )
+      end
+    end
+  end
 end

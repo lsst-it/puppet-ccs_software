@@ -49,7 +49,9 @@ class ccs_software(
   $installations.each |String $i, Hash $conf| {
     $exec_title = "install.py ${i}"
 
+    #
     # create a new dev-packages clone for each installation
+    #
     $clone_path = $conf['repo_path'] ? {
       undef   => "${pkglist_path}/${i}",
       default => $conf['repo_path'],
@@ -76,7 +78,9 @@ class ccs_software(
       require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
 
+    #
     # create installation
+    #
     $installation_path = "${ccs_path}/${i}"
     $_real_env = $conf['env'] ? {
       undef   => $env,
@@ -105,6 +109,18 @@ class ccs_software(
       logoutput => true,
       cwd       => $base_path,
       require   => Package[$deps],
+    }
+
+    #
+    # create aliases (if any)
+    #
+    unless (empty($conf['aliases'])) {
+      $conf['aliases'].each |String $a| {
+        file { "${ccs_path}/${a}":
+          ensure => 'link',
+          target => $installation_path,
+        }
+      }
     }
   }
 }

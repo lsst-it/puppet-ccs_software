@@ -121,4 +121,42 @@ describe 'ccs_software class' do
       end
     end
   end
+
+  context 'with aliases' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      -> class{ 'ccs_software':
+        base_path     => '#{basedir}',
+        env           => 'ComCam',
+        hostname      => 'comcam-fp01',
+        installations => {
+          master  => {
+            aliases => ['foo', 'bar', 'baz'],
+          },
+          e4a8224 => {
+            aliases => ['a', 'b', 'c'],
+          },
+        },
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    [
+      "#{basedir}/ccs/foo",
+      "#{basedir}/ccs/bar",
+      "#{basedir}/ccs/baz",
+      "#{basedir}/ccs/a",
+      "#{basedir}/ccs/b",
+      "#{basedir}/ccs/c",
+    ].each do |f|
+      describe file(f) do
+        it { should be_symlink }
+      end
+    end
+  end
 end
