@@ -15,6 +15,12 @@ class ccs_software(
   $release_path = "${ccsadm_path}/release"
   $install_bin  = "${release_path}/bin/install.py"
 
+  $deps = [
+    'unzip',
+  ]
+
+  ensure_packages($deps)
+
   $dirs = [
     $base_path,
     $ccs_path,
@@ -95,6 +101,7 @@ class ccs_software(
       group     => $group,
       tries     => 3,
       logoutput => true,
+      require   => Package[$deps],
     }
   }
 }
