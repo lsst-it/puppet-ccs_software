@@ -26,6 +26,7 @@ describe 'ccs_software' do
         ensure: 'latest',
         provider: 'git',
         user: 'ccs',
+        require: 'File[/opt/lsst/ccsadm]',
       )
     end
   end
@@ -54,6 +55,7 @@ describe 'ccs_software' do
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
           user: 'ccs',
+          require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
       it do
@@ -92,6 +94,7 @@ describe 'ccs_software' do
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
           user: 'ccs',
+          require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
       it do
@@ -165,6 +168,7 @@ describe 'ccs_software' do
         source: 'https://github.com/lsst-camera-dh/dev-package-lists',
         revision: 'master',
         user: 'ccs',
+        require: 'File[/opt/lsst/ccsadm/package-lists]',
       )
     end
 

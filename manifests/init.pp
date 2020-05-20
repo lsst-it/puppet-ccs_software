@@ -43,6 +43,7 @@ class ccs_software(
     source   => $release_repo_url,
     revision => $release_repo_ref,
     user     => $user,
+    require  => File[$ccsadm_path],  # vcsrepo doesn't autorequire its parent dir
   }
 
   $installations.each |String $i, Hash $conf| {
@@ -72,6 +73,7 @@ class ccs_software(
       revision => $ref,
       user     => $user,
       notify   => Exec[$exec_title],
+      require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
 
     # create installation
