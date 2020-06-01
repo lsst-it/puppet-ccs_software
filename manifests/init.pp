@@ -17,6 +17,7 @@ class ccs_software(
 
   $deps = [
     'unzip',
+    'git'
   ]
 
   ensure_packages($deps)

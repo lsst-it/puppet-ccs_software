@@ -28,6 +28,16 @@ describe 'ccs_software class' do
         it { is_expected.to be_directory }
       end
     end
+
+    # package deps
+    %w(
+      unzip
+      git
+    ).each do |p|
+      describe package(p) do
+        it { should be_installed }
+      end
+    end
   end
 
   context 'with installations' do

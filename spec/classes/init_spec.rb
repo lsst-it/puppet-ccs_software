@@ -29,6 +29,11 @@ describe 'ccs_software' do
         require: 'File[/opt/lsst/ccsadm]',
       )
     end
+
+    it do
+      is_expected.to contain_package('unzip')
+      is_expected.to contain_package('git')
+    end
   end
 
   describe 'with installations + env parameter' do
