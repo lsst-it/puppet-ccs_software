@@ -18,14 +18,20 @@ describe 'ccs_software' do
       '/opt/lsst/ccsadm',
       '/opt/lsst/ccsadm/package-lists',
     ].each do |dir|
-      it { is_expected.to contain_file(dir).with(ensure: 'directory') }
+      it do
+        is_expected.to contain_file(dir).with(
+          ensure: 'directory',
+          owner: 'ccsadm',
+          group: 'ccsadm',
+        )
+      end
     end
 
     it do
       is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/release').with(
         ensure: 'latest',
         provider: 'git',
-        user: 'ccs',
+        user: 'ccsadm',
         require: 'File[/opt/lsst/ccsadm]',
       )
     end
@@ -59,7 +65,7 @@ describe 'ccs_software' do
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
-          user: 'ccs',
+          user: 'ccsadm',
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
@@ -98,7 +104,7 @@ describe 'ccs_software' do
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
-          user: 'ccs',
+          user: 'ccsadm',
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
@@ -111,8 +117,8 @@ describe 'ccs_software' do
         is_expected.to contain_exec("install.py #{c}").with(
           command: "/opt/lsst/ccsadm/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/#{c} /opt/lsst/ccsadm/package-lists/#{c}/ComCam/foo/ccsApplications.txt",
           creates: "/opt/lsst/ccs/#{c}",
-          user: 'ccs',
-          group: 'ccs',
+          user: 'ccsadm',
+          group: 'ccsadm',
           tries: 3,
           logoutput: true,
         )
@@ -172,7 +178,7 @@ describe 'ccs_software' do
         provider: 'git',
         source: 'https://github.com/lsst-camera-dh/dev-package-lists',
         revision: 'master',
-        user: 'ccs',
+        user: 'ccsadm',
         require: 'File[/opt/lsst/ccsadm/package-lists]',
       )
     end

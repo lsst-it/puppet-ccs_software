@@ -9,6 +9,7 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
       -> class{ 'ccs_software':
         base_path => '#{basedir}',
       }
@@ -26,16 +27,15 @@ describe 'ccs_software class' do
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
       end
     end
 
     # package deps
-    %w(
-      unzip
-      git
-    ).each do |p|
+    ['unzip', 'git'].each do |p|
       describe package(p) do
-        it { should be_installed }
+        it { is_expected.to be_installed }
       end
     end
   end
@@ -46,6 +46,7 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
       -> class{ 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'comcam-fp01',
@@ -77,6 +78,8 @@ describe 'ccs_software class' do
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
       end
     end
   end
@@ -87,6 +90,7 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
       -> class{ 'ccs_software':
         base_path     => '#{basedir}',
         installations => {
@@ -128,6 +132,8 @@ describe 'ccs_software class' do
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
       end
     end
   end
@@ -138,6 +144,7 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
       -> class{ 'ccs_software':
         base_path     => '#{basedir}',
         env           => 'ComCam',

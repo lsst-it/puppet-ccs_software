@@ -3,6 +3,8 @@ class ccs_software(
   String             $base_path        = '/opt/lsst',
   String             $user             = 'ccs',
   String             $group            = 'ccs',
+  String             $adm_user         = 'ccsadm',
+  String             $adm_group        = 'ccsadm',
   String             $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
   String             $release_repo_url = 'https://github.com/lsst-it/release',
   String             $release_repo_ref = 'IT-2233/working',
@@ -31,8 +33,8 @@ class ccs_software(
 
   file { $dirs:
     ensure => directory,
-    owner  => $user,
-    group  => $group,
+    owner  => $adm_user,
+    group  => $adm_group,
     mode   => '0755',
     backup => false,
   }
@@ -43,7 +45,7 @@ class ccs_software(
     provider => git,
     source   => $release_repo_url,
     revision => $release_repo_ref,
-    user     => $user,
+    user     => $adm_user,
     require  => File[$ccsadm_path],  # vcsrepo doesn't autorequire its parent dir
   }
 
@@ -74,7 +76,7 @@ class ccs_software(
       provider => git,
       source   => $repo,
       revision => $ref,
-      user     => $user,
+      user     => $adm_user,
       notify   => Exec[$exec_title],
       require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
@@ -104,11 +106,12 @@ class ccs_software(
     exec { $exec_title:
       command   => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
       creates   => $installation_path,
-      user      => $user,
-      group     => $group,
+      user      => $adm_user,
+      group     => $adm_group,
       tries     => 3,
       logoutput => true,
       cwd       => $base_path,
+      timeout   => 900,
       require   => Package[$deps],
     }
 
