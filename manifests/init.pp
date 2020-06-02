@@ -1,15 +1,15 @@
 class ccs_software(
-  Hash[String, Hash] $installations    = {},
-  String             $base_path        = '/opt/lsst',
-  String             $user             = 'ccs',
-  String             $group            = 'ccs',
-  String             $adm_user         = 'ccsadm',
-  String             $adm_group        = 'ccsadm',
-  String             $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
-  String             $release_repo_url = 'https://github.com/lsst-it/release',
-  String             $release_repo_ref = 'IT-2233/working',
-  Optional[String]   $env              = undef,
-  Optional[String]   $hostname         = $facts['hostname'],
+  Hash[String, Hash]   $installations    = {},
+  Stdlib::Absolutepath $base_path        = '/opt/lsst',
+  String               $user             = 'ccs',
+  String               $group            = 'ccs',
+  String               $adm_user         = 'ccsadm',
+  String               $adm_group        = 'ccsadm',
+  Stdlib::HTTPUrl      $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
+  Stdlib::HTTPUrl      $release_repo_url = 'https://github.com/lsst-it/release',
+  String               $release_repo_ref = 'IT-2233/working',
+  Optional[String]     $env              = undef,
+  Optional[String]     $hostname         = $facts['hostname'],
 ) {
   $ccs_path     = "${base_path}/ccs"
   $ccsadm_path  = "${base_path}/ccsadm"
