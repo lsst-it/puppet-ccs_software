@@ -81,7 +81,7 @@ class ccs_software(
 
     # ensure the vcsrepo to allow the same clone path to be path of multiple installations
     ensure_resource('vcsrepo', $clone_path, {
-      ensure   => latest,
+      ensure   => present,
       provider => git,
       source   => $repo,
       revision => $ref,

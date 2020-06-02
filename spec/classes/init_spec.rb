@@ -68,7 +68,7 @@ describe 'ccs_software' do
     ].each do |c|
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
-          ensure: 'latest',
+          ensure: 'present',
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
@@ -107,7 +107,7 @@ describe 'ccs_software' do
     ].each do |c|
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
-          ensure: 'latest',
+          ensure: 'present',
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
@@ -181,7 +181,7 @@ describe 'ccs_software' do
 
     it do
       is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/package-lists/master').with(
-        ensure: 'latest',
+        ensure: 'present',
         provider: 'git',
         source: 'https://github.com/lsst-camera-dh/dev-package-lists',
         revision: 'master',
