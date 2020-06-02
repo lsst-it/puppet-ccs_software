@@ -38,6 +38,15 @@ describe 'ccs_software' do
       )
     end
 
+    it do
+      is_expected.to contain_file('/var/log/ccs').with(
+        ensure: 'directory',
+        owner: 'root',
+        group: 'ccs',
+        mode: '2775',
+      )
+    end
+
     [
       '/opt/lsst/ccs',
       '/opt/lsst/ccsadm',
