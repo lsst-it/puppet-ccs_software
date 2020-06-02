@@ -18,8 +18,13 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
+    describe file(basedir) do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_grouped_into 'root' }
+    end
+
     [
-      basedir,
       "#{basedir}/ccs",
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
@@ -61,8 +66,13 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
+    describe file(basedir) do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_grouped_into 'root' }
+    end
+
     [
-      basedir,
       "#{basedir}/ccs",
       "#{basedir}/ccs/master",
       "#{basedir}/ccs/master/bin",
@@ -115,8 +125,13 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
+    describe file(basedir) do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_grouped_into 'root' }
+    end
+
     [
-      basedir,
       "#{basedir}/ccs",
       "#{basedir}/ccs/test1",
       "#{basedir}/ccs/test1/bin",
@@ -172,7 +187,7 @@ describe 'ccs_software class' do
       "#{basedir}/ccs/c",
     ].each do |f|
       describe file(f) do
-        it { should be_symlink }
+        it { is_expected.to be_symlink }
       end
     end
   end
