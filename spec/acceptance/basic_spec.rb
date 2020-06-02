@@ -26,6 +26,7 @@ describe 'ccs_software class' do
 
     describe file('/lsst') do
       it { is_expected.to be_symlink }
+      it { is_expected.to be_linked_to basedir }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'root' }
     end
@@ -188,12 +189,23 @@ describe 'ccs_software class' do
       "#{basedir}/ccs/foo",
       "#{basedir}/ccs/bar",
       "#{basedir}/ccs/baz",
+    ].each do |f|
+      describe file(f) do
+        it { is_expected.to be_symlink }
+        it { is_expected.to be_linked_to "#{basedir}/ccs/master" }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
+      end
+    end
+
+    [
       "#{basedir}/ccs/a",
       "#{basedir}/ccs/b",
       "#{basedir}/ccs/c",
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
+        it { is_expected.to be_linked_to "#{basedir}/ccs/e4a8224" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
