@@ -1,6 +1,7 @@
 class ccs_software(
   Hash[String, Hash]   $installations    = {},
   Stdlib::Absolutepath $base_path        = '/opt/lsst',
+  Stdlib::Absolutepath $etc_path         = '/etc/ccs',
   String               $user             = 'ccs',
   String               $group            = 'ccs',
   String               $adm_user         = 'ccsadm',
@@ -40,11 +41,17 @@ class ccs_software(
       mode   => '0755',
       backup => false,
     },
-    '/lsst' => {
+    '/lsst'    => {
       ensure => symlink,
       group  => 'root',
       owner  => 'root',
       target => $base_path
+    },
+    $etc_path  => {
+      ensure => directory,
+      owner  => $adm_user,
+      group  => $adm_group,
+      mode   => '2775',
     },
   })
 
