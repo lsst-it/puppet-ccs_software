@@ -67,7 +67,8 @@ class ccs_software(
   }
 
   $installations.each |String $i, Hash $conf| {
-    $exec_title = "install.py ${i}"
+    $exec_install_title = "install.py ${i}"
+    $exec_chown_title = "chown ${i}"
 
     #
     # create a new dev-packages clone for each installation
@@ -94,7 +95,7 @@ class ccs_software(
       source   => $repo,
       revision => $ref,
       user     => $adm_user,
-      notify   => Exec[$exec_title],
+      notify   => Exec[$exec_install_title],
       require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
 
@@ -119,8 +120,9 @@ class ccs_software(
     }
 
     $ccsapps_path = "${clone_path}/${_real_env}/${_real_hostname}/ccsApplications.txt"
+    $etc_path     = "${installation_path}/etc"
 
-    exec { $exec_title:
+    exec { $exec_install_title:
       command   => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
       creates   => $installation_path,
       user      => $adm_user,
@@ -130,6 +132,16 @@ class ccs_software(
       cwd       => $base_path,
       timeout   => 900,
       require   => Package[$deps],
+    }
+    ~> exec { $exec_chown_title:
+      command   => "chown -R -H ${user}:${group} ${etc_path}",
+      path      => '/bin:/usr/bin',
+      # run only if the etc symlink exists (it may not) and ownership of the
+      # link target is out of sync
+      onlyif    => "[[ -e ${etc_path} && ${user} != $(stat -L --format='%U' ${etc_path}) ]]",
+      provider  => shell,
+      logoutput => true,
+      cwd       => $base_path,
     }
 
     #

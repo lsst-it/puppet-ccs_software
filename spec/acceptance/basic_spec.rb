@@ -197,4 +197,71 @@ describe 'ccs_software class' do
       end
     end
   end
+
+  context 'with etc symlink' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
+      -> class{ 'ccs_software':
+        base_path     => '#{basedir}',
+        hostname      => 'lsst-dc01',
+        env           => 'IR2',
+        installations => {
+          '0b5328e' => {},
+        },
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    describe file(basedir) do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_grouped_into 'root' }
+    end
+
+    [
+      "#{basedir}/ccs",
+      "#{basedir}/ccs/0b5328e",
+      "#{basedir}/ccs/0b5328e/bin",
+      "#{basedir}/ccsadm",
+      "#{basedir}/ccsadm/package-lists",
+      "#{basedir}/ccsadm/package-lists/0b5328e",
+      "#{basedir}/ccsadm/package-lists/0b5328e/.git",
+      "#{basedir}/ccsadm/release",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
+      end
+    end
+
+    # symlink created by install.py
+    describe file("#{basedir}/ccs/0b5328e/etc") do
+      it { is_expected.to be_symlink }
+      # link is relative
+      it { is_expected.to be_linked_to 'ccs-test-configurations-master/IR2/lsst-dc01' }
+      it { is_expected.to be_owned_by 'ccsadm' }
+      it { is_expected.to be_grouped_into 'ccsadm' }
+    end
+
+    # symlink target dir
+    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master/IR2/lsst-dc01") do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'ccs' }
+      it { is_expected.to be_grouped_into 'ccs' }
+    end
+
+    # file in chown'd etc dir
+    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master/IR2/lsst-dc01/focal-plane_9raft_HardwareId.properties") do
+      it { is_expected.to be_file }
+      it { is_expected.to be_owned_by 'ccs' }
+      it { is_expected.to be_grouped_into 'ccs' }
+    end
+  end
 end
