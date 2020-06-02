@@ -234,6 +234,8 @@ describe 'ccs_software' do
       it do
         is_expected.to contain_file("/opt/lsst/ccs/#{a}").with(
           ensure: 'link',
+          owner: 'ccsadm',
+          group: 'ccsadm',
           target: '/opt/lsst/ccs/test',
         )
       end

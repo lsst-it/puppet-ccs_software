@@ -151,6 +151,8 @@ class ccs_software(
       $conf['aliases'].each |String $a| {
         file { "${ccs_path}/${a}":
           ensure => 'link',
+          owner  => $adm_user,
+          group  => $adm_group,
           target => $installation_path,
         }
       }

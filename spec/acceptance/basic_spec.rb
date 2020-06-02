@@ -194,6 +194,8 @@ describe 'ccs_software class' do
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
       end
     end
   end
