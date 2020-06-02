@@ -24,6 +24,12 @@ describe 'ccs_software class' do
       it { is_expected.to be_grouped_into 'root' }
     end
 
+    describe file('/lsst') do
+      it { is_expected.to be_symlink }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_grouped_into 'root' }
+    end
+
     [
       "#{basedir}/ccs",
       "#{basedir}/ccsadm",

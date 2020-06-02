@@ -32,12 +32,20 @@ class ccs_software(
 
   # the base path should be owned by root
   # try to be nice about sharing the base path with other mods
-  ensure_resource('file', $base_path, {
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    backup => false,
+  ensure_resources('file', {
+    $base_path => {
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      backup => false,
+    },
+    '/lsst' => {
+      ensure => symlink,
+      group  => 'root',
+      owner  => 'root',
+      target => $base_path
+    },
   })
 
   file { $dirs:

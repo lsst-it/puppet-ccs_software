@@ -13,6 +13,15 @@ describe 'ccs_software' do
     it { is_expected.to compile.with_all_deps }
 
     it do
+      is_expected.to contain_file('/lsst').with(
+        ensure: 'symlink',
+        owner: 'root',
+        group: 'root',
+        target: '/opt/lsst',
+      )
+    end
+
+    it do
       is_expected.to contain_file('/opt/lsst').with(
         ensure: 'directory',
         owner: 'root',
