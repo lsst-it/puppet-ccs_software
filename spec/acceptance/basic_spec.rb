@@ -73,6 +73,18 @@ describe 'ccs_software class' do
         it { is_expected.to be_installed }
       end
     end
+
+    # jdk
+    describe file('/usr/bin/java') do
+      it { is_expected.to be_symlink }
+      it { is_expected.to be_linked_to '/etc/alternatives/java' }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_grouped_into 'root' }
+    end
+
+    describe package('jdk1.8') do
+      it { is_expected.to be_installed }
+    end
   end
 
   context 'with installations' do

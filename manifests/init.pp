@@ -20,6 +20,7 @@ class ccs_software(
   $install_bin  = "${release_path}/bin/install.py"
 
   contain ccs_software::config
+  contain ccs_software::jdk8
 
   $deps = [
     'unzip',

@@ -13,6 +13,14 @@
     {
       "name": "puppet/vcsrepo",
       "version_requirement": ">= 3.0.0 < 4.0.0"
+    },
+    {
+      "name": "puppet/yum",
+      "version_requirement": ">= 4.0.0 < 5.0.0"
+    },
+    {
+      "name": "puppet/alternatives",
+      "version_requirement": ">= 3.0.0 < 4.0.0"
     }
   ],
   "operatingsystem_support": [

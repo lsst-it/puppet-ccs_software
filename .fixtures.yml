@@ -5,4 +5,6 @@ fixtures:
   forge_modules:
     stdlib: "puppetlabs/stdlib"
     vcsrepo: "puppetlabs/vcsrepo"
+    yum: "puppet/yum"
+    alternatives: "puppet/alternatives"
     accounts: "puppetlabs/accounts"  # beaker only
