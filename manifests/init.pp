@@ -19,6 +19,8 @@ class ccs_software(
   $release_path = "${ccsadm_path}/release"
   $install_bin  = "${release_path}/bin/install.py"
 
+  contain ccs_software::config
+
   $deps = [
     'unzip',
     'git'

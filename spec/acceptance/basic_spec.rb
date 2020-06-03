@@ -38,6 +38,15 @@ describe 'ccs_software class' do
       it { is_expected.to be_mode '2775' }
     end
 
+    ['logging.properties', 'ccsGlobal.properties', 'udp_ccs.properties'].each do |f|
+      describe file("/etc/ccs/#{f}") do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
+        it { is_expected.to be_mode '664' } # serverspec does not like a leading 0
+      end
+    end
+
     describe file('/var/log/ccs') do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'root' }
