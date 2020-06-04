@@ -63,6 +63,7 @@ describe 'ccs_software class' do
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
       "#{basedir}/ccsadm/release",
+      "#{basedir}/ccsadm/scripts",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -88,6 +89,24 @@ describe 'ccs_software class' do
 
     describe package('jdk1.8') do
       it { is_expected.to be_installed }
+    end
+
+    # scripts
+    %w[
+      installCCS.sh
+      showCCSProcesses.sh
+      startStopCluster.sh
+      updateCcsSudoerFile.sh
+      updateInstallationSymlink.sh
+      updateServiceFile.sh
+      verifyUser.sh
+    ].each do |s|
+      describe file("#{basedir}/ccsadm/scripts/#{s}") do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
+        it { is_expected.to be_mode '755' } # serverspec does not like a leading 0
+      end
     end
   end
 

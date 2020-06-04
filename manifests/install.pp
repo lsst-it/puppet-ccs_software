@@ -25,6 +25,7 @@ class ccs_software::install {
   $pkglist_path = "${ccsadm_path}/package-lists"
   $release_path = "${ccsadm_path}/release"
   $install_bin  = "${release_path}/bin/install.py"
+  $scripts_path = "${ccsadm_path}/scripts"
 
   $dirs = [
     $ccs_path,
@@ -68,6 +69,17 @@ class ccs_software::install {
     group  => $adm_group,
     mode   => '0755',
     backup => false,
+  }
+
+  # install ccs scripts
+  file { $scripts_path:
+    ensure  => directory,
+    recurse => true,
+    purge   => false,
+    owner   => $adm_user,
+    group   => $adm_group,
+    mode    => '0755',
+    source  => "puppet:///modules/${module_name}/install",
   }
 
   # provides bin/install.py

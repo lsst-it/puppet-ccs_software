@@ -51,6 +51,7 @@ describe 'ccs_software' do
       /opt/lsst/ccs
       /opt/lsst/ccsadm
       /opt/lsst/ccsadm/package-lists
+      /opt/lsst/ccsadm/scripts
     ].each do |dir|
       it do
         is_expected.to contain_file(dir).with(
