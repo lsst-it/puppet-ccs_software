@@ -12,7 +12,11 @@ describe 'ccs_software' do
   describe 'without any parameters' do
     it { is_expected.to compile.with_all_deps }
 
-    ['logging.properties', 'ccsGlobal.properties', 'udp_ccs.properties'].each do |f|
+    %w[
+      logging.properties
+      ccsGlobal.properties
+      udp_ccs.properties
+    ].each do |f|
       it do
         is_expected.to contain_file("/etc/ccs/#{f}").with(
           ensure: 'file',

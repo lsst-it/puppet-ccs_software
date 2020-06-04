@@ -12,13 +12,13 @@ describe 'ccs_software' do
   describe 'without any parameters' do
     it { is_expected.to compile.with_all_deps }
 
-    [
-      'java',
-      'javac',
-      'javaws',
-      'jar',
-      'jconsole',
-      'jstack',
+    %w[
+      java
+      javac
+      javaws
+      jar
+      jconsole
+      jstack
     ].each do |cmd|
       it do
         dest = "/usr/java/jdk1.8.0_202-amd64/bin/#{cmd}"

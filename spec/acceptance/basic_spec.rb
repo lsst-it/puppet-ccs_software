@@ -38,7 +38,11 @@ describe 'ccs_software class' do
       it { is_expected.to be_mode '2775' }
     end
 
-    ['logging.properties', 'ccsGlobal.properties', 'udp_ccs.properties'].each do |f|
+    %w[
+      logging.properties
+      ccsGlobal.properties
+      udp_ccs.properties
+    ].each do |f|
       describe file("/etc/ccs/#{f}") do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'ccsadm' }
@@ -68,7 +72,7 @@ describe 'ccs_software class' do
     end
 
     # package deps
-    ['unzip', 'git'].each do |p|
+    %w[unzip git].each do |p|
       describe package(p) do
         it { is_expected.to be_installed }
       end

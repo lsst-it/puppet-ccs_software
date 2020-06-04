@@ -47,10 +47,10 @@ describe 'ccs_software' do
       )
     end
 
-    [
-      '/opt/lsst/ccs',
-      '/opt/lsst/ccsadm',
-      '/opt/lsst/ccsadm/package-lists',
+    %w[
+      /opt/lsst/ccs
+      /opt/lsst/ccsadm
+      /opt/lsst/ccsadm/package-lists
     ].each do |dir|
       it do
         is_expected.to contain_file(dir).with(
@@ -88,10 +88,10 @@ describe 'ccs_software' do
       }
     end
 
-    [
-      'master',
-      '1.0.0',
-      'ETCCB-269',
+    %w[
+      master
+      1.0.0
+      ETCCB-269
     ].each do |c|
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
@@ -127,10 +127,10 @@ describe 'ccs_software' do
       }
     end
 
-    [
-      'master',
-      '1.0.0',
-      'ETCCB-269',
+    %w[
+      master
+      1.0.0
+      ETCCB-269
     ].each do |c|
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
@@ -241,14 +241,14 @@ describe 'ccs_software' do
       {
         installations: {
           test: {
-            aliases: ['foo', 'bar', 'baz'],
+            aliases: %w[foo bar baz],
           },
         },
         env: 'ComCam',
       }
     end
 
-    ['foo', 'bar', 'baz'].each do |a|
+    %w[foo bar baz].each do |a|
       it do
         is_expected.to contain_file("/opt/lsst/ccs/#{a}").with(
           ensure: 'link',
