@@ -340,7 +340,8 @@ describe 'ccs_software class' do
     it_behaves_like 'an idempotent resource'
 
     describe service('comcam-fp') do
-      it { is_expected.to be_installed }
+      # does not work on el7
+      # it { is_expected.to be_installed }
       it { is_expected.to be_enabled }
       it { is_expected.not_to be_running }
     end
