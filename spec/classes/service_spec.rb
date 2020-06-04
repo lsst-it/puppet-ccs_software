@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'ccs_software' do
   let(:facts) do
     {
-      hostname: 'comcam-fp01',
+      hostname: 'comcam-mcm',
       path: '/bin',
     }
   end
@@ -20,14 +20,14 @@ describe 'ccs_software' do
           },
         },
         services: {
-          dev: ['comcam-fp', 'comcam-ih'],
+          dev: ['comcam-mcm'],
         },
       }
     end
 
     it { is_expected.to compile.with_all_deps }
 
-    ['comcam-fp', 'comcam-ih'].each do |svc|
+    ['comcam-mcm'].each do |svc|
       it do
         is_expected.to contain_service(svc).with(
           enable: true,

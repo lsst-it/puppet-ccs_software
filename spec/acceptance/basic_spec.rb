@@ -96,7 +96,7 @@ describe 'ccs_software class' do
       -> accounts::user { 'ccsadm': }
       -> class{ 'ccs_software':
         base_path     => '#{basedir}',
-        hostname      => 'comcam-fp01',
+        hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
           master  => {},
@@ -151,14 +151,14 @@ describe 'ccs_software class' do
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'e4a8224',
             env       => 'ComCam',
-            hostname  => 'comcam-fp01',
+            hostname  => 'comcam-mcm',
           },
           test42 => {
             repo_path => "#{basedir}/ccsadm/package-lists/test42.bar",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'e4a8224',
             env       => 'ComCam',
-            hostname  => 'comcam-fp01',
+            hostname  => 'comcam-mcm',
           },
         },
       }
@@ -205,7 +205,7 @@ describe 'ccs_software class' do
       -> class{ 'ccs_software':
         base_path     => '#{basedir}',
         env           => 'ComCam',
-        hostname      => 'comcam-fp01',
+        hostname      => 'comcam-mcm',
         installations => {
           master  => {
             aliases => ['foo', 'bar', 'baz'],
@@ -323,7 +323,7 @@ describe 'ccs_software class' do
       -> accounts::user { 'ccsadm': }
       -> class{ 'ccs_software':
         base_path     => '#{basedir}',
-        hostname      => 'comcam-fp01',
+        hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
           e4a8224 => {
@@ -331,7 +331,7 @@ describe 'ccs_software class' do
           },
         },
         services      => {
-          dev => ['comcam-fp'],
+          dev => ['comcam-mcm'],
         },
       }
       EOS
@@ -339,7 +339,7 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
-    describe service('comcam-fp') do
+    describe service('comcam-mcm') do
       # does not work on el7
       # it { is_expected.to be_installed }
       it { is_expected.to be_enabled }
