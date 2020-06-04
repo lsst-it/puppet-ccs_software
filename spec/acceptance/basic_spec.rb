@@ -313,4 +313,36 @@ describe 'ccs_software class' do
       it { is_expected.to be_grouped_into 'ccs' }
     end
   end
+
+  context 'with services' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
+      -> class{ 'ccs_software':
+        base_path     => '#{basedir}',
+        hostname      => 'comcam-fp01',
+        env           => 'ComCam',
+        installations => {
+          e4a8224 => {
+            aliases => ['dev'],
+          },
+        },
+        services      => {
+          dev => ['comcam-fp'],
+        },
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    describe service('comcam-fp') do
+      it { is_expected.to be_installed }
+      it { is_expected.to be_enabled }
+      it { is_expected.not_to be_running }
+    end
+  end
 end

@@ -18,9 +18,11 @@ class ccs_software(
   contain ccs_software::install
   contain ccs_software::config
   contain ccs_software::jdk8
+  contain ccs_software::service
 
   Class['::ccs_software::pre'] ->
   Class['::ccs_software::install'] ->
   Class['::ccs_software::config'] ->
-  Class['::ccs_software::jdk8']
+  Class['::ccs_software::jdk8'] ->
+  Class['::ccs_software::service']
 }

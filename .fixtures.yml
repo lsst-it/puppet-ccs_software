@@ -7,4 +7,5 @@ fixtures:
     vcsrepo: "puppetlabs/vcsrepo"
     yum: "puppet/yum"
     alternatives: "puppet/alternatives"
+    systemd: "camptocamp/systemd"
     accounts: "puppetlabs/accounts"  # beaker only
