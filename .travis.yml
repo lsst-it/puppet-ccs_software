@@ -39,14 +39,15 @@ jobs:
       rvm: 2.5.7
       stage: spec
     -
-      env: DEPLOY_TO_FORGE=yes
-      stage: deploy
-
-    -
       env: BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_setfile=centos7-64 CHECK=beaker
       rvm: 2.5.7
       bundler_args: --without development release
       services: docker
+      stage: acceptance
+    -
+      env: DEPLOY_TO_FORGE=yes
+      stage: deploy
+
 branches:
   only:
     - master
