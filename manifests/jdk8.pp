@@ -20,8 +20,9 @@ class ccs_software::jdk8 (
   String          $dir     = 'jdk1.8.0_202-amd64',
 ) {
   yum::install { $package:
-    ensure => present,
-    source => $source,
+    ensure  => present,
+    source  => $source,
+    timeout => 600,
   }
 
   $cmds = [
