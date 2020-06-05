@@ -15,6 +15,9 @@ class ccs_software(
   Optional[String]            $hostname         = $facts['hostname'],
   Boolean                     $desktop          = false,
 ) {
+  $ccs_path    = "${base_path}/ccs"
+  $ccsadm_path = "${base_path}/ccsadm"
+
   contain ccs_software::pre
   contain ccs_software::install
   contain ccs_software::config

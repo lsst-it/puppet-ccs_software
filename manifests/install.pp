@@ -20,8 +20,9 @@ class ccs_software::install {
   $env              = $::ccs_software::env
   $hostname         = $::ccs_software::hostname
 
-  $ccs_path     = "${base_path}/ccs"
-  $ccsadm_path  = "${base_path}/ccsadm"
+  $ccs_path    = $::ccs_software::ccs_path
+  $ccsadm_path = $::ccs_software::ccsadm_path
+
   $pkglist_path = "${ccsadm_path}/package-lists"
   $release_path = "${ccsadm_path}/release"
   $install_bin  = "${release_path}/bin/install.py"

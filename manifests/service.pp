@@ -12,7 +12,7 @@ class ccs_software::service {
         desc  => "CCS ${svc} service",
         user  => $::ccs_software::user,
         group => $::ccs_software::group,
-        cmd   => "/lsst/ccs/${alias}/bin/${svc}",
+        cmd   => "${::ccs_software::ccs_path}/${alias}/bin/${svc}",
       }
 
       systemd::unit_file { "${svc}.service":
