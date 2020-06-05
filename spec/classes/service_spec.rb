@@ -9,6 +9,7 @@ describe 'ccs_software' do
       path: '/bin',
     }
   end
+  let(:node_params) { { 'site' => 'ls' } }
 
   describe 'with services parameters' do
     let(:params) do

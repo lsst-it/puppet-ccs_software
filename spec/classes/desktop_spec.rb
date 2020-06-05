@@ -13,11 +13,8 @@ desktop_files = %w[
 ]
 
 describe 'ccs_software' do
-  let(:facts) do
-    {
-      hostname: 'foo',
-    }
-  end
+  let(:facts) { { hostname: 'foo' } }
+  let(:node_params) { { 'site' => 'ls' } }
 
   describe 'with desktop parameter' do
     let(:params) do

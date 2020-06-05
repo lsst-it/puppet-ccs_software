@@ -20,6 +20,7 @@ class ccs_software(
   contain ccs_software::config
   contain ccs_software::jdk8
   contain ccs_software::service
+  contain ccs_software::log # does not need to be ordered
 
   Class['::ccs_software::pre']
   -> Class['::ccs_software::install']
