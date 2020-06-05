@@ -13,6 +13,7 @@ class ccs_software(
   String                      $release_repo_ref = 'IT-2233/working',
   Optional[String]            $env              = undef,
   Optional[String]            $hostname         = $facts['hostname'],
+  Boolean                     $desktop          = false,
 ) {
   contain ccs_software::pre
   contain ccs_software::install
@@ -25,4 +26,8 @@ class ccs_software(
   -> Class['::ccs_software::config']
   -> Class['::ccs_software::jdk8']
   -> Class['::ccs_software::service']
+
+  if ($desktop) {
+    contain ccs_software::desktop
+  }
 }

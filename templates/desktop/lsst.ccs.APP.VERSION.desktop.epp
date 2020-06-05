@@ -1,0 +1,12 @@
+<%- | Enum['prod','dev'] $version, String $app,
+    Enum['production','development'] $desc, Boolean $terminal| -%>
+# This file is managed by Puppet; changes may be overwritten
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=CCS <%= $app %> (<%= $version %>)
+Comment=Camera Control System <%= $app %> (<%= $desc %> version)
+Exec=/lsst/ccs/<%= $version %>/bin/ccs-<%= $app %>
+Categories=LSST;
+Terminal=<%= $terminal %>
+Icon=lsst_appicon

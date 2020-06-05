@@ -377,4 +377,37 @@ describe 'ccs_software class' do
       it { is_expected.not_to be_running }
     end
   end
+
+  context 'with desktop' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      -> accounts::user { 'ccsadm': }
+      -> class{ 'ccs_software':
+        base_path => '#{basedir}',
+        desktop   => true,
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    %w[
+      /etc/xdg/menus/applications-merged/lsst.menu
+      /usr/share/desktop-directories/lsst.directory
+      /usr/share/icons/lsst_appicon.png
+      /usr/share/applications/lsst.ccs.console.prod.desktop
+      /usr/share/applications/lsst.ccs.console.dev.desktop
+      /usr/share/applications/lsst.ccs.shell.prod.desktop
+      /usr/share/applications/lsst.ccs.shell.dev.desktop
+    ].each do |f|
+      describe file(f) do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+      end
+    end
+  end
 end
