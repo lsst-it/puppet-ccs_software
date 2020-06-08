@@ -5,7 +5,8 @@ fixtures:
   forge_modules:
     stdlib: "puppetlabs/stdlib"
     vcsrepo: "puppetlabs/vcsrepo"
-    yum: "puppet/yum"
-    alternatives: "puppet/alternatives"
     systemd: "camptocamp/systemd"
     accounts: "puppetlabs/accounts"  # beaker only
+  repositories:
+    java_artisanal: # beaker only
+      repo: "git://github.com/lsst-it/puppet-java_artisanal"
