@@ -1,3 +1,4 @@
+#
 # XXX is it possible to replace this script with a logrotate conf and a
 # logging.properties that does not try to do its own log rotation?
 #

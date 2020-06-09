@@ -1,3 +1,70 @@
+#
+# @summary Installs and configures CCS software
+#
+# @param installations
+#   Hash of hashes which describes one or more CCS "installations" to manage.
+#
+# @option installations [String] name-of-installation
+#
+#   The top level hash keys are the name of the installation. Eg., `foo` would
+#   create the installation `/opt/lsst/ccs/<foo>`.
+#
+#   Supported keys in nested hashes:
+#
+#   - repo_path - Overrides the default path to package list repo clone for this installation.
+#   - repo_url - Overrides the `pkglist_repo_url` param for this installation.
+#   - repo_ref - Overrides the `pkglist_repo_ref` param for this installation.
+#   - env - Overides the `env` param for this installation.
+#   - hostname - Overides the `hostname` param for this installation.
+#   - aliases - [Array] of "alias" links to create for the current installation.
+#
+# @param services
+#   Hash of Arrays of services to create systemd service units for.
+#
+# @option services [String] name-of-alias
+#   [Array] of service names/service executables (links under /opt/lsst/<alias>/bin/)
+#
+# @param base_path
+#   Base path for [all] CCS installations.
+#
+# @param etc_path
+#   Path to global CCS configuration files.
+#
+# @param log_path
+#   Path to CCS log files.
+#
+# @param user
+#   Name of the role user under which CCS services will be run and the owner of config files
+#
+# @param group
+#   Name of the role group
+#
+# @param adm_user
+#   Name of the admin role user which owns many of the installed files
+#
+# @param adm_group
+#   Name of the admin role group
+#
+# @param pkglist_repo_url
+#   URL of the git repo to use for `install.py` package lists by default.  This
+#   may be overriden in a `installations` hash with the `repo_url` key.
+#
+# @param release_repo_url
+#   URL of the repo which contains the `install.py` script.
+#
+# @param release_repo_ref
+#   `install.py` git repo ref.
+#
+# @param env
+#   Name of the package list environment.  Eg., `ComCam`.  This may be
+#   overriden in a `installation` hash with the `env` key.
+#
+# @param hostname
+#   The "short" hostname used to select the installation set in a package lists repo.
+#
+# @param desktop
+#   Install desktop shortcuts.
+#
 class ccs_software(
   Hash[String, Hash]          $installations    = {},
   Hash[String, Array[String]] $services         = {},
