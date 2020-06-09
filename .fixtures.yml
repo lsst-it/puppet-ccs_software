@@ -7,6 +7,8 @@ fixtures:
     vcsrepo: "puppetlabs/vcsrepo"
     systemd: "camptocamp/systemd"
     accounts: "puppetlabs/accounts"  # beaker only
+    yum: "puppet/yum" # java_artisanal dep
+    alternatives: "puppet/alternatives" # java_artisanal dep
   repositories:
     java_artisanal: # beaker only
       repo: "git://github.com/lsst-it/puppet-java_artisanal"
