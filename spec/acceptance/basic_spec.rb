@@ -226,6 +226,61 @@ describe 'ccs_software class' do
     end
   end
 
+  context 'with shared git clones' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
+        base_path     => '#{basedir}',
+        installations => {
+          test-mcm => {
+            repo_path => "#{basedir}/ccsadm/package-lists/e4a8224",
+            repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
+            repo_ref  => 'e4a8224',
+            env       => 'ComCam',
+            hostname  => 'comcam-mcm',
+          },
+          test-fp => {
+            repo_path => "#{basedir}/ccsadm/package-lists/e4a8224",
+            repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
+            repo_ref  => 'e4a8224',
+            env       => 'ComCam',
+            hostname  => 'comcam-fp',
+          },
+        },
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    [
+      "#{basedir}/ccsadm",
+      "#{basedir}/ccsadm/package-lists",
+      "#{basedir}/ccsadm/package-lists/e4a8224",
+      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
+      end
+    end
+
+    [
+      "#{basedir}/ccsadm/package-lists/test-mcm",
+      "#{basedir}/ccsadm/package-lists/test-fp",
+    ].each do |d|
+      describe file(d) do
+        it { is_expected.not_to exist }
+      end
+    end
+  end
+
   context 'with aliases' do
     basedir = default.tmpdir('ccs')
 
