@@ -3,7 +3,7 @@
 # logging.properties that does not try to do its own log rotation?
 #
 # @summary
-#   Install /etc/ccs files.
+#   Create /var/log/ccs and install logrotation.
 #
 # @api private
 class ccs_software::log {
