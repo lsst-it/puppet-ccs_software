@@ -9,8 +9,9 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
         base_path => '#{basedir}',
       }
       EOS
@@ -121,8 +122,9 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
@@ -170,8 +172,9 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
         base_path     => '#{basedir}',
         installations => {
           test1 => {
@@ -229,8 +232,9 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
         base_path     => '#{basedir}',
         env           => 'ComCam',
         hostname      => 'comcam-mcm',
@@ -281,8 +285,9 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'lsst-dc01',
         env           => 'IR2',
@@ -347,13 +352,14 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-EOS
+      accounts::user { 'ccs': }
+      accounts::user { 'ccsadm': }
+
       # java is only needed to manually start services
       class { 'java_artisanal': }
       -> Class['ccs_software']
 
-      accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      class { 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
@@ -385,8 +391,9 @@ describe 'ccs_software class' do
     let(:pp) do
       <<-EOS
       accounts::user { 'ccs': }
-      -> accounts::user { 'ccsadm': }
-      -> class { 'ccs_software':
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
         base_path => '#{basedir}',
         desktop   => true,
       }
