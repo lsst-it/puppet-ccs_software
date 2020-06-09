@@ -134,6 +134,34 @@ classes:
 ccs_software::desktop: true  # default is false
 ```
 
+### Multiple Installations sharing a git clone
+
+This may be an efficiency optimization for simulating a large number of hosts on
+a single node.
+
+```yaml
+---
+classes:
+  - "profile::ccs::common"
+
+ccs_software::base_path: "/opt/lsst"
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  test-mcm:
+    repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/e4a8224"
+    repo_ref: "e4a8224"
+    hostname: "comcam-mcm"
+  test-fp:
+    repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/e4a8224"
+    repo_ref: "e4a8224"
+    hostname: "comcam-fp01"
+ccs_software::services:
+  test-mcm:
+    - "comcam-mcm"
+  test-fp:
+    - "comcam-fp01"
+```
+
 ### Pedantic Example
 
 ```yaml
