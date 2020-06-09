@@ -1,5 +1,7 @@
 # ccs_software
 
+[![Build Status](https://travis-ci.org/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.org/lsst-it/puppet-ccs_software)
+
 Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/docs/pdk/latest/pdk_generating_modules.html .
 
 The README template below provides a starting point with details about what information to include in your README.
