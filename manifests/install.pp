@@ -130,9 +130,11 @@ class ccs_software::install {
       source   => $repo,
       revision => $ref,
       user     => $adm_user,
-      notify   => Exec[$exec_install_title],
       require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
+    # ordering can't be declared directly on the vcsrepo when a clone is shared
+    # by multiple installations
+    Vcsrepo[$clone_path] ~> Exec[$exec_install_title]
 
     #
     # create installation

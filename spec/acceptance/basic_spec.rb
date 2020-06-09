@@ -249,7 +249,7 @@ describe 'ccs_software class' do
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'e4a8224',
             env       => 'ComCam',
-            hostname  => 'comcam-fp',
+            hostname  => 'comcam-fp01',
           },
         },
       }
