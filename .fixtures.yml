@@ -12,3 +12,4 @@ fixtures:
   repositories:
     java_artisanal: # beaker only
       repo: "git://github.com/lsst-it/puppet-java_artisanal"
+      ref: "v1.0.0"
