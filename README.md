@@ -1,87 +1,211 @@
 # ccs_software
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/docs/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
+[![Build Status](https://travis-ci.org/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.org/lsst-it/puppet-ccs_software)
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with ccs_software](#setup)
+1. [Overview](#overview)
+2. [Description](#description)
+
+3. [Setup - The basics of getting started with ccs_software](#setup)
     * [What ccs_software affects](#what-ccs_software-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with ccs_software](#beginning-with-ccs_software)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+4. [Usage - Configuration options and additional functionality](#usage)
+5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+
+## Overview
+
+This module manages *installation*s of Camera Control System (CCS) software.
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
+The ccs_software module can optionally manage one or more *installation*s.
 
 ## Setup
 
-### What ccs_software affects **OPTIONAL**
+### What ccs_software affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+* `install.py` script
+* ccs /scripts/
+* `/lsst` link
+* clone(s) of the package-list repo
+* ccs `etc` directory
+* ccs `log` directory
+* [optional] /installations/ of ccs software
+* [optional] systemd service units for ccs applications
 
-If there's more that they should know about, though, this is the place to mention:
+### Setup Requirements
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with ccs_software
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+* `ccs` and `ccsadm` user accounts
+* The systemd service units created by this module require `java` to be installed on the system.  See [`java_artisanal`])https://github.com/lsst-it/puppet-java_artisanal)
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+### Absolute Minimal Example / If you want to manually create installations
+
+When the `ccs_software` class is included with no parameters it will create directories, install the `install.py` script, etc. but it *will not* create a CCS *installation*.
+
+```puppet
+accounts::user { 'ccs': }
+accounts::user { 'ccsadm': }
+include ccs_software
+```
+
+### Example profile
+
+This is an example of minimal
+[profile](https://puppet.com/docs/pe/latest/the_roles_and_profiles_method.html)
+that provides the requirements listed in [Setup
+requirements](#setup-requirements).  The intent is that the majority of
+configuration to the `ccs_software` class be provided via hiera data.
+
+```puppet
+class profile::ccs::common {
+  include ccs_software
+  include accounts
+  include java_artisanal
+
+  Class['java_artisanal']
+  -> Class['ccs_software']
+
+  accounts::user { 'ccs':
+    uid => 62000,
+    gid => 62000,
+  }
+  accounts::user { 'ccsadm':
+    uid => 62001,
+    gid => 62001,
+  }
+}
+```
+
+### Installation(s)
+
+This example creates two installations at the paths `/opt/lsst/ccs/master` and
+`/opt/lsst/ccs/e4a8224`.  Where `master` and `e4a8224` are refs in the 
+[`lsst-camera-dh/dev-package-lists`](https://github.com/lsst-camera-dh/dev-package-lists).
+
+```yaml
+---
+classes:
+  - "profile::ccs::common"
+
+ccs_software::hostname: "comcam-mcm"  # not required if `comcam-mcm` is the real hostname
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  master: {}
+  e4a8224: {},
+```
+
+The literal invocations of the `install.py` command would be something like:
+
+    /opt/lsst/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/master /opt/lsst/ccsadm/package-lists/master/ComCam/comcam-mcm/ccsApplications.txt
+
+and
+
+    /opt/lsst/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/e4a8224 /opt/lsst/ccsadm/package-lists/e4a8224/ComCam/comcam-mcm/ccsApplications.txt
+
+Note that a separate clone of the `dev-package-lists` repo is created for each *installation*.
+
+### Service(s)
+
+This example will create a systemd service unit named `comcam-mcm` that
+executes `/opt/lsst/ccs/dev/bin/comcam-mcm`.
+
+```yaml
+classes:
+  - "profile::ccs::common"
+
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  e4a8224:
+    - "dev"
+ccs_software::services:
+  dev:
+    - "comcam-mcm"
+```
+
+### Desktop
+
+```yaml
+classes:
+  - "profile::ccs::common"
+
+ccs_software::desktop: true  # default is false
+```
+
+### Multiple Installations sharing a git clone
+
+This may be an efficiency optimization for simulating a large number of hosts on
+a single node.
+
+```yaml
+---
+classes:
+  - "profile::ccs::common"
+
+ccs_software::base_path: "/opt/lsst"
+ccs_software::env: "ComCam"
+ccs_software::installations:
+  test-mcm:
+    repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/e4a8224"
+    repo_ref: "e4a8224"
+    hostname: "comcam-mcm"
+  test-fp:
+    repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/e4a8224"
+    repo_ref: "e4a8224"
+    hostname: "comcam-fp01"
+ccs_software::services:
+  test-mcm:
+    - "comcam-mcm"
+  test-fp:
+    - "comcam-fp01"
+```
+
+### Pedantic Example
+
+```yaml
+---
+classes:
+  - "profile::ccs::common"
+
+ccs_software::base_path: "/opt/lsst"
+ccs_software::etc_path: "/etc/ccs"
+ccs_software::log_path: "/var/log/ccs"
+ccs_software::user: "ccs"
+ccs_software::group: "ccs"
+ccs_software::adm_user: "ccsadm"
+ccs_software::adm_group: "ccsadm"
+ccs_software::pkglist_repo_url: "https://github.com/lsst-camera-dh/dev-package-lists" # overriden in installations hash
+ccs_software::release_repo_url: "https://github.com/lsst-it/release"
+ccs_software::release_repo_ref: "IT-2233/working"
+ccs_software::env: ~ # overriden in installations hash
+ccs_software::hostname: "%{lookup(facts.hostname)}" # overidden in installations hash
+ccs_software::desktop: false
+ccs_software::installations:
+  test1:
+    repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/test1"
+    repo_url: "https://github.com/lsst-camera-dh/dev-package-lists"
+    repo_ref: "e4a8224"
+    env: "ComCam"
+    hostname: "comcam-mcm"
+    aliases:
+      - "dev"
+  test42:
+    repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/test42"
+    repo_url: "https://github.com/lsst-camera-dh/dev-package-lists"
+    repo_ref: "e4a8224"
+    env: "IR2"
+    hostname: "lsst-dc01"
+    aliases:
+      - "prod"
+ccs_software::services:
+  dev:
+    - "comcam-mcm"
+  prod:
+    - "lsst-dc01"
+```
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
-
-## Limitations
-
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
-
-## Development
-
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+See [REFERENCE](REFERENCE.md).

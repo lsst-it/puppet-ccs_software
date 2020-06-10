@@ -1,0 +1,20 @@
+<%- | String $desc,
+      String $user,
+      String $group,
+      String $cmd
+| -%>
+[Unit]
+Description=<%= $desc %>
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=<%= $cmd %>
+Restart=on-failure
+RestartSec=42s
+User=<%= $user %>
+Group=<%= $group %>
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+# This file is managed by Puppet; changes may be overwritten
+[Desktop Entry]
+Type=Directory
+Name=LSST
+Icon=lsst_appicon
