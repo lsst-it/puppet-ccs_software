@@ -60,16 +60,6 @@ describe 'ccs_software' do
     end
 
     it do
-      is_expected.to contain_file('/etc/profile.d/ccs-scripts.sh').with(
-        ensure: 'file',
-        owner: 'root',
-        group: 'root',
-        mode: '0644',
-        content: 'export PATH=${PATH}:/opt/lsst/ccsadm/scripts',
-      )
-    end
-
-    it do
       is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/release').with(
         ensure: 'latest',
         provider: 'git',

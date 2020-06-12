@@ -83,14 +83,6 @@ class ccs_software::install {
     source  => "puppet:///modules/${module_name}/install",
   }
 
-  file { '/etc/profile.d/ccs-scripts.sh':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "export PATH=\${PATH}:${scripts_path}",
-  }
-
   # provides bin/install.py
   vcsrepo { $release_path:
     ensure   => latest,
