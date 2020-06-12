@@ -98,14 +98,6 @@ describe 'ccs_software class' do
       end
     end
 
-    describe file('/etc/profile.d/ccs-scripts.sh') do
-      it { is_expected.to be_file }
-      it { is_expected.to be_owned_by 'root' }
-      it { is_expected.to be_grouped_into 'root' }
-      it { is_expected.to be_mode '644' } # serverspec does not like a leading 0
-      its(:content) { is_expected.to match "export PATH=${PATH}:#{basedir}/ccsadm/scripts" }
-    end
-
     # log
     describe file('/etc/cron.daily/ccs-log-compress') do
       it { is_expected.to be_file }
