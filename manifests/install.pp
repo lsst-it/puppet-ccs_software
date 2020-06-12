@@ -60,7 +60,7 @@ class ccs_software::install {
       ensure => directory,
       owner  => 'root',
       group  => $group,
-      mode   => '2775',
+      mode   => '2777',
     },
   })
 
