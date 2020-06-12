@@ -40,7 +40,7 @@ describe 'ccs_software' do
         ensure: 'directory',
         owner: 'root',
         group: 'ccs',
-        mode: '2775',
+        mode: '2777',
       )
     end
 

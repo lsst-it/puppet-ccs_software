@@ -56,7 +56,7 @@ describe 'ccs_software class' do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'ccs' }
-      it { is_expected.to be_mode '2775' }
+      it { is_expected.to be_mode '2777' }
     end
 
     [
