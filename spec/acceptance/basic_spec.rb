@@ -61,6 +61,16 @@ describe 'ccs_software class' do
 
     [
       "#{basedir}/ccs",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccs' }
+        it { is_expected.to be_grouped_into 'ccs' }
+        it { is_expected.to be_mode '1775' }
+      end
+    end
+
+    [
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
       "#{basedir}/ccsadm/release",
@@ -70,6 +80,7 @@ describe 'ccs_software class' do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
+        it { is_expected.to be_mode '755' } # serverspec does not like a leading 0
       end
     end
 

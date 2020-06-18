@@ -29,7 +29,6 @@ class ccs_software::install {
   $scripts_path = "${ccsadm_path}/scripts"
 
   $dirs = [
-    $ccs_path,
     $ccsadm_path,
     $pkglist_path,
   ]
@@ -63,6 +62,15 @@ class ccs_software::install {
       mode   => '2777',
     },
   })
+
+  # need to allow manual installs owned by the ccs user
+  file { $ccs_path:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '1775',
+    backup => false,
+  }
 
   file { $dirs:
     ensure => directory,

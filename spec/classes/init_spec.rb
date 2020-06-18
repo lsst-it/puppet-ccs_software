@@ -46,6 +46,18 @@ describe 'ccs_software' do
 
     %w[
       /opt/lsst/ccs
+    ].each do |dir|
+      it do
+        is_expected.to contain_file(dir).with(
+          ensure: 'directory',
+          owner: 'ccs',
+          group: 'ccs',
+          mode: '1775',
+        )
+      end
+    end
+
+    %w[
       /opt/lsst/ccsadm
       /opt/lsst/ccsadm/package-lists
       /opt/lsst/ccsadm/scripts
@@ -55,6 +67,7 @@ describe 'ccs_software' do
           ensure: 'directory',
           owner: 'ccsadm',
           group: 'ccsadm',
+          mode: '0755',
         )
       end
     end
