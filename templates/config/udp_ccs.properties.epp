@@ -1,3 +1,7 @@
 <%- | String $hostname | -%>
 # This file is managed by Puppet; changes may be overwritten
 org.lsst.ccs.jgroups.ALL.UDP.bind_addr=<%= $hostname %>
+org.lsst.ccs.jgroups.ALL.UDP.mcast_recv_buf_size=5M
+org.lsst.ccs.jgroups.ALL.UDP.mcast_send_buf_size=5M
+org.lsst.ccs.jgroups.ALL.UDP.ucast_send_buf_size=5M
+org.lsst.ccs.jgroups.ALL.UDP.ucast_recv_buf_size=5M
