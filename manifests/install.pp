@@ -66,8 +66,8 @@ class ccs_software::install {
   # need to allow manual installs owned by the ccs user
   file { $ccs_path:
     ensure => directory,
-    owner  => $user,
-    group  => $group,
+    owner  => $adm_user,  # owned by admin user
+    group  => $group,  # group is regular ccs user
     mode   => '1775',
     backup => false,
   }

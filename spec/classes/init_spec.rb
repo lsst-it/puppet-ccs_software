@@ -50,7 +50,7 @@ describe 'ccs_software' do
       it do
         is_expected.to contain_file(dir).with(
           ensure: 'directory',
-          owner: 'ccs',
+          owner: 'ccsadm',
           group: 'ccs',
           mode: '1775',
         )

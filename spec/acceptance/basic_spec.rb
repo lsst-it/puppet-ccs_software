@@ -64,7 +64,7 @@ describe 'ccs_software class' do
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
-        it { is_expected.to be_owned_by 'ccs' }
+        it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccs' }
         it { is_expected.to be_mode '1775' }
       end
@@ -148,7 +148,6 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
       "#{basedir}/ccs/master",
       "#{basedir}/ccs/master/bin",
       "#{basedir}/ccs/e4a8224",
@@ -208,7 +207,6 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
       "#{basedir}/ccs/test1",
       "#{basedir}/ccs/test1/bin",
       "#{basedir}/ccs/test42",
@@ -365,7 +363,6 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
       "#{basedir}/ccs/0b5328e",
       "#{basedir}/ccs/0b5328e/bin",
       "#{basedir}/ccsadm",
