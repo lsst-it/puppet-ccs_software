@@ -77,6 +77,7 @@ describe 'ccs_software' do
         ensure: 'latest',
         provider: 'git',
         user: 'ccsadm',
+        force: true,
         require: 'File[/opt/lsst/ccsadm]',
       )
     end

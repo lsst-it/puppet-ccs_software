@@ -98,6 +98,7 @@ class ccs_software::install {
     source   => $release_repo_url,
     revision => $release_repo_ref,
     user     => $adm_user,
+    force    => true,
     require  => File[$ccsadm_path],  # vcsrepo doesn't autorequire its parent dir
   }
 
