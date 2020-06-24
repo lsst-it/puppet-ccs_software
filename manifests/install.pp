@@ -160,6 +160,12 @@ class ccs_software::install {
     $ccsapps_path = "${clone_path}/${_real_env}/${_real_hostname}/ccsApplications.txt"
     $etc_path     = "${installation_path}/etc"
 
+    # if there is an installation level etc symlink, find the base package tree
+    # it points into.  We want to chown the entire package tree that contains
+    # etc files (which is also a git clone) so that the 'ccs' user can make git
+    # commits.
+    $pre_script = "PNAME=$(realpath ${etc_path} --relative-to=${installation_path}); PDIR=${installation_path}/\${PNAME/%\\/*/};"
+
     exec { $exec_install_title:
       command   => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
       creates   => $installation_path,
@@ -171,11 +177,11 @@ class ccs_software::install {
       timeout   => 900,
     }
     ~> exec { $exec_chown_title:
-      command   => "chown -R -H ${user}:${group} ${etc_path}",
+      command   => "${pre_script} chown -R -H ${user}:${group} \${PDIR}",
       path      => '/bin:/usr/bin',
       # run only if the etc symlink exists (it may not) and ownership of the
       # link target is out of sync
-      onlyif    => "[[ -e ${etc_path} && ${user} != $(stat -L --format='%U' ${etc_path}) ]]",
+      onlyif    => "${pre_script} [[ -e \${PDIR} && ${user} != $(stat -L --format='%U' \${PDIR}) ]]",
       provider  => shell,
       logoutput => true,
       cwd       => $base_path,

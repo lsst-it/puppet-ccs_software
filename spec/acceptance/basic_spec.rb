@@ -394,6 +394,13 @@ describe 'ccs_software class' do
       it { is_expected.to be_grouped_into 'ccs' }
     end
 
+    # package containing symlink target dir
+    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master") do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'ccs' }
+      it { is_expected.to be_grouped_into 'ccs' }
+    end
+
     # file in chown'd etc dir
     describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master/IR2/lsst-dc01/focal-plane_9raft_HardwareId.properties") do
       it { is_expected.to be_file }

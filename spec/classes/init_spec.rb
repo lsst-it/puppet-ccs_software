@@ -177,8 +177,6 @@ describe 'ccs_software' do
 
       it do
         is_expected.to contain_exec("chown #{c}").with(
-          command: "chown -R -H ccs:ccs /opt/lsst/ccs/#{c}/etc",
-          onlyif: "[[ -e /opt/lsst/ccs/#{c}/etc && ccs != $(stat -L --format='%U' /opt/lsst/ccs/#{c}/etc) ]]",
           path: '/bin:/usr/bin',
           provider: 'shell',
           logoutput: true,
