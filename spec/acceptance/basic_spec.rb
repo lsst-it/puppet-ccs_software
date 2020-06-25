@@ -480,4 +480,40 @@ describe 'ccs_software class' do
       end
     end
   end
+
+  context 'with git_force' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
+        base_path     => '#{basedir}',
+        hostname      => 'comcam-mcm',
+        env           => 'ComCam',
+        git_force     => true,
+        installations => {
+          e4a8224 => {},
+        },
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    [
+      "#{basedir}/ccsadm/package-lists/e4a8224",
+      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/release",
+      "#{basedir}/ccsadm/release/.git",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
+      end
+    end
+  end
 end

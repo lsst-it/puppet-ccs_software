@@ -65,6 +65,10 @@
 # @param desktop
 #   Install desktop shortcuts.
 #
+# @param git_force
+#   Force the update of managed git clones. This is done by passing `force =>
+#   true` to `vcsrepo` type resources.
+#
 class ccs_software(
   Hash[String, Hash]          $installations    = {},
   Hash[String, Array[String]] $services         = {},
@@ -81,6 +85,7 @@ class ccs_software(
   Optional[String]            $env              = undef,
   Optional[String]            $hostname         = $facts['hostname'],
   Boolean                     $desktop          = false,
+  Boolean                     $git_force        = false,
 ) {
   $ccs_path    = "${base_path}/ccs"
   $ccsadm_path = "${base_path}/ccsadm"

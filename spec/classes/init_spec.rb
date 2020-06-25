@@ -77,7 +77,7 @@ describe 'ccs_software' do
         ensure: 'latest',
         provider: 'git',
         user: 'ccsadm',
-        force: true,
+        force: false,
         require: 'File[/opt/lsst/ccsadm]',
       )
     end
@@ -112,6 +112,7 @@ describe 'ccs_software' do
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
           user: 'ccsadm',
+          force: false,
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
@@ -151,6 +152,7 @@ describe 'ccs_software' do
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
           user: 'ccsadm',
+          force: false,
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
@@ -239,6 +241,7 @@ describe 'ccs_software' do
         source: 'https://github.com/lsst-camera-dh/dev-package-lists',
         revision: 'master',
         user: 'ccsadm',
+        force: false,
         require: 'File[/opt/lsst/ccsadm/package-lists]',
       )
     end
@@ -267,6 +270,40 @@ describe 'ccs_software' do
           target: '/opt/lsst/ccs/test',
         )
       end
+    end
+  end
+
+  describe 'installation with git_force' do
+    let(:params) do
+      {
+        env: 'ComCam',
+        git_force: true,
+        installations: {
+          master: {},
+        },
+      }
+    end
+
+    it do
+      is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/release').with(
+        ensure: 'latest',
+        provider: 'git',
+        user: 'ccsadm',
+        force: true,
+        require: 'File[/opt/lsst/ccsadm]',
+      )
+    end
+
+    it do
+      is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/package-lists/master').with(
+        ensure: 'latest',
+        provider: 'git',
+        source: 'https://github.com/lsst-camera-dh/dev-package-lists',
+        revision: 'master',
+        user: 'ccsadm',
+        force: true,
+        require: 'File[/opt/lsst/ccsadm/package-lists]',
+      )
     end
   end
 end

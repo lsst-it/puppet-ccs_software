@@ -19,6 +19,7 @@ class ccs_software::install {
   $release_repo_ref = $::ccs_software::release_repo_ref
   $env              = $::ccs_software::env
   $hostname         = $::ccs_software::hostname
+  $git_force        = $::ccs_software::git_force
 
   $ccs_path    = $::ccs_software::ccs_path
   $ccsadm_path = $::ccs_software::ccsadm_path
@@ -98,7 +99,7 @@ class ccs_software::install {
     source   => $release_repo_url,
     revision => $release_repo_ref,
     user     => $adm_user,
-    force    => true,
+    force    => $git_force,
     require  => File[$ccsadm_path],  # vcsrepo doesn't autorequire its parent dir
   }
 
@@ -131,6 +132,7 @@ class ccs_software::install {
       source   => $repo,
       revision => $ref,
       user     => $adm_user,
+      force    => $git_force,
       require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
     # ordering can't be declared directly on the vcsrepo when a clone is shared
