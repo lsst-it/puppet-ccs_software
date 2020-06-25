@@ -119,7 +119,8 @@ classes:
 ccs_software::env: "ComCam"
 ccs_software::installations:
   e4a8224:
-    - "dev"
+    aliases:
+      - "dev"
 ccs_software::services:
   dev:
     - "comcam-mcm"
