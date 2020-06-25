@@ -18,7 +18,7 @@ class ccs_software::service {
       systemd::unit_file { "${svc}.service":
         content => epp("${module_name}/service/ccs.service.epp", $epp_vars),
       }
-      ~> service { $svc:
+      -> service { $svc:
         enable => true,
       }
     }
