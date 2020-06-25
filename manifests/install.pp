@@ -19,6 +19,7 @@ class ccs_software::install {
   $release_repo_ref = $::ccs_software::release_repo_ref
   $env              = $::ccs_software::env
   $hostname         = $::ccs_software::hostname
+  $git_force        = $::ccs_software::git_force
 
   $ccs_path    = $::ccs_software::ccs_path
   $ccsadm_path = $::ccs_software::ccsadm_path
@@ -29,7 +30,6 @@ class ccs_software::install {
   $scripts_path = "${ccsadm_path}/scripts"
 
   $dirs = [
-    $ccs_path,
     $ccsadm_path,
     $pkglist_path,
   ]
@@ -64,6 +64,15 @@ class ccs_software::install {
     },
   })
 
+  # need to allow manual installs owned by the ccs user
+  file { $ccs_path:
+    ensure => directory,
+    owner  => $adm_user,  # owned by admin user
+    group  => $group,  # group is regular ccs user
+    mode   => '1775',
+    backup => false,
+  }
+
   file { $dirs:
     ensure => directory,
     owner  => $adm_user,
@@ -90,6 +99,7 @@ class ccs_software::install {
     source   => $release_repo_url,
     revision => $release_repo_ref,
     user     => $adm_user,
+    force    => $git_force,
     require  => File[$ccsadm_path],  # vcsrepo doesn't autorequire its parent dir
   }
 
@@ -117,11 +127,12 @@ class ccs_software::install {
 
     # ensure the vcsrepo to allow the same clone path to be path of multiple installations
     ensure_resource('vcsrepo', $clone_path, {
-      ensure   => present,
+      ensure   => latest,
       provider => git,
       source   => $repo,
       revision => $ref,
       user     => $adm_user,
+      force    => $git_force,
       require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
     # ordering can't be declared directly on the vcsrepo when a clone is shared
@@ -151,6 +162,12 @@ class ccs_software::install {
     $ccsapps_path = "${clone_path}/${_real_env}/${_real_hostname}/ccsApplications.txt"
     $etc_path     = "${installation_path}/etc"
 
+    # if there is an installation level etc symlink, find the base package tree
+    # it points into.  We want to chown the entire package tree that contains
+    # etc files (which is also a git clone) so that the 'ccs' user can make git
+    # commits.
+    $pre_script = "PNAME=$(realpath ${etc_path} --relative-to=${installation_path}); PDIR=${installation_path}/\${PNAME/%\\/*/};"
+
     exec { $exec_install_title:
       command   => "${install_bin} --ccs_inst_dir ${installation_path} ${ccsapps_path}",
       creates   => $installation_path,
@@ -162,11 +179,11 @@ class ccs_software::install {
       timeout   => 900,
     }
     ~> exec { $exec_chown_title:
-      command   => "chown -R -H ${user}:${group} ${etc_path}",
+      command   => "${pre_script} chown -R -H ${user}:${group} \${PDIR}",
       path      => '/bin:/usr/bin',
       # run only if the etc symlink exists (it may not) and ownership of the
       # link target is out of sync
-      onlyif    => "[[ -e ${etc_path} && ${user} != $(stat -L --format='%U' ${etc_path}) ]]",
+      onlyif    => "${pre_script} [[ -e \${PDIR} && ${user} != $(stat -L --format='%U' \${PDIR}) ]]",
       provider  => shell,
       logoutput => true,
       cwd       => $base_path,

@@ -61,6 +61,16 @@ describe 'ccs_software class' do
 
     [
       "#{basedir}/ccs",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccs' }
+        it { is_expected.to be_mode '1775' }
+      end
+    end
+
+    [
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
       "#{basedir}/ccsadm/release",
@@ -70,6 +80,7 @@ describe 'ccs_software class' do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
+        it { is_expected.to be_mode '755' } # serverspec does not like a leading 0
       end
     end
 
@@ -137,7 +148,6 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
       "#{basedir}/ccs/master",
       "#{basedir}/ccs/master/bin",
       "#{basedir}/ccs/e4a8224",
@@ -197,7 +207,6 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
       "#{basedir}/ccs/test1",
       "#{basedir}/ccs/test1/bin",
       "#{basedir}/ccs/test42",
@@ -354,7 +363,6 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
       "#{basedir}/ccs/0b5328e",
       "#{basedir}/ccs/0b5328e/bin",
       "#{basedir}/ccsadm",
@@ -381,6 +389,13 @@ describe 'ccs_software class' do
 
     # symlink target dir
     describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master/IR2/lsst-dc01") do
+      it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'ccs' }
+      it { is_expected.to be_grouped_into 'ccs' }
+    end
+
+    # package containing symlink target dir
+    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master") do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'ccs' }
       it { is_expected.to be_grouped_into 'ccs' }
@@ -462,6 +477,42 @@ describe 'ccs_software class' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
+      end
+    end
+  end
+
+  context 'with git_force' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-EOS
+      accounts::user { 'ccs': }
+      accounts::user { 'ccsadm': }
+
+      class { 'ccs_software':
+        base_path     => '#{basedir}',
+        hostname      => 'comcam-mcm',
+        env           => 'ComCam',
+        git_force     => true,
+        installations => {
+          e4a8224 => {},
+        },
+      }
+      EOS
+    end
+
+    it_behaves_like 'an idempotent resource'
+
+    [
+      "#{basedir}/ccsadm/package-lists/e4a8224",
+      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/release",
+      "#{basedir}/ccsadm/release/.git",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccsadm' }
+        it { is_expected.to be_grouped_into 'ccsadm' }
       end
     end
   end

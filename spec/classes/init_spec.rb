@@ -46,6 +46,18 @@ describe 'ccs_software' do
 
     %w[
       /opt/lsst/ccs
+    ].each do |dir|
+      it do
+        is_expected.to contain_file(dir).with(
+          ensure: 'directory',
+          owner: 'ccsadm',
+          group: 'ccs',
+          mode: '1775',
+        )
+      end
+    end
+
+    %w[
       /opt/lsst/ccsadm
       /opt/lsst/ccsadm/package-lists
       /opt/lsst/ccsadm/scripts
@@ -55,6 +67,7 @@ describe 'ccs_software' do
           ensure: 'directory',
           owner: 'ccsadm',
           group: 'ccsadm',
+          mode: '0755',
         )
       end
     end
@@ -64,6 +77,7 @@ describe 'ccs_software' do
         ensure: 'latest',
         provider: 'git',
         user: 'ccsadm',
+        force: false,
         require: 'File[/opt/lsst/ccsadm]',
       )
     end
@@ -93,11 +107,12 @@ describe 'ccs_software' do
     ].each do |c|
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
-          ensure: 'present',
+          ensure: 'latest',
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
           user: 'ccsadm',
+          force: false,
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
@@ -132,11 +147,12 @@ describe 'ccs_software' do
     ].each do |c|
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").with(
-          ensure: 'present',
+          ensure: 'latest',
           provider: 'git',
           source: 'https://github.com/lsst-camera-dh/dev-package-lists',
           revision: c,
           user: 'ccsadm',
+          force: false,
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
@@ -163,8 +179,6 @@ describe 'ccs_software' do
 
       it do
         is_expected.to contain_exec("chown #{c}").with(
-          command: "chown -R -H ccs:ccs /opt/lsst/ccs/#{c}/etc",
-          onlyif: "[[ -e /opt/lsst/ccs/#{c}/etc && ccs != $(stat -L --format='%U' /opt/lsst/ccs/#{c}/etc) ]]",
           path: '/bin:/usr/bin',
           provider: 'shell',
           logoutput: true,
@@ -222,11 +236,12 @@ describe 'ccs_software' do
 
     it do
       is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/package-lists/master').with(
-        ensure: 'present',
+        ensure: 'latest',
         provider: 'git',
         source: 'https://github.com/lsst-camera-dh/dev-package-lists',
         revision: 'master',
         user: 'ccsadm',
+        force: false,
         require: 'File[/opt/lsst/ccsadm/package-lists]',
       )
     end
@@ -255,6 +270,40 @@ describe 'ccs_software' do
           target: '/opt/lsst/ccs/test',
         )
       end
+    end
+  end
+
+  describe 'installation with git_force' do
+    let(:params) do
+      {
+        env: 'ComCam',
+        git_force: true,
+        installations: {
+          master: {},
+        },
+      }
+    end
+
+    it do
+      is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/release').with(
+        ensure: 'latest',
+        provider: 'git',
+        user: 'ccsadm',
+        force: true,
+        require: 'File[/opt/lsst/ccsadm]',
+      )
+    end
+
+    it do
+      is_expected.to contain_vcsrepo('/opt/lsst/ccsadm/package-lists/master').with(
+        ensure: 'latest',
+        provider: 'git',
+        source: 'https://github.com/lsst-camera-dh/dev-package-lists',
+        revision: 'master',
+        user: 'ccsadm',
+        force: true,
+        require: 'File[/opt/lsst/ccsadm/package-lists]',
+      )
     end
   end
 end

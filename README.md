@@ -162,6 +162,24 @@ ccs_software::services:
     - "comcam-fp01"
 ```
 
+### Force git clone update
+
+In the event that a git clone has local changes, and the `vcsrepo` type is
+having trouble updating it, setting the `force_git` flag will cause the clones
+to be **deleted** and re-cloned on every puppet run.  This flag should generally
+only be set temporarily to resolve a known issue.
+
+```yaml
+---
+classes:
+  - "profile::ccs::common"
+
+ccs_software::env: "ComCam"
+ccs_software::force_git: true
+ccs_software::installations:
+  master: {}
+```
+
 ### Pedantic Example
 
 ```yaml
@@ -182,6 +200,7 @@ ccs_software::release_repo_ref: "IT-2233/working"
 ccs_software::env: ~ # overriden in installations hash
 ccs_software::hostname: "%{lookup(facts.hostname)}" # overidden in installations hash
 ccs_software::desktop: false
+ccs_software::git_force: false
 ccs_software::installations:
   test1:
     repo_path: "%{lookup('ccs_software::base_path')}/ccsadm/package-lists/test1"
