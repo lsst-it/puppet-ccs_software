@@ -1,6 +1,6 @@
 # ccs_software
 
-[![Build Status](https://travis-ci.org/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.org/lsst-it/puppet-ccs_software)
+[![Build Status](https://travis-ci.com/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.com/lsst-it/puppet-ccs_software)
 
 #### Table of Contents
 
