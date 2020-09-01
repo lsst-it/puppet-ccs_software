@@ -83,7 +83,7 @@ class ccs_software(
   Stdlib::HTTPUrl             $release_repo_url = 'https://github.com/lsst-it/release',
   String                      $release_repo_ref = 'IT-2233/working',
   Optional[String]            $env              = undef,
-  Optional[String]            $hostname         = $facts['hostname'],
+  Optional[String]            $hostname         = $facts['networking']['hostname'],
   Boolean                     $desktop          = false,
   Boolean                     $git_force        = false,
 ) {

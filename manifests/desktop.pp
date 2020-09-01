@@ -17,9 +17,9 @@ class ccs_software::desktop {
   # these dirs are expected to be existing system paths which we shouldn't "own"
   $dirs.each |String $d| {
     ensure_resources('file', {
-      $d => {
-        ensure => directory,
-      },
+        $d => {
+          ensure => directory,
+        },
     })
   }
 
@@ -52,10 +52,10 @@ class ccs_software::desktop {
       file { "/usr/share/applications/lsst.ccs.${app}.${version}.desktop":
         ensure  => file,
         content => epp("${module_name}/desktop/lsst.ccs.APP.VERSION.desktop.epp", {
-          version  => $version,
-          app      => $app,
-          desc     => $desc,
-          terminal => $terminal,
+            version  => $version,
+            app      => $app,
+            desc     => $desc,
+            terminal => $terminal,
         }),
       }
     }
