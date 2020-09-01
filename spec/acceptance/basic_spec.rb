@@ -345,7 +345,7 @@ describe 'ccs_software class' do
 
       class { 'ccs_software':
         base_path     => '#{basedir}',
-        hostname      => 'lsst-fp01',
+        hostname      => 'comcam-fp01',
         env           => 'ComCam',
         installations => {
           'comcam-software-1.0.6' => {},
