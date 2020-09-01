@@ -345,10 +345,10 @@ describe 'ccs_software class' do
 
       class { 'ccs_software':
         base_path     => '#{basedir}',
-        hostname      => 'lsst-dc01',
-        env           => 'IR2',
+        hostname      => 'lsst-fp01',
+        env           => 'ComCam',
         installations => {
-          '0b5328e' => {},
+          'comcam-software-1.0.6' => {},
         },
       }
       EOS
@@ -363,12 +363,12 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs/0b5328e",
-      "#{basedir}/ccs/0b5328e/bin",
+      "#{basedir}/ccs/comcam-software-1.0.6",
+      "#{basedir}/ccs/comcam-software-1.0.6/bin",
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/0b5328e",
-      "#{basedir}/ccsadm/package-lists/0b5328e/.git",
+      "#{basedir}/ccsadm/package-lists/comcam-software-1.0.6",
+      "#{basedir}/ccsadm/package-lists/comcam-software-1.0.6/.git",
       "#{basedir}/ccsadm/release",
     ].each do |dir|
       describe file(dir) do
@@ -379,30 +379,30 @@ describe 'ccs_software class' do
     end
 
     # symlink created by install.py
-    describe file("#{basedir}/ccs/0b5328e/etc") do
+    describe file("#{basedir}/ccs/comcam-software-1.0.6/etc") do
       it { is_expected.to be_symlink }
       # link is relative
-      it { is_expected.to be_linked_to 'ccs-test-configurations-master/IR2/lsst-dc01' }
+      it { is_expected.to be_linked_to 'ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01' }
       it { is_expected.to be_owned_by 'ccsadm' }
       it { is_expected.to be_grouped_into 'ccsadm' }
     end
 
     # symlink target dir
-    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master/IR2/lsst-dc01") do
+    describe file("#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01") do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'ccs' }
       it { is_expected.to be_grouped_into 'ccs' }
     end
 
     # package containing symlink target dir
-    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master") do
+    describe file("#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6") do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'ccs' }
       it { is_expected.to be_grouped_into 'ccs' }
     end
 
     # file in chown'd etc dir
-    describe file("#{basedir}/ccs/0b5328e/ccs-test-configurations-master/IR2/lsst-dc01/focal-plane_9raft_HardwareId.properties") do
+    describe file("#{basedir}/ccs/comcam-software-1.0.6/etc/comcam-fp_NewRCGain_Rafts.properties") do
       it { is_expected.to be_file }
       it { is_expected.to be_owned_by 'ccs' }
       it { is_expected.to be_grouped_into 'ccs' }
