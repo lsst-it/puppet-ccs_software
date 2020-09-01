@@ -1,6 +1,6 @@
 # ccs_software
 
-[![Build Status](https://travis-ci.org/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.org/lsst-it/puppet-ccs_software)
+[![Build Status](https://travis-ci.com/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.com/lsst-it/puppet-ccs_software)
 
 #### Table of Contents
 
@@ -119,7 +119,8 @@ classes:
 ccs_software::env: "ComCam"
 ccs_software::installations:
   e4a8224:
-    - "dev"
+    aliases:
+      - "dev"
 ccs_software::services:
   dev:
     - "comcam-mcm"
