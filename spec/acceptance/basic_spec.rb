@@ -402,7 +402,7 @@ describe 'ccs_software class' do
     end
 
     # file in chown'd etc dir
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/etc/comcam-fp_NewRCGain_Rafts.properties") do
+    describe file("#{basedir}/ccs/comcam-software-1.0.6/etc/comcam-fp_safe_DAQ.properties") do
       it { is_expected.to be_file }
       it { is_expected.to be_owned_by 'ccs' }
       it { is_expected.to be_grouped_into 'ccs' }
