@@ -72,6 +72,7 @@
 class ccs_software(
   Hash[String, Hash]          $installations    = {},
   Hash[String, Array[String]] $services         = {},
+  Optional[String]            $service_workdir  = undef,
   Stdlib::Absolutepath        $base_path        = '/opt/lsst',
   Stdlib::Absolutepath        $etc_path         = '/etc/ccs',
   Stdlib::Absolutepath        $log_path         = '/var/log/ccs',
@@ -89,6 +90,11 @@ class ccs_software(
 ) {
   $ccs_path    = "${base_path}/ccs"
   $ccsadm_path = "${base_path}/ccsadm"
+
+  $_real_service_workdir = $service_workdir ? {
+    undef   => "/home/${user}",
+    default => $service_workdir,
+  }
 
   contain ccs_software::pre
   contain ccs_software::install

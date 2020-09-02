@@ -445,6 +445,11 @@ describe 'ccs_software class' do
       it { is_expected.to be_enabled }
       it { is_expected.not_to be_running }
     end
+
+    describe file('/etc/systemd/system/comcam-mcm.service') do
+      it { is_expected.to be_file }
+      its(:content) { is_expected.to match %r{WorkingDirectory=/home/ccs} }
+    end
   end
 
   context 'with desktop' do
