@@ -3,7 +3,13 @@
 require 'spec_helper'
 
 describe 'ccs_software' do
-  let(:facts) { { hostname: 'foo' } }
+  let(:facts) do
+    {
+      networking: {
+        hostname: 'foo',
+      },
+    }
+  end
   let(:node_params) { { 'site' => 'ls' } }
 
   describe 'without any parameters' do
@@ -201,10 +207,12 @@ describe 'ccs_software' do
   end
 
   describe 'without hostname param or installation key' do
-    # the hostname param default comes from the $facts['hostname']
+    # the hostname param default comes from the $facts['networking']['hostname']
     let(:facts) do
       {
-        hostname: nil,
+        networking: {
+          hostname: nil,
+        },
       }
     end
 
