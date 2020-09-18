@@ -23,4 +23,14 @@ class ccs_software::log {
     mode    => '0755',
     content => epp("${module_name}/log/${file}", {'archive' => $archive}),
   }
+
+  $ccslog = 'ccslog'
+
+  file { "/usr/local/bin/${ccslog}":
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source => "puppet:///modules/${module_name}/log/${ccslog}",
+  }
 }
