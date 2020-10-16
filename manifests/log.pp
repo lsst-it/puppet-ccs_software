@@ -33,4 +33,16 @@ class ccs_software::log {
     mode   => '0755',
     source => "puppet:///modules/${module_name}/log/${ccslog}",
   }
+
+
+  $ccslogcomp = 'ccslog.bash'
+
+  file { "/etc/bash_completion.d/${ccslogcomp}":
+    ensure => file,
+    source => "puppet:///modules/${module_name}/log/${ccslogcomp}",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+  }
+
 }
