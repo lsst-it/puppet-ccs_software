@@ -8,17 +8,18 @@ class ccs_software::config {
 
   $etc_path = $ccs_software::etc_path
 
-  $etc_files = [
-    'logging.properties',
-    'ccsGlobal.properties',
-    'udp_ccs.properties',
-  ]
-
-  $epp_vars = {
-    'hostname' => $trusted['certname'],
+  ## Hash of templates and any arguments they take.
+  $etc_files = {
+    'logging.properties' => {},
+    'ccsGlobal.properties' => {
+      'global_properties' => lookup('ccs_software::global_properties', Array[String], 'unique', []),
+    },
+    'udp_ccs.properties' => {
+      'hostname' => $trusted['certname'],
+    },
   }
 
-  $etc_files.each |$file| {
+  $etc_files.each |$file, $epp_vars| {
     file { "${etc_path}/${file}":
       ensure  => file,
       owner   => $ccs_software::adm_user,

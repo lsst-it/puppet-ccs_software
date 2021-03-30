@@ -1,3 +1,7 @@
+<%- | Array[String] $global_properties = [] | -%>
 # This file is managed by Puppet; changes may be overwritten
 org.lsst.ccs.level=INFO
 org.lsst.ccs.logdir=/var/log/ccs
+<% $global_properties.each |$line| { -%>
+<%= $line %>
+<% } -%>
