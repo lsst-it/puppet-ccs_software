@@ -16,6 +16,7 @@ class ccs_software::config {
     },
     'udp_ccs.properties' => {
       'hostname' => $trusted['certname'],
+      'udp_properties' => lookup('ccs_software::udp_properties', Array[String], 'unique', []),
     },
   }
 
