@@ -7,16 +7,19 @@ class ccs_software::config {
   assert_private()
 
   $etc_path = $ccs_software::etc_path
+  ## Next two use the "unique" merge strategy in hieradata/org/lsst.yaml.
+  $global_properties = $ccs_software::global_properties
+  $udp_properties = $ccs_software::udp_properties
 
   ## Hash of templates and any arguments they take.
   $etc_files = {
     'logging.properties' => {},
     'ccsGlobal.properties' => {
-      'global_properties' => lookup('ccs_software::global_properties', Array[String], 'unique', []),
+      'global_properties' => $global_properties,
     },
     'udp_ccs.properties' => {
       'hostname' => $trusted['certname'],
-      'udp_properties' => lookup('ccs_software::udp_properties', Array[String], 'unique', []),
+      'udp_properties' => $udp_properties,
     },
   }
 
