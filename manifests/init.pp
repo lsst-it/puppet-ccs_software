@@ -69,6 +69,12 @@
 #   Force the update of managed git clones. This is done by passing `force =>
 #   true` to `vcsrepo` type resources.
 #
+# @param global_properties
+#    Array of extra strings to add to the ccsGlobal.properties file.
+#
+# @param udp_properties
+#    Array of extra strings to add to the udp_ccs.properties file.
+#
 class ccs_software(
   Hash[String, Hash]          $installations    = {},
   Hash[String, Array[String]] $services         = {},
@@ -87,6 +93,8 @@ class ccs_software(
   Optional[String]            $hostname         = $facts['networking']['hostname'],
   Boolean                     $desktop          = false,
   Boolean                     $git_force        = false,
+  Array[String]               $global_properties = [],
+  Array[String]               $udp_properties   = [],
 ) {
   $ccs_path    = "${base_path}/ccs"
   $ccsadm_path = "${base_path}/ccsadm"
