@@ -22,6 +22,15 @@ class ccs_software::service {
       -> service { $svc:
         enable => true,
       }
+
+      $epp_sudo_vars = {
+        service => $svc,
+        user    => $ccs_software::user,
+      }
+
+      sudo::conf { "ccs-service-${svc}":
+        content => epp("${module_name}/sudo/ccs.sudo.epp", $epp_sudo_vars),
+      }
     }
   }
 }

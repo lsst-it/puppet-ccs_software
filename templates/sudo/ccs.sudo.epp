@@ -1,0 +1,7 @@
+<%- | String $service, String $user | -%>
+Cmnd_Alias CCS_<%= upcase($service) %> = \
+<%= join(['start', 'stop', 'restart', 'status'].map |$task| {
+  "/usr/bin/systemctl ${task} ${service}, \\\n/usr/bin/systemctl ${task} ${service}.service"
+}, ", \\\n") %>
+
+<%= $user %> ALL= NOPASSWD: CCS_<%= upcase($service) %>
