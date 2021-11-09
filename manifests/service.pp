@@ -6,29 +6,37 @@
 class ccs_software::service {
   assert_private()
 
-  $ccs_software::services.each |String $alias, Array[String] $services| {
+  $ccs_software::services.each |String $alias, Array[Variant[String, Hash]] $services| {
+
     $services.each |$svc| {
+      if $svc =~ Hash {
+        $service_name = $svc['name']
+        $service_cmd = $svc['cmd']
+      } else {
+        $service_name = $svc
+        $service_cmd = "${ccs_software::ccs_path}/${alias}/bin/${svc}"
+      }
       $epp_vars = {
-        desc    => "CCS ${svc} service",
+        desc    => "CCS ${service_name} service",
         user    => $ccs_software::user,
         group   => $ccs_software::group,
-        cmd     => "${ccs_software::ccs_path}/${alias}/bin/${svc}",
+        cmd     => $service_cmd,
         workdir => $ccs_software::_real_service_workdir,
       }
 
-      systemd::unit_file { "${svc}.service":
+      systemd::unit_file { "${service_name}.service":
         content => epp("${module_name}/service/ccs.service.epp", $epp_vars),
       }
-      -> service { $svc:
+      -> service { $service_name:
         enable => true,
       }
 
       $epp_sudo_vars = {
-        service => $svc,
+        service => $service_name,
         user    => $ccs_software::user,
       }
 
-      sudo::conf { "ccs-service-${svc}":
+      sudo::conf { "ccs-service-${service_name}":
         content => epp("${module_name}/sudo/ccs.sudo.epp", $epp_sudo_vars),
       }
     }

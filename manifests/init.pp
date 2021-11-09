@@ -23,6 +23,8 @@
 #
 # @option services [String] name-of-alias
 #   [Array] of service names/service executables (links under /opt/lsst/<alias>/bin/)
+#   Alternatively, array element can also be a hash of the form
+#   { name: "h2db, cmd: "/foo/bar/baz" }
 #
 # @param base_path
 #   Base path for [all] CCS installations.
@@ -77,7 +79,7 @@
 #
 class ccs_software(
   Hash[String, Hash]          $installations    = {},
-  Hash[String, Array[String]] $services         = {},
+  Hash[String, Array[Variant[String, Hash]]] $services = {},
   Optional[String]            $service_workdir  = undef,
   Stdlib::Absolutepath        $base_path        = '/opt/lsst',
   Stdlib::Absolutepath        $etc_path         = '/etc/ccs',
