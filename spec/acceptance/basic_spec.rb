@@ -445,7 +445,7 @@ describe 'ccs_software class' do
           },
         },
         services      => {
-          dev => ['comcam-mcm'],
+          dev => ['comcam-mcm', {name => 'h2db', cmd => '/bin/h2db'}],
         },
       }
       EOS
@@ -463,6 +463,11 @@ describe 'ccs_software class' do
     describe file('/etc/systemd/system/comcam-mcm.service') do
       it { is_expected.to be_file }
       its(:content) { is_expected.to match %r{WorkingDirectory=/home/ccs} }
+    end
+
+    describe file('/etc/systemd/system/h2db.service') do
+      it { is_expected.to be_file }
+      its(:content) { is_expected.to match %r{ExecStart=/bin/h2db} }
     end
   end
 
