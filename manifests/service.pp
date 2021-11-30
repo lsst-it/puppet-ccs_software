@@ -41,4 +41,31 @@ class ccs_software::service {
       }
     }
   }
+
+  $email_helper = 'systemd-email'
+
+  file { "/usr/local/libexec/${email_helper}":
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => "puppet:///modules/${module_name}/service/${email_helper}",
+  }
+
+  $email_config = 'systemd-email'
+  $email_service = 'status-email-user@.service'
+  $envfile = "${ccs_software::etc_path}/${email_config}"
+
+  systemd::unit_file { $email_service:
+    content => epp("${module_name}/service/${email_service}.epp", {'envfile' => $envfile})
+  }
+
+  file { $envfile:
+    ensure  => file,
+    owner   => $ccs_sofware::adm_user,
+    group   => $ccs_sofware::adm_group,
+    mode    => '0644',
+    content => epp("${module_name}/service/${email_config}", {'email' => $ccs_software::service_email}),
+  }
+
 }

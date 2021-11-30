@@ -47,6 +47,10 @@
 # @param adm_group
 #   Name of the admin role group
 #
+# @param service_email
+#   String giving email address (or comma separated addresses) to
+#   receive change of service status emails from systemd.
+#
 # @param pkglist_repo_url
 #   URL of the git repo to use for `install.py` package lists by default.  This
 #   may be overriden in a `installations` hash with the `repo_url` key.
@@ -88,6 +92,7 @@ class ccs_software(
   String                      $group            = 'ccs',
   String                      $adm_user         = 'ccsadm',
   String                      $adm_group        = 'ccsadm',
+  String                      $service_email    = 'root@localhost',
   Stdlib::HTTPUrl             $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
   Stdlib::HTTPUrl             $release_repo_url = 'https://github.com/lsst-it/release',
   String                      $release_repo_ref = 'IT-2233/working',
