@@ -8,6 +8,7 @@
 Description=<%= $desc %>
 Wants=network-online.target
 After=network-online.target
+OnFailure=status-email-user@%n.service
 
 [Service]
 Type=simple
@@ -15,6 +16,8 @@ WorkingDirectory=<%= $workdir %>
 ExecStart=<%= $cmd %>
 Restart=on-failure
 RestartSec=42s
+StartLimitInterval=600
+StartLimitBurst=5
 User=<%= $user %>
 Group=<%= $group %>
 
