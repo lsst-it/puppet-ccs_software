@@ -62,8 +62,8 @@ class ccs_software::service {
 
   file { $envfile:
     ensure  => file,
-    owner   => $ccs_sofware::adm_user,
-    group   => $ccs_sofware::adm_group,
+    owner   => $ccs_software::adm_user,
+    group   => $ccs_software::adm_group,
     mode    => '0644',
     content => epp("${module_name}/service/${email_config}", {'email' => $ccs_software::service_email}),
   }
