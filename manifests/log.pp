@@ -21,7 +21,7 @@ class ccs_software::log {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => epp("${module_name}/log/${file}", {'archive' => $archive}),
+    content => epp("${module_name}/log/${file}.epp", { 'archive' => $archive }),
   }
 
   $ccslog = 'ccslog'
@@ -34,7 +34,6 @@ class ccs_software::log {
     source => "puppet:///modules/${module_name}/log/${ccslog}",
   }
 
-
   $ccslogcomp = 'ccslog.bash'
 
   file { "/etc/bash_completion.d/${ccslogcomp}":
@@ -44,5 +43,4 @@ class ccs_software::log {
     group  => 'root',
     mode   => '0644',
   }
-
 }

@@ -29,7 +29,7 @@ class ccs_software::config {
       owner   => $ccs_software::adm_user,
       group   => $ccs_software::adm_group,
       mode    => '0664',
-      content => epp("${module_name}/config/${file}", $epp_vars),
+      content => epp("${module_name}/config/${file}.epp", $epp_vars),
     }
   }
 }

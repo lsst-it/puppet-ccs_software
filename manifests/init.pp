@@ -18,6 +18,9 @@
 #   - hostname - Overides the `hostname` param for this installation.
 #   - aliases - [Array] of "alias" links to create for the current installation.
 #
+# @param service_workdir
+#   CWD for services
+#
 # @param services
 #   Hash of Arrays of services to create systemd service units for.
 #
@@ -81,27 +84,27 @@
 # @param udp_properties
 #    Array of extra strings to add to the udp_ccs.properties file.
 #
-class ccs_software(
-  Hash[String, Hash]          $installations    = {},
+class ccs_software (
+  Hash[String, Hash]          $installations           = {},
   Hash[String, Array[Variant[String, Hash]]] $services = {},
-  Optional[String]            $service_workdir  = undef,
-  Stdlib::Absolutepath        $base_path        = '/opt/lsst',
-  Stdlib::Absolutepath        $etc_path         = '/etc/ccs',
-  Stdlib::Absolutepath        $log_path         = '/var/log/ccs',
-  String                      $user             = 'ccs',
-  String                      $group            = 'ccs',
-  String                      $adm_user         = 'ccsadm',
-  String                      $adm_group        = 'ccsadm',
-  String                      $service_email    = 'root@localhost',
-  Stdlib::HTTPUrl             $pkglist_repo_url = 'https://github.com/lsst-camera-dh/dev-package-lists',
-  Stdlib::HTTPUrl             $release_repo_url = 'https://github.com/lsst-it/release',
-  String                      $release_repo_ref = 'IT-2233/working',
-  Optional[String]            $env              = undef,
-  Optional[String]            $hostname         = $facts['networking']['hostname'],
-  Boolean                     $desktop          = false,
-  Boolean                     $git_force        = false,
-  Array[String]               $global_properties = [],
-  Array[String]               $udp_properties   = [],
+  Optional[String]            $service_workdir         = undef,
+  Stdlib::Absolutepath        $base_path               = '/opt/lsst',
+  Stdlib::Absolutepath        $etc_path                = '/etc/ccs',
+  Stdlib::Absolutepath        $log_path                = '/var/log/ccs',
+  String                      $user                    = 'ccs',
+  String                      $group                   = 'ccs',
+  String                      $adm_user                = 'ccsadm',
+  String                      $adm_group               = 'ccsadm',
+  String                      $service_email           = 'root@localhost',
+  Stdlib::HTTPUrl             $pkglist_repo_url        = 'https://github.com/lsst-camera-dh/dev-package-lists',
+  Stdlib::HTTPUrl             $release_repo_url        = 'https://github.com/lsst-it/release',
+  String                      $release_repo_ref        = 'IT-2233/working',
+  Optional[String]            $env                     = undef,
+  Optional[String]            $hostname                = $facts['networking']['hostname'],
+  Boolean                     $desktop                 = false,
+  Boolean                     $git_force               = false,
+  Array[String]               $global_properties       = [],
+  Array[String]               $udp_properties          = [],
 ) {
   $ccs_path    = "${base_path}/ccs"
   $ccsadm_path = "${base_path}/ccsadm"
@@ -117,10 +120,10 @@ class ccs_software(
   contain ccs_software::service
   contain ccs_software::log # does not need to be ordered
 
-  Class['::ccs_software::pre']
-  -> Class['::ccs_software::install']
-  -> Class['::ccs_software::config']
-  -> Class['::ccs_software::service']
+  Class['ccs_software::pre']
+  -> Class['ccs_software::install']
+  -> Class['ccs_software::config']
+  -> Class['ccs_software::service']
 
   if ($desktop) {
     contain ccs_software::desktop

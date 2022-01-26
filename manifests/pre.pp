@@ -8,7 +8,7 @@ class ccs_software::pre {
 
   $deps = [
     'unzip',
-    'git'
+    'git',
   ]
 
   ensure_packages($deps)
