@@ -82,7 +82,7 @@ class profile::ccs::common {
 ### Installation(s)
 
 This example creates two installations at the paths `/opt/lsst/ccs/master` and
-`/opt/lsst/ccs/e4a8224`.  Where `master` and `e4a8224` are refs in the 
+`/opt/lsst/ccs/e4a8224`.  Where `master` and `e4a8224` are refs in the
 [`lsst-camera-dh/dev-package-lists`](https://github.com/lsst-camera-dh/dev-package-lists).
 
 ```yaml
