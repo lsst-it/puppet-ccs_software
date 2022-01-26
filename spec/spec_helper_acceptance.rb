@@ -2,7 +2,7 @@
 
 require 'voxpupuli/acceptance/spec_helper_acceptance'
 
-configure_beaker(modules: :fixtures) do |host|
+configure_beaker do |host|
   install_package(host, 'git')
 end
 
