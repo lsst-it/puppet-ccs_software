@@ -3,18 +3,18 @@
 require 'spec_helper_acceptance'
 
 describe 'ccs_software class' do
-  context 'trivial case without installations' do
+  context 'with trivial case without installations' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
       class { 'ccs_software':
         base_path => '#{basedir}',
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -137,7 +137,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -150,7 +150,7 @@ describe 'ccs_software class' do
           e4a8224 => {},
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -186,7 +186,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -209,7 +209,7 @@ describe 'ccs_software class' do
           },
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -245,7 +245,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -268,7 +268,7 @@ describe 'ccs_software class' do
           },
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -300,7 +300,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -317,7 +317,7 @@ describe 'ccs_software class' do
           },
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -353,7 +353,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -365,7 +365,7 @@ describe 'ccs_software class' do
           'comcam-software-1.0.6' => {},
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -401,18 +401,17 @@ describe 'ccs_software class' do
       it { is_expected.to be_grouped_into 'ccsadm' }
     end
 
-    # symlink target dir
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01") do
-      it { is_expected.to be_directory }
-      it { is_expected.to be_owned_by 'ccs' }
-      it { is_expected.to be_grouped_into 'ccs' }
-    end
-
-    # package containing symlink target dir
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6") do
-      it { is_expected.to be_directory }
-      it { is_expected.to be_owned_by 'ccs' }
-      it { is_expected.to be_grouped_into 'ccs' }
+    [
+      # symlink target dir
+      "#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01",
+      # package containing symlink target dir
+      "#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccs' }
+        it { is_expected.to be_grouped_into 'ccs' }
+      end
     end
 
     # file in chown'd etc dir
@@ -427,7 +426,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -448,7 +447,7 @@ describe 'ccs_software class' do
           dev => ['comcam-mcm', {name => 'h2db', cmd => '/bin/h2db'}],
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -475,7 +474,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -483,7 +482,7 @@ describe 'ccs_software class' do
         base_path => '#{basedir}',
         desktop   => true,
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -509,7 +508,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -522,7 +521,7 @@ describe 'ccs_software class' do
           e4a8224 => {},
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'

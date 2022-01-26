@@ -122,6 +122,7 @@ describe 'ccs_software' do
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
+
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
           .that_notifies("Exec[install.py #{c}]")
@@ -162,6 +163,7 @@ describe 'ccs_software' do
           require: 'File[/opt/lsst/ccsadm/package-lists]',
         )
       end
+
       it do
         is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
           .that_notifies("Exec[install.py #{c}]")

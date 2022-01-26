@@ -16,7 +16,7 @@ describe 'ccs_software' do
       {
         env: 'ComCam',
         installations: {
-          'e4a8224': {
+          e4a8224: {
             aliases: ['dev'],
           },
         },
@@ -34,6 +34,7 @@ describe 'ccs_software' do
           content: %r{WorkingDirectory=/home/ccs},
         ).that_comes_before("Service[#{svc}]")
       end
+
       it do
         is_expected.to contain_service(svc).with(
           enable: true,
