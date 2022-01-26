@@ -17,6 +17,10 @@
     {
       "name": "camptocamp/systemd",
       "version_requirement": ">= 2.6.0 < 3.0.0"
+    },
+    {
+      "name": "saz/sudo",
+      "version_requirement": ">= 6.0.0 < 7.0.0"
     }
   ],
   "operatingsystem_support": [
