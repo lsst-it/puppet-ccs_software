@@ -11,7 +11,7 @@
       "version_requirement": ">= 5.0.0 < 9.0.0"
     },
     {
-      "name": "puppet/vcsrepo",
+      "name": "puppetlabs/vcsrepo",
       "version_requirement": ">= 3.0.0 < 4.0.0"
     },
     {
