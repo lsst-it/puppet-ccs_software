@@ -5,6 +5,7 @@ require 'voxpupuli/acceptance/spec_helper_acceptance'
 configure_beaker do |host|
   install_package(host, 'git')
   install_module_from_forge_on(host, 'puppetlabs/accounts', '> 7 < 8')
+  scp_to(host, "#{__dir__}/fixtures/facts/site.yaml", '/opt/puppetlabs/facter/facts.d/site.yaml')
 end
 
 shared_examples 'an idempotent resource' do
