@@ -146,8 +146,8 @@ describe 'ccs_software class' do
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
-          master  => {},
-          e4a8224 => {},
+          'comcam-software-2.2.7' => {},
+          'cb1f1e2' => {},  # commit at head ofd comcam-software-2.2.3 branch
         },
       }
       PP
@@ -162,16 +162,16 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs/master",
-      "#{basedir}/ccs/master/bin",
-      "#{basedir}/ccs/e4a8224",
-      "#{basedir}/ccs/e4a8224/bin",
+      "#{basedir}/ccs/comcam-software-2.2.7",
+      "#{basedir}/ccs/comcam-software-2.2.7/bin",
+      "#{basedir}/ccs/cb1f1e2",
+      "#{basedir}/ccs/cb1f1e2/bin",
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/master",
-      "#{basedir}/ccsadm/package-lists/master/.git",
-      "#{basedir}/ccsadm/package-lists/e4a8224",
-      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/package-lists/comcam-software-2.2.7",
+      "#{basedir}/ccsadm/package-lists/comcam-software-2.2.7/.git",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
       "#{basedir}/ccsadm/release",
     ].each do |dir|
       describe file(dir) do
@@ -196,14 +196,14 @@ describe 'ccs_software class' do
           test1 => {
             repo_path => "#{basedir}/ccsadm/package-lists/test1.foo",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
           test42 => {
             repo_path => "#{basedir}/ccsadm/package-lists/test42.bar",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
@@ -253,16 +253,16 @@ describe 'ccs_software class' do
         base_path     => '#{basedir}',
         installations => {
           test-mcm => {
-            repo_path => "#{basedir}/ccsadm/package-lists/e4a8224",
+            repo_path => "#{basedir}/ccsadm/package-lists/cb1f1e2",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
           test-fp => {
-            repo_path => "#{basedir}/ccsadm/package-lists/e4a8224",
+            repo_path => "#{basedir}/ccsadm/package-lists/cb1f1e2",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-fp01',
           },
@@ -276,8 +276,8 @@ describe 'ccs_software class' do
     [
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/e4a8224",
-      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -309,10 +309,10 @@ describe 'ccs_software class' do
         env           => 'ComCam',
         hostname      => 'comcam-mcm',
         installations => {
-          master  => {
+          'comcam-software-2.2.7'  => {
             aliases => ['foo', 'bar', 'baz'],
           },
-          e4a8224 => {
+          'cb1f1e2' => {
             aliases => ['a', 'b', 'c'],
           },
         },
@@ -329,7 +329,7 @@ describe 'ccs_software class' do
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to "#{basedir}/ccs/master" }
+        it { is_expected.to be_linked_to "#{basedir}/ccs/comcam-software-2.2.7" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
@@ -342,7 +342,7 @@ describe 'ccs_software class' do
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to "#{basedir}/ccs/e4a8224" }
+        it { is_expected.to be_linked_to "#{basedir}/ccs/cb1f1e2" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
@@ -439,7 +439,7 @@ describe 'ccs_software class' do
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
-          e4a8224 => {
+          'cb1f1e2' => {
             aliases => ['dev'],
           },
         },
@@ -518,7 +518,7 @@ describe 'ccs_software class' do
         env           => 'ComCam',
         git_force     => true,
         installations => {
-          e4a8224 => {},
+          'cb1f1e2' => {},
         },
       }
       PP
@@ -527,8 +527,8 @@ describe 'ccs_software class' do
     it_behaves_like 'an idempotent resource'
 
     [
-      "#{basedir}/ccsadm/package-lists/e4a8224",
-      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
       "#{basedir}/ccsadm/release",
       "#{basedir}/ccsadm/release/.git",
     ].each do |dir|
