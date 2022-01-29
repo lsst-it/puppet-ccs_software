@@ -3,7 +3,7 @@
 to=$1
 service=$2
 
-mail -Ssendwait -s "systemd status change: $service" $to <<EOF
+mail -Ssendwait -s "systemd status change: $service" "$to" <<EOF
 
 Status of service $service:
 
