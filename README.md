@@ -2,16 +2,15 @@
 
 [![Build Status](https://travis-ci.com/lsst-it/puppet-ccs_software.svg?branch=master)](https://travis-ci.com/lsst-it/puppet-ccs_software)
 
-#### Table of Contents
+## Table of Contents
 
 1. [Overview](#overview)
-2. [Description](#description)
-
-3. [Setup - The basics of getting started with ccs_software](#setup)
+1. [Description](#description)
+1. [Setup - The basics of getting started with ccs_software](#setup)
     * [What ccs_software affects](#what-ccs_software-affects)
     * [Setup requirements](#setup-requirements)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+1. [Usage - Configuration options and additional functionality](#usage)
+1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 
 ## Overview
 
@@ -99,11 +98,15 @@ ccs_software::installations:
 
 The literal invocations of the `install.py` command would be something like:
 
-    /opt/lsst/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/master /opt/lsst/ccsadm/package-lists/master/ComCam/comcam-mcm/ccsApplications.txt
+```bash
+/opt/lsst/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/master /opt/lsst/ccsadm/package-lists/master/ComCam/comcam-mcm/ccsApplications.txt
+```
 
 and
 
-    /opt/lsst/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/e4a8224 /opt/lsst/ccsadm/package-lists/e4a8224/ComCam/comcam-mcm/ccsApplications.txt
+```bash
+/opt/lsst/release/bin/install.py --ccs_inst_dir /opt/lsst/ccs/e4a8224 /opt/lsst/ccsadm/package-lists/e4a8224/ComCam/comcam-mcm/ccsApplications.txt
+```
 
 Note that a separate clone of the `dev-package-lists` repo is created for each *installation*.
 
