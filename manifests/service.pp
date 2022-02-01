@@ -7,7 +7,6 @@ class ccs_software::service {
   assert_private()
 
   $ccs_software::services.each |String $alias, Array[Variant[String, Hash]] $services| {
-
     $services.each |$svc| {
       if $svc =~ Hash {
         $service_name = $svc['name']
@@ -57,7 +56,7 @@ class ccs_software::service {
   $envfile = "${ccs_software::etc_path}/${email_config}"
 
   systemd::unit_file { $email_service:
-    content => epp("${module_name}/service/${email_service}.epp", {'envfile' => $envfile})
+    content => epp("${module_name}/service/${email_service}.epp", { 'envfile' => $envfile }),
   }
 
   file { $envfile:
@@ -65,7 +64,6 @@ class ccs_software::service {
     owner   => $ccs_software::adm_user,
     group   => $ccs_software::adm_group,
     mode    => '0644',
-    content => epp("${module_name}/service/${email_config}", {'email' => $ccs_software::service_email}),
+    content => epp("${module_name}/service/${email_config}.epp", { 'email' => $ccs_software::service_email }),
   }
-
 }

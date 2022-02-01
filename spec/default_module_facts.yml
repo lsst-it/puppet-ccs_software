@@ -1,0 +1,12 @@
+---
+osfamily: 'RedHat'   # service provider
+operatingsystem: 'CentOS'   # service provider
+os:
+  family: 'RedHat'
+  name: 'CentOS'
+  release:
+    full: '7.9.2009'  # saz/sudo
+networking:
+  hostname: 'foo'
+sudoversion: '1.8.23'  # saz/sudo
+path: '/usr/bin'  # puppet/systemd

@@ -3,18 +3,18 @@
 require 'spec_helper_acceptance'
 
 describe 'ccs_software class' do
-  context 'trivial case without installations' do
+  context 'with trivial case without installations' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
       class { 'ccs_software':
         base_path => '#{basedir}',
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -137,7 +137,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -146,11 +146,11 @@ describe 'ccs_software class' do
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
-          master  => {},
-          e4a8224 => {},
+          'comcam-software-2.2.7' => {},
+          'cb1f1e2' => {},  # commit at head ofd comcam-software-2.2.3 branch
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -162,16 +162,16 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs/master",
-      "#{basedir}/ccs/master/bin",
-      "#{basedir}/ccs/e4a8224",
-      "#{basedir}/ccs/e4a8224/bin",
+      "#{basedir}/ccs/comcam-software-2.2.7",
+      "#{basedir}/ccs/comcam-software-2.2.7/bin",
+      "#{basedir}/ccs/cb1f1e2",
+      "#{basedir}/ccs/cb1f1e2/bin",
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/master",
-      "#{basedir}/ccsadm/package-lists/master/.git",
-      "#{basedir}/ccsadm/package-lists/e4a8224",
-      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/package-lists/comcam-software-2.2.7",
+      "#{basedir}/ccsadm/package-lists/comcam-software-2.2.7/.git",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
       "#{basedir}/ccsadm/release",
     ].each do |dir|
       describe file(dir) do
@@ -186,7 +186,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -196,20 +196,20 @@ describe 'ccs_software class' do
           test1 => {
             repo_path => "#{basedir}/ccsadm/package-lists/test1.foo",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
           test42 => {
             repo_path => "#{basedir}/ccsadm/package-lists/test42.bar",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -245,7 +245,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -253,22 +253,22 @@ describe 'ccs_software class' do
         base_path     => '#{basedir}',
         installations => {
           test-mcm => {
-            repo_path => "#{basedir}/ccsadm/package-lists/e4a8224",
+            repo_path => "#{basedir}/ccsadm/package-lists/cb1f1e2",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
           test-fp => {
-            repo_path => "#{basedir}/ccsadm/package-lists/e4a8224",
+            repo_path => "#{basedir}/ccsadm/package-lists/cb1f1e2",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
-            repo_ref  => 'e4a8224',
+            repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-fp01',
           },
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -276,8 +276,8 @@ describe 'ccs_software class' do
     [
       "#{basedir}/ccsadm",
       "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/e4a8224",
-      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -300,7 +300,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -309,15 +309,15 @@ describe 'ccs_software class' do
         env           => 'ComCam',
         hostname      => 'comcam-mcm',
         installations => {
-          master  => {
+          'comcam-software-2.2.7'  => {
             aliases => ['foo', 'bar', 'baz'],
           },
-          e4a8224 => {
+          'cb1f1e2' => {
             aliases => ['a', 'b', 'c'],
           },
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -329,7 +329,7 @@ describe 'ccs_software class' do
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to "#{basedir}/ccs/master" }
+        it { is_expected.to be_linked_to "#{basedir}/ccs/comcam-software-2.2.7" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
@@ -342,7 +342,7 @@ describe 'ccs_software class' do
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to "#{basedir}/ccs/e4a8224" }
+        it { is_expected.to be_linked_to "#{basedir}/ccs/cb1f1e2" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
@@ -353,7 +353,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -365,7 +365,7 @@ describe 'ccs_software class' do
           'comcam-software-1.0.6' => {},
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -401,18 +401,17 @@ describe 'ccs_software class' do
       it { is_expected.to be_grouped_into 'ccsadm' }
     end
 
-    # symlink target dir
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01") do
-      it { is_expected.to be_directory }
-      it { is_expected.to be_owned_by 'ccs' }
-      it { is_expected.to be_grouped_into 'ccs' }
-    end
-
-    # package containing symlink target dir
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6") do
-      it { is_expected.to be_directory }
-      it { is_expected.to be_owned_by 'ccs' }
-      it { is_expected.to be_grouped_into 'ccs' }
+    [
+      # symlink target dir
+      "#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01",
+      # package containing symlink target dir
+      "#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6",
+    ].each do |dir|
+      describe file(dir) do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'ccs' }
+        it { is_expected.to be_grouped_into 'ccs' }
+      end
     end
 
     # file in chown'd etc dir
@@ -427,7 +426,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -440,7 +439,7 @@ describe 'ccs_software class' do
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
-          e4a8224 => {
+          'cb1f1e2' => {
             aliases => ['dev'],
           },
         },
@@ -448,7 +447,7 @@ describe 'ccs_software class' do
           dev => ['comcam-mcm', {name => 'h2db', cmd => '/bin/h2db'}],
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -475,7 +474,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -483,7 +482,7 @@ describe 'ccs_software class' do
         base_path => '#{basedir}',
         desktop   => true,
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
@@ -509,7 +508,7 @@ describe 'ccs_software class' do
     basedir = default.tmpdir('ccs')
 
     let(:pp) do
-      <<-EOS
+      <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
@@ -519,17 +518,17 @@ describe 'ccs_software class' do
         env           => 'ComCam',
         git_force     => true,
         installations => {
-          e4a8224 => {},
+          'cb1f1e2' => {},
         },
       }
-      EOS
+      PP
     end
 
     it_behaves_like 'an idempotent resource'
 
     [
-      "#{basedir}/ccsadm/package-lists/e4a8224",
-      "#{basedir}/ccsadm/package-lists/e4a8224/.git",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2",
+      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
       "#{basedir}/ccsadm/release",
       "#{basedir}/ccsadm/release/.git",
     ].each do |dir|

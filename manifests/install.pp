@@ -48,7 +48,7 @@ class ccs_software::install {
         ensure => symlink,
         group  => 'root',
         owner  => 'root',
-        target => $base_path
+        target => $base_path,
       },
       $etc_path  => {
         ensure => directory,
