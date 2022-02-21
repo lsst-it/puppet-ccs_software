@@ -3,6 +3,7 @@
 org.hibernate.level=WARNING
 org.lsst.ccs.level=INFO
 org.lsst.ccs.logdir=/var/log/ccs
+org.lsst.ccs.config.remote=true
 <% $global_properties.each |$line| { -%>
 <%= $line %>
 <% } -%>
