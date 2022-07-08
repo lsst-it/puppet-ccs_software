@@ -4,6 +4,8 @@ org.hibernate.level=WARNING
 org.lsst.ccs.level=INFO
 org.lsst.ccs.logdir=/var/log/ccs
 org.lsst.ccs.config.remote=true
+# Temporary fix for core 6.0.4
+org.lsst.ccs.subsystem.agent.property.org.lsst.ccs.use.full.paths=true
 <% $global_properties.each |$line| { -%>
 <%= $line %>
 <% } -%>
