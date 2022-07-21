@@ -15,33 +15,36 @@ desktop_files = %w[
 describe 'ccs_software' do
   let(:node_params) { { 'site' => 'ls' } }
 
-  on_supported_os.each do |_os, facts|
-    let(:facts) do
-      facts
-    end
-    describe 'with desktop parameter' do
-      let(:params) do
-        {
-          desktop: true,
-        }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
       end
 
-      it { is_expected.to compile.with_all_deps }
+      describe 'with desktop parameter' do
+        let(:params) do
+          {
+            desktop: true,
+          }
+        end
 
-      desktop_files.each do |f|
-        it do
-          is_expected.to contain_file(f).with(
-            ensure: 'file',
-          )
+        it { is_expected.to compile.with_all_deps }
+
+        desktop_files.each do |f|
+          it do
+            is_expected.to contain_file(f).with(
+              ensure: 'file',
+            )
+          end
         end
       end
-    end
 
-    describe 'without desktop parameter' do
-      it { is_expected.to compile.with_all_deps }
+      describe 'without desktop parameter' do
+        it { is_expected.to compile.with_all_deps }
 
-      desktop_files.each do |f|
-        it { is_expected.not_to contain_file(f) }
+        desktop_files.each do |f|
+          it { is_expected.not_to contain_file(f) }
+        end
       end
     end
   end
