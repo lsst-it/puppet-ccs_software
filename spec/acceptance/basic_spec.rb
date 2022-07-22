@@ -3,14 +3,29 @@
 require 'spec_helper_acceptance'
 
 describe 'ccs_software class' do
-  context 'with trivial case without installations' do
-    basedir = default.tmpdir('ccs')
-
+  describe 'prepare host' do
     let(:pp) do
       <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
 
+      if versioncmp($facts['os']['release']['major'],'8') >= 0 {
+        package { 'python3': }
+        -> alternatives { 'python':
+          path => '/usr/bin/python3',
+        }
+      }
+      PP
+    end
+
+    it_behaves_like 'an idempotent resource'
+  end
+
+  context 'with trivial case without installations' do
+    basedir = default.tmpdir('ccs')
+
+    let(:pp) do
+      <<-PP
       class { 'ccs_software':
         base_path => '#{basedir}',
       }
@@ -138,9 +153,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'comcam-mcm',
@@ -187,9 +199,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path     => '#{basedir}',
         installations => {
@@ -246,9 +255,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path     => '#{basedir}',
         installations => {
@@ -301,9 +307,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path     => '#{basedir}',
         env           => 'ComCam',
@@ -354,9 +357,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'comcam-fp01',
@@ -427,9 +427,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       # java is only needed to manually start services
       class { 'java_artisanal': }
       -> Class['ccs_software']
@@ -475,9 +472,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path => '#{basedir}',
         desktop   => true,
@@ -509,9 +503,6 @@ describe 'ccs_software class' do
 
     let(:pp) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
-
       class { 'ccs_software':
         base_path     => '#{basedir}',
         hostname      => 'comcam-mcm',
