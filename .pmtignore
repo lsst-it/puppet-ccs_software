@@ -14,7 +14,7 @@ Rakefile
 .bundle/
 .ruby-version
 coverage/
-log/
+/log/
 .idea/
 .dependencies/
 .github/
