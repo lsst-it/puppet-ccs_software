@@ -33,7 +33,7 @@ describe 'ccs_software' do
         desktop_files.each do |f|
           it do
             is_expected.to contain_file(f).with(
-              ensure: 'file',
+              ensure: 'file'
             )
           end
         end

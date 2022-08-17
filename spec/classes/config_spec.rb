@@ -24,7 +24,7 @@ describe 'ccs_software' do
               ensure: 'file',
               owner: 'ccsadm',
               group: 'ccsadm',
-              mode: '0664',
+              mode: '0664'
             )
           end
         end
