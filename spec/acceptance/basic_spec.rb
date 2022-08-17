@@ -4,7 +4,7 @@ require 'spec_helper_acceptance'
 
 describe 'ccs_software class' do
   describe 'prepare host' do
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       accounts::user { 'ccs': }
       accounts::user { 'ccsadm': }
@@ -24,7 +24,7 @@ describe 'ccs_software class' do
   context 'with trivial case without installations' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path => '#{basedir}',
@@ -151,7 +151,7 @@ describe 'ccs_software class' do
   context 'with installations' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path     => '#{basedir}',
@@ -197,7 +197,7 @@ describe 'ccs_software class' do
   context 'with complex installations' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path     => '#{basedir}',
@@ -253,7 +253,7 @@ describe 'ccs_software class' do
   context 'with shared git clones' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path     => '#{basedir}',
@@ -305,7 +305,7 @@ describe 'ccs_software class' do
   context 'with aliases' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path     => '#{basedir}',
@@ -355,7 +355,7 @@ describe 'ccs_software class' do
   context 'with etc symlink' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path     => '#{basedir}',
@@ -425,7 +425,7 @@ describe 'ccs_software class' do
   context 'with services' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       # java is only needed to manually start services
       class { 'java_artisanal': }
@@ -470,7 +470,7 @@ describe 'ccs_software class' do
   context 'with desktop' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path => '#{basedir}',
@@ -501,7 +501,7 @@ describe 'ccs_software class' do
   context 'with git_force' do
     basedir = default.tmpdir('ccs')
 
-    let(:pp) do
+    let(:manifest) do
       <<-PP
       class { 'ccs_software':
         base_path     => '#{basedir}',
