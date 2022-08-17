@@ -31,13 +31,13 @@ describe 'ccs_software' do
         ['comcam-mcm'].each do |svc|
           it do
             is_expected.to contain_systemd__unit_file("#{svc}.service").with(
-              content: %r{WorkingDirectory=/home/ccs},
+              content: %r{WorkingDirectory=/home/ccs}
             ).that_comes_before("Service[#{svc}]")
           end
 
           it do
             is_expected.to contain_service(svc).with(
-              enable: true,
+              enable: true
             )
           end
         end
@@ -50,12 +50,12 @@ describe 'ccs_software' do
           ['comcam-mcm'].each do |svc|
             it do
               is_expected.to contain_systemd__unit_file("#{svc}.service").with(
-                content: %r{WorkingDirectory=/foo/bar},
+                content: %r{WorkingDirectory=/foo/bar}
               )
             end
           end
-        end # with workdir parameter
-      end # with services parameters
+        end
+      end
     end
   end
 end

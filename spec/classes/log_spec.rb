@@ -20,7 +20,7 @@ describe 'ccs_software' do
             mode: '0755',
             owner: 'root',
             group: 'root',
-            content: %r{archive_flag=n},
+            content: %r{archive_flag=n}
           )
         end
       end
