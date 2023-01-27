@@ -29,28 +29,28 @@ Installs and configures CCS software
 
 The following parameters are available in the `ccs_software` class:
 
-* [`installations`](#installations)
-* [`service_workdir`](#service_workdir)
-* [`services`](#services)
-* [`base_path`](#base_path)
-* [`etc_path`](#etc_path)
-* [`log_path`](#log_path)
-* [`user`](#user)
-* [`group`](#group)
-* [`adm_user`](#adm_user)
-* [`adm_group`](#adm_group)
-* [`service_email`](#service_email)
-* [`pkglist_repo_url`](#pkglist_repo_url)
-* [`release_repo_url`](#release_repo_url)
-* [`release_repo_ref`](#release_repo_ref)
-* [`env`](#env)
-* [`hostname`](#hostname)
-* [`desktop`](#desktop)
-* [`git_force`](#git_force)
-* [`global_properties`](#global_properties)
-* [`udp_properties`](#udp_properties)
+* [`installations`](#-ccs_software--installations)
+* [`service_workdir`](#-ccs_software--service_workdir)
+* [`services`](#-ccs_software--services)
+* [`base_path`](#-ccs_software--base_path)
+* [`etc_path`](#-ccs_software--etc_path)
+* [`log_path`](#-ccs_software--log_path)
+* [`user`](#-ccs_software--user)
+* [`group`](#-ccs_software--group)
+* [`adm_user`](#-ccs_software--adm_user)
+* [`adm_group`](#-ccs_software--adm_group)
+* [`service_email`](#-ccs_software--service_email)
+* [`pkglist_repo_url`](#-ccs_software--pkglist_repo_url)
+* [`release_repo_url`](#-ccs_software--release_repo_url)
+* [`release_repo_ref`](#-ccs_software--release_repo_ref)
+* [`env`](#-ccs_software--env)
+* [`hostname`](#-ccs_software--hostname)
+* [`desktop`](#-ccs_software--desktop)
+* [`git_force`](#-ccs_software--git_force)
+* [`global_properties`](#-ccs_software--global_properties)
+* [`udp_properties`](#-ccs_software--udp_properties)
 
-##### <a name="installations"></a>`installations`
+##### <a name="-ccs_software--installations"></a>`installations`
 
 Data type: `Hash[String, Hash]`
 
@@ -72,15 +72,15 @@ Supported keys in nested hashes:
 
 Default value: `{}`
 
-##### <a name="service_workdir"></a>`service_workdir`
+##### <a name="-ccs_software--service_workdir"></a>`service_workdir`
 
 Data type: `Optional[String]`
 
 CWD for services
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="services"></a>`services`
+##### <a name="-ccs_software--services"></a>`services`
 
 Data type: `Hash[String, Array[Variant[String, Hash]]]`
 
@@ -94,7 +94,7 @@ Alternatively, array element can also be a hash of the form
 
 Default value: `{}`
 
-##### <a name="base_path"></a>`base_path`
+##### <a name="-ccs_software--base_path"></a>`base_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -102,7 +102,7 @@ Base path for [all] CCS installations.
 
 Default value: `'/opt/lsst'`
 
-##### <a name="etc_path"></a>`etc_path`
+##### <a name="-ccs_software--etc_path"></a>`etc_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -110,7 +110,7 @@ Path to global CCS configuration files.
 
 Default value: `'/etc/ccs'`
 
-##### <a name="log_path"></a>`log_path`
+##### <a name="-ccs_software--log_path"></a>`log_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -118,7 +118,7 @@ Path to CCS log files.
 
 Default value: `'/var/log/ccs'`
 
-##### <a name="user"></a>`user`
+##### <a name="-ccs_software--user"></a>`user`
 
 Data type: `String`
 
@@ -126,7 +126,7 @@ Name of the role user under which CCS services will be run and the owner of conf
 
 Default value: `'ccs'`
 
-##### <a name="group"></a>`group`
+##### <a name="-ccs_software--group"></a>`group`
 
 Data type: `String`
 
@@ -134,7 +134,7 @@ Name of the role group
 
 Default value: `'ccs'`
 
-##### <a name="adm_user"></a>`adm_user`
+##### <a name="-ccs_software--adm_user"></a>`adm_user`
 
 Data type: `String`
 
@@ -142,7 +142,7 @@ Name of the admin role user which owns many of the installed files
 
 Default value: `'ccsadm'`
 
-##### <a name="adm_group"></a>`adm_group`
+##### <a name="-ccs_software--adm_group"></a>`adm_group`
 
 Data type: `String`
 
@@ -150,7 +150,7 @@ Name of the admin role group
 
 Default value: `'ccsadm'`
 
-##### <a name="service_email"></a>`service_email`
+##### <a name="-ccs_software--service_email"></a>`service_email`
 
 Data type: `String`
 
@@ -159,7 +159,7 @@ receive change of service status emails from systemd.
 
 Default value: `'root@localhost'`
 
-##### <a name="pkglist_repo_url"></a>`pkglist_repo_url`
+##### <a name="-ccs_software--pkglist_repo_url"></a>`pkglist_repo_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -168,7 +168,7 @@ may be overriden in a `installations` hash with the `repo_url` key.
 
 Default value: `'https://github.com/lsst-camera-dh/dev-package-lists'`
 
-##### <a name="release_repo_url"></a>`release_repo_url`
+##### <a name="-ccs_software--release_repo_url"></a>`release_repo_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -176,7 +176,7 @@ URL of the repo which contains the `install.py` script.
 
 Default value: `'https://github.com/lsst-it/release'`
 
-##### <a name="release_repo_ref"></a>`release_repo_ref`
+##### <a name="-ccs_software--release_repo_ref"></a>`release_repo_ref`
 
 Data type: `String`
 
@@ -184,16 +184,16 @@ Data type: `String`
 
 Default value: `'IT-2233/working'`
 
-##### <a name="env"></a>`env`
+##### <a name="-ccs_software--env"></a>`env`
 
 Data type: `Optional[String]`
 
 Name of the package list environment.  Eg., `ComCam`.  This may be
 overriden in a `installation` hash with the `env` key.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-ccs_software--hostname"></a>`hostname`
 
 Data type: `Optional[String]`
 
@@ -201,24 +201,24 @@ The "short" hostname used to select the installation set in a package lists repo
 
 Default value: `$facts['networking']['hostname']`
 
-##### <a name="desktop"></a>`desktop`
+##### <a name="-ccs_software--desktop"></a>`desktop`
 
 Data type: `Boolean`
 
 Install desktop shortcuts.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="git_force"></a>`git_force`
+##### <a name="-ccs_software--git_force"></a>`git_force`
 
 Data type: `Boolean`
 
 Force the update of managed git clones. This is done by passing `force =>
 true` to `vcsrepo` type resources.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="global_properties"></a>`global_properties`
+##### <a name="-ccs_software--global_properties"></a>`global_properties`
 
 Data type: `Array[String]`
 
@@ -226,7 +226,7 @@ Array of extra strings to add to the ccsGlobal.properties file.
 
 Default value: `[]`
 
-##### <a name="udp_properties"></a>`udp_properties`
+##### <a name="-ccs_software--udp_properties"></a>`udp_properties`
 
 Data type: `Array[String]`
 
