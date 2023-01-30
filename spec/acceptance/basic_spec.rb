@@ -15,6 +15,15 @@ describe 'ccs_software class' do
           path => '/usr/bin/python3',
         }
       }
+      if versioncmp($facts['os']['release']['major'],'9') >= 0 {
+        alternative_entry {'/usr/bin/python3':
+          ensure   => present,
+          altlink  => '/usr/bin/python',
+          altname  => 'python',
+          priority => 30,
+        }
+        -> Alternatives['python']
+      }
       PP
     end
 
