@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v1.2.0](https://github.com/lsst-it/puppet-ccs_software/tree/v1.2.0) (2023-01-30)
+## [v1.2.1](https://github.com/lsst-it/puppet-ccs_software/tree/v1.2.1) (2023-01-31)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v1.2.0...v1.2.1)
+
+**Fixed bugs:**
+
+- fix .pmtignore rm'ing templates/log from release tarballs [\#30](https://github.com/lsst-it/puppet-ccs_software/pull/30) ([jhoblitt](https://github.com/jhoblitt))
+
+## [v1.2.0](https://github.com/lsst-it/puppet-ccs_software/tree/v1.2.0) (2023-01-31)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v1.1.4...v1.2.0)
 
