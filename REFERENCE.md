@@ -182,7 +182,7 @@ Data type: `String`
 
 `install.py` git repo ref.
 
-Default value: `'IT-2233/working'`
+Default value: `'IT-4348/python3'`
 
 ##### <a name="-ccs_software--env"></a>`env`
 
