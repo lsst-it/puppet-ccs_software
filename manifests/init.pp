@@ -98,7 +98,7 @@ class ccs_software (
   String                      $service_email           = 'root@localhost',
   Stdlib::HTTPUrl             $pkglist_repo_url        = 'https://github.com/lsst-camera-dh/dev-package-lists',
   Stdlib::HTTPUrl             $release_repo_url        = 'https://github.com/lsst-it/release',
-  String                      $release_repo_ref        = 'IT-2233/working',
+  String                      $release_repo_ref        = 'IT-4348/python3',
   Optional[String]            $env                     = undef,
   Optional[String]            $hostname                = $facts['networking']['hostname'],
   Boolean                     $desktop                 = false,
