@@ -22,9 +22,8 @@ describe 'ccs_software' do
             },
             services: {
               dev: ['comcam-mcm',
-                    { name: "comcam-ih",
-                      user: "ccs-ipa",
-                    }],
+                    { name: 'comcam-ih',
+                      user: 'ccs-ipa', }],
             },
           }
         end
@@ -52,7 +51,7 @@ describe 'ccs_software' do
             ).that_comes_before("Service[#{svc}]")
           end
         end
-        
+
         context 'with workdir parameter' do
           let(:params) do
             super().merge(service_workdir: '/foo/bar')
