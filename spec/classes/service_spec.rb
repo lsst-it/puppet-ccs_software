@@ -30,7 +30,7 @@ describe 'ccs_software' do
 
         it { is_expected.to compile.with_all_deps }
 
-        ['comcam-mcm', 'comcam-ih'].each do |svc|
+        %w[comcam-mcm comcam-ih].each do |svc|
           it do
             is_expected.to contain_systemd__unit_file("#{svc}.service").with(
               content: %r{WorkingDirectory=/home/ccs}
