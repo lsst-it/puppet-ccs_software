@@ -21,14 +21,17 @@ describe 'ccs_software' do
               },
             },
             services: {
-              dev: ['comcam-mcm'],
+              dev: ['comcam-mcm',
+                    { name: "comcam-ih",
+                      user: "ccs-ipa",
+                    }],
             },
           }
         end
 
         it { is_expected.to compile.with_all_deps }
 
-        ['comcam-mcm'].each do |svc|
+        ['comcam-mcm', 'comcam-ih'].each do |svc|
           it do
             is_expected.to contain_systemd__unit_file("#{svc}.service").with(
               content: %r{WorkingDirectory=/home/ccs}
@@ -42,6 +45,14 @@ describe 'ccs_software' do
           end
         end
 
+        ['comcam-ih'].each do |svc|
+          it do
+            is_expected.to contain_systemd__unit_file("#{svc}.service").with(
+              content: %r{User=ccs-ipa}
+            ).that_comes_before("Service[#{svc}]")
+          end
+        end
+        
         context 'with workdir parameter' do
           let(:params) do
             super().merge(service_workdir: '/foo/bar')
