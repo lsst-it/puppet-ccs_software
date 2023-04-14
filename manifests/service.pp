@@ -15,6 +15,7 @@ class ccs_software::service {
         $hash_user = $svc['user']
         $hash_group = $svc['group']
         $hash_workdir = $svc['workdir']
+        $service_env = $svc['env']
       } else {
         $service_name = $svc
         $cmd_base = $svc
@@ -30,6 +31,7 @@ class ccs_software::service {
         group   => $service_group,
         cmd     => $service_cmd,
         workdir => $service_workdir,
+        env     => $service_env,
       }
 
       systemd::unit_file { "${service_name}.service":
