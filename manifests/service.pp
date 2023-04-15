@@ -19,6 +19,10 @@ class ccs_software::service {
       } else {
         $service_name = $svc
         $cmd_base = $svc
+        $hash_cmd = ''
+        $hash_user = ''
+        $hash_group = ''
+        $hash_workdir = ''
       }
       $cmd = "${ccs_software::ccs_path}/${alias}/bin/${cmd_base}"
       $service_cmd = pick($hash_cmd,$cmd)
