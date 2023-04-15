@@ -23,6 +23,7 @@ class ccs_software::service {
         $hash_user = ''
         $hash_group = ''
         $hash_workdir = ''
+        $service_env = undef
       }
       $cmd = "${ccs_software::ccs_path}/${alias}/bin/${cmd_base}"
       $service_cmd = pick($hash_cmd,$cmd)
