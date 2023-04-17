@@ -2,7 +2,8 @@
       String $user,
       String $group,
       String $cmd,
-      String $workdir
+      String $workdir,
+      Optional[String] $env = undef
 | -%>
 [Unit]
 Description=<%= $desc %>
@@ -13,6 +14,9 @@ OnFailure=status-email-user@%n.service
 [Service]
 Type=simple
 WorkingDirectory=<%= $workdir %>
+<% unless $env =~ Undef { -%>
+Environment=<%= $env %>
+<% } -%>
 ExecStart=<%= $cmd %>
 Restart=on-failure
 RestartSec=42s

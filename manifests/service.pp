@@ -10,17 +10,33 @@ class ccs_software::service {
     $services.each |$svc| {
       if $svc =~ Hash {
         $service_name = $svc['name']
-        $service_cmd = $svc['cmd']
+        $cmd_base = $service_name
+        $hash_cmd = $svc['cmd']
+        $hash_user = $svc['user']
+        $hash_group = $svc['group']
+        $hash_workdir = $svc['workdir']
+        $service_env = $svc['env']
       } else {
         $service_name = $svc
-        $service_cmd = "${ccs_software::ccs_path}/${alias}/bin/${svc}"
+        $cmd_base = $svc
+        $hash_cmd = ''
+        $hash_user = ''
+        $hash_group = ''
+        $hash_workdir = ''
+        $service_env = undef
       }
+      $cmd = "${ccs_software::ccs_path}/${alias}/bin/${cmd_base}"
+      $service_cmd = pick($hash_cmd,$cmd)
+      $service_user = pick($hash_user,$ccs_software::user)
+      $service_group = pick($hash_group,$ccs_software::group)
+      $service_workdir = pick($hash_workdir,$ccs_software::_real_service_workdir)
       $epp_vars = {
         desc    => "CCS ${service_name} service",
-        user    => $ccs_software::user,
-        group   => $ccs_software::group,
+        user    => $service_user,
+        group   => $service_group,
         cmd     => $service_cmd,
-        workdir => $ccs_software::_real_service_workdir,
+        workdir => $service_workdir,
+        env     => $service_env,
       }
 
       systemd::unit_file { "${service_name}.service":
@@ -30,6 +46,8 @@ class ccs_software::service {
         enable => true,
       }
 
+      ## NB this uses $ccs_software::user even if the service runs
+      ## under a different user.
       $epp_sudo_vars = {
         service => $service_name,
         user    => $ccs_software::user,

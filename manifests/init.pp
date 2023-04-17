@@ -27,7 +27,9 @@
 # @option services [String] name-of-alias
 #   [Array] of service names/service executables (links under /opt/lsst/<alias>/bin/)
 #   Alternatively, array element can also be a hash of the form
-#   { name: "h2db, cmd: "/foo/bar/baz" }
+#   { name: "h2db", key: "value", ... }
+#   Allowed keys: cmd, user, group, workdir, env.
+#   Values specify the associated service file values.
 #
 # @param base_path
 #   Base path for [all] CCS installations.
