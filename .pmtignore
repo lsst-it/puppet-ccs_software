@@ -34,4 +34,4 @@
 .*.sw?
 /.yardoc/
 /.yardopts
-Dockerfile
+/Dockerfile
