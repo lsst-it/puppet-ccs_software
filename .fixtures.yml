@@ -7,3 +7,8 @@ fixtures:
     vcsrepo: "puppetlabs/vcsrepo"
     systemd: "puppet/systemd"
     sudo: "saz/sudo"
+    # acceptance test only
+    accounts: "puppetlabs/accounts"
+    alternatives: "puppet/alternatives"
+    java_artisanal: "lsst/java_artisanal"
+    yum: "puppet/yum"
