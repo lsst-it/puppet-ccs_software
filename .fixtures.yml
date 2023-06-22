@@ -11,3 +11,4 @@ fixtures:
     accounts: "puppetlabs/accounts"
     alternatives: "puppet/alternatives"
     java_artisanal: "lsst/java_artisanal"
+    yum: "puppet/yum"
