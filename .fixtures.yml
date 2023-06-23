@@ -3,12 +3,9 @@
 ---
 fixtures:
   forge_modules:
-    stdlib: "puppetlabs/stdlib"
+    stdlib:
+      repo: "puppetlabs/stdlib"
+      ref: "8.6.0"
     vcsrepo: "puppetlabs/vcsrepo"
     systemd: "puppet/systemd"
     sudo: "saz/sudo"
-    # acceptance test only
-    accounts: "puppetlabs/accounts"
-    alternatives: "puppet/alternatives"
-    java_artisanal: "lsst/java_artisanal"
-    yum: "puppet/yum"
