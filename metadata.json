@@ -1,6 +1,6 @@
 {
   "name": "lsst-ccs_software",
-  "version": "1.4.1-rc0",
+  "version": "2.0.0",
   "author": "AURA/LSST",
   "summary": "Configure CCS Software",
   "license": "Apache-2.0",
