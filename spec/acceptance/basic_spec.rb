@@ -420,8 +420,15 @@ describe 'ccs_software class' do
 
     let(:manifest) do
       <<-PP
-      # java is only needed to manually start services
-      class { 'java_artisanal': }
+      # java is only needed to start services
+      $jdk_pkg = fact('os.release.major') ? {
+        '7'     => 'java-1.8.0-openjdk-devel',
+        default => 'java-17-openjdk-devel',
+      }
+
+      class { 'java':
+        package => $jdk_pkg,
+      }
       -> Class['ccs_software']
 
       class { 'ccs_software':
