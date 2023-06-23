@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.0.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.0.0) (2023-06-23)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v1.4.0...v2.0.0)
+
+**Breaking changes:**
+
+- \(plumbing\) drop support for puppet6 [\#37](https://github.com/lsst-it/puppet-ccs_software/pull/37) ([jhoblitt](https://github.com/jhoblitt))
+
+**Implemented enhancements:**
+
+- allow puppetlabs/vcsrepo 6.x [\#42](https://github.com/lsst-it/puppet-ccs_software/pull/42) ([jhoblitt](https://github.com/jhoblitt))
+- add support for puppet8 [\#38](https://github.com/lsst-it/puppet-ccs_software/pull/38) ([jhoblitt](https://github.com/jhoblitt))
+- \(sudo\) add 'reset-failed' to the commands ccs user can run [\#36](https://github.com/lsst-it/puppet-ccs_software/pull/36) ([glennmorris](https://github.com/glennmorris))
+
 ## [v1.4.0](https://github.com/lsst-it/puppet-ccs_software/tree/v1.4.0) (2023-04-17)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v1.3.0...v1.4.0)
