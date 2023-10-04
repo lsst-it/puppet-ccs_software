@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.2.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.0) (2023-10-04)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.1.0...v2.2.0)
+
+**Implemented enhancements:**
+
+- allow puppet/systemd 6.x [\#50](https://github.com/lsst-it/puppet-ccs_software/pull/50) ([jhoblitt](https://github.com/jhoblitt))
+- add almalinux 9 support [\#40](https://github.com/lsst-it/puppet-ccs_software/pull/40) ([jhoblitt](https://github.com/jhoblitt))
+
 ## [v2.1.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.1.0) (2023-08-22)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.0.0...v2.1.0)
