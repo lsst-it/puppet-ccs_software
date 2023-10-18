@@ -10,6 +10,7 @@ class ccs_software::pre {
     'unzip',
     'git',
     'python3',
+    'wget',
   ]
 
   ensure_packages($deps)
