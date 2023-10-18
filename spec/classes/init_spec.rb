@@ -90,6 +90,7 @@ describe 'ccs_software' do
         it do
           is_expected.to contain_package('unzip')
           is_expected.to contain_package('git')
+          is_expected.to contain_package('wget')
         end
       end
 

@@ -93,7 +93,7 @@ describe 'ccs_software class' do
     end
 
     # package deps
-    %w[unzip git].each do |p|
+    %w[unzip git wget].each do |p|
       describe package(p) do
         it { is_expected.to be_installed }
       end
