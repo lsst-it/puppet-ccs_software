@@ -6,8 +6,10 @@ describe 'ccs_software class' do
   describe 'prepare host' do
     let(:manifest) do
       <<-PP
-      accounts::user { 'ccs': }
-      accounts::user { 'ccsadm': }
+      user { ['ccs', 'ccsadm']:
+        ensure     => 'present',
+        managehome => true,
+      }
       PP
     end
 
