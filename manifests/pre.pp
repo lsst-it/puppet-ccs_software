@@ -13,5 +13,5 @@ class ccs_software::pre {
     'wget',
   ]
 
-  ensure_packages($deps)
+  stdlib::ensure_packages($deps)
 }
