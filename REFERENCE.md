@@ -18,6 +18,7 @@
 * `ccs_software::log`: Create /var/log/ccs and install logrotation.
 * `ccs_software::pre`: Install ccs software prerequisites
 * `ccs_software::service`: Manages ccs systemd service units
+* `ccs_software::tomcat`: Install /etc/ccs/tomcat files.
 
 ## Classes
 
@@ -35,6 +36,7 @@ The following parameters are available in the `ccs_software` class:
 * [`base_path`](#-ccs_software--base_path)
 * [`etc_path`](#-ccs_software--etc_path)
 * [`log_path`](#-ccs_software--log_path)
+* [`tomcat_rest_etc_path`](#-ccs_software--tomcat_rest_etc_path)
 * [`user`](#-ccs_software--user)
 * [`group`](#-ccs_software--group)
 * [`adm_user`](#-ccs_software--adm_user)
@@ -47,8 +49,12 @@ The following parameters are available in the `ccs_software` class:
 * [`hostname`](#-ccs_software--hostname)
 * [`desktop`](#-ccs_software--desktop)
 * [`git_force`](#-ccs_software--git_force)
+* [`tomcat_rest`](#-ccs_software--tomcat_rest)
 * [`global_properties`](#-ccs_software--global_properties)
 * [`udp_properties`](#-ccs_software--udp_properties)
+* [`tomcat_rest_url`](#-ccs_software--tomcat_rest_url)
+* [`tomcat_rest_user`](#-ccs_software--tomcat_rest_user)
+* [`tomcat_rest_pass`](#-ccs_software--tomcat_rest_pass)
 
 ##### <a name="-ccs_software--installations"></a>`installations`
 
@@ -119,6 +125,14 @@ Data type: `Stdlib::Absolutepath`
 Path to CCS log files.
 
 Default value: `'/var/log/ccs'`
+
+##### <a name="-ccs_software--tomcat_rest_etc_path"></a>`tomcat_rest_etc_path`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to CCS tomcat configuration directory.
+
+Default value: `'/etc/ccs/tomcat'`
 
 ##### <a name="-ccs_software--user"></a>`user`
 
@@ -220,6 +234,14 @@ true` to `vcsrepo` type resources.
 
 Default value: `false`
 
+##### <a name="-ccs_software--tomcat_rest"></a>`tomcat_rest`
+
+Data type: `Boolean`
+
+If true, install tomcat rest server configuration
+
+Default value: `false`
+
 ##### <a name="-ccs_software--global_properties"></a>`global_properties`
 
 Data type: `Array[String]`
@@ -235,4 +257,28 @@ Data type: `Array[String]`
 Array of extra strings to add to the udp_ccs.properties file.
 
 Default value: `[]`
+
+##### <a name="-ccs_software--tomcat_rest_url"></a>`tomcat_rest_url`
+
+Data type: `String[1]`
+
+String giving URL for the rest server.
+
+Default value: `'lsstcam-db01:3306/ccsdbprod'`
+
+##### <a name="-ccs_software--tomcat_rest_user"></a>`tomcat_rest_user`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving username for the rest server.
+
+Default value: `Sensitive('user')`
+
+##### <a name="-ccs_software--tomcat_rest_pass"></a>`tomcat_rest_pass`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving password for the rest server.
+
+Default value: `Sensitive('pass')`
 
