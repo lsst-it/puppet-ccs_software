@@ -40,6 +40,9 @@
 # @param log_path
 #   Path to CCS log files.
 #
+# @param tomcat_rest_etc_path
+#   Path to CCS tomcat configuration directory.
+#
 # @param user
 #   Name of the role user under which CCS services will be run and the owner of config files
 #
@@ -80,11 +83,23 @@
 #   Force the update of managed git clones. This is done by passing `force =>
 #   true` to `vcsrepo` type resources.
 #
+# @param tomcat_rest
+#  If true, install tomcat rest server configuration
+#
 # @param global_properties
 #    Array of extra strings to add to the ccsGlobal.properties file.
 #
 # @param udp_properties
 #    Array of extra strings to add to the udp_ccs.properties file.
+#
+# @param tomcat_rest_url
+#    String giving URL for the rest server.
+#
+# @param tomcat_rest_user
+#    Sensitive string giving username for the rest server.
+#
+# @param tomcat_rest_pass
+#    Sensitive string giving password for the rest server.
 #
 class ccs_software (
   Hash[String, Hash]          $installations           = {},
@@ -93,6 +108,7 @@ class ccs_software (
   Stdlib::Absolutepath        $base_path               = '/opt/lsst',
   Stdlib::Absolutepath        $etc_path                = '/etc/ccs',
   Stdlib::Absolutepath        $log_path                = '/var/log/ccs',
+  Stdlib::Absolutepath        $tomcat_rest_etc_path    = '/etc/ccs/tomcat',
   String                      $user                    = 'ccs',
   String                      $group                   = 'ccs',
   String                      $adm_user                = 'ccsadm',
@@ -105,8 +121,13 @@ class ccs_software (
   Optional[String]            $hostname                = $facts['networking']['hostname'],
   Boolean                     $desktop                 = false,
   Boolean                     $git_force               = false,
+  Boolean                     $tomcat_rest             = false,
   Array[String]               $global_properties       = [],
   Array[String]               $udp_properties          = [],
+  String[1]                   $tomcat_rest_url         = 'lsstcam-db01:3306/ccsdbprod',
+  ## These are only required if tomcat rest server is being used.
+  Sensitive[String[1]]        $tomcat_rest_user        = Sensitive('user'),
+  Sensitive[String[1]]        $tomcat_rest_pass        = Sensitive('pass'),
 ) {
   $ccs_path    = "${base_path}/ccs"
   $ccsadm_path = "${base_path}/ccsadm"
@@ -129,5 +150,11 @@ class ccs_software (
 
   if ($desktop) {
     contain ccs_software::desktop
+  }
+
+  if ($tomcat_rest) {
+    contain ccs_software::tomcat
+    Class['ccs_software::install']
+    -> Class['ccs_software::tomcat']
   }
 }
