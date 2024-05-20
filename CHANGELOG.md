@@ -4,12 +4,25 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.2.1](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.1) (2024-03-18)
+## [v2.2.2](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.2) (2024-05-20)
 
-[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.2.0...v2.2.1)
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.2.1...v2.2.2)
 
 **Implemented enhancements:**
 
+- \(puppet-ccs-software\) add license file [\#56](https://github.com/lsst-it/puppet-ccs_software/pull/56) ([dtapiacl](https://github.com/dtapiacl))
+
+## [v2.2.1](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.1) (2024-03-19)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.2.0...v2.2.1)
+
+**Breaking changes:**
+
+- use stdlib::ensure\_packages\(\) and require stdlib \>= 9 [\#55](https://github.com/lsst-it/puppet-ccs_software/pull/55) ([jhoblitt](https://github.com/jhoblitt))
+
+**Implemented enhancements:**
+
+- Bump version to 2.2.1 [\#53](https://github.com/lsst-it/puppet-ccs_software/pull/53) ([glennmorris](https://github.com/glennmorris))
 - Add wget as a required system package [\#52](https://github.com/lsst-it/puppet-ccs_software/pull/52) ([glennmorris](https://github.com/glennmorris))
 
 ## [v2.2.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.0) (2023-10-04)
