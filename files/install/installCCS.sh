@@ -12,6 +12,8 @@ NODE_NAME=$3
 
 BASEDIR=$(dirname "$0")
 DEV_PACKAGE_DIR="/home/ccs/dev-package-lists-"$(date +%Y%m%d)
+# Cleanup any existing dev-package-lists installation
+trap 'rm -rf $DEV_PACKAGE_DIR' EXIT
 RELEASE_INSTALL_SCRIPT="/lsst/ccsadm/release/bin/install.py"
 CCS_INSTALL_DIR="/lsst/ccs/"$(date +%Y%m%d)
 
@@ -64,9 +66,6 @@ then
 
     $RELEASE_INSTALL_SCRIPT --ccs_inst_dir "$CCS_INSTALL_DIR" "$DEV_PACKAGE_DIR/$ENVIRONMENT/$NODE_NAME/ccsApplications.txt"
 
-    # Cleanup any existing dev-package-lists installation
-    rm -rf "$DEV_PACKAGE_DIR"
-        
 else
     echo "$VERIFY_USER"
 fi
