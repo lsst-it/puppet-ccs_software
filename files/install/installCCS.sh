@@ -11,7 +11,9 @@ ENVIRONMENT=$2
 NODE_NAME=$3
 
 BASEDIR=$(dirname "$0")
-DEV_PACKAGE_DIR="/home/ccs/dev-package-lists"
+DEV_PACKAGE_DIR="/home/ccs/dev-package-lists-"$(date +%Y%m%d)
+# Cleanup any existing dev-package-lists installation
+trap 'rm -rf $DEV_PACKAGE_DIR' EXIT
 RELEASE_INSTALL_SCRIPT="/lsst/ccsadm/release/bin/install.py"
 CCS_INSTALL_DIR="/lsst/ccs/"$(date +%Y%m%d)
 
@@ -29,10 +31,10 @@ then
 
     # Check that the dev-package-lists github project is up to date.
     # If not abort.
-    if [ ! -d $DEV_PACKAGE_DIR ]; then
-	git clone https://github.com/lsst-camera-dh/dev-package-lists.git $DEV_PACKAGE_DIR
+    if [ ! -d "$DEV_PACKAGE_DIR" ]; then
+	git clone https://github.com/lsst-camera-dh/dev-package-lists.git "$DEV_PACKAGE_DIR"
     fi
-    cd $DEV_PACKAGE_DIR || exit
+    cd "$DEV_PACKAGE_DIR" || exit
     if ! git checkout "$TAG"; then
 	echo "Tag $TAG does not exist"
 	exit
@@ -44,7 +46,7 @@ then
     fi
     gitStatus=$(git status)
     if [[ $gitStatus != *"nothing to commit, working tree clean"* ]]; then
-	echo Directory $DEV_PACKAGE_DIR is not up to date. Exiting.
+	echo Directory "$DEV_PACKAGE_DIR" is not up to date. Exiting.
 	exit
     fi
 
