@@ -16,6 +16,7 @@ class ccs_software::service {
         $hash_group = $svc['group']
         $hash_workdir = $svc['workdir']
         $service_env = $svc['env']
+        $hash_enable = $svc['enable']
       } else {
         $service_name = $svc
         $cmd_base = $svc
@@ -24,12 +25,14 @@ class ccs_software::service {
         $hash_group = ''
         $hash_workdir = ''
         $service_env = undef
+        $hash_enable = undef
       }
       $cmd = "${ccs_software::ccs_path}/${alias}/bin/${cmd_base}"
       $service_cmd = pick($hash_cmd,$cmd)
       $service_user = pick($hash_user,$ccs_software::user)
       $service_group = pick($hash_group,$ccs_software::group)
       $service_workdir = pick($hash_workdir,$ccs_software::_real_service_workdir)
+      $service_enable = pick($hash_enable,true)
       $epp_vars = {
         desc    => "CCS ${service_name} service",
         user    => $service_user,
@@ -43,7 +46,7 @@ class ccs_software::service {
         content => epp("${module_name}/service/ccs.service.epp", $epp_vars),
       }
       -> service { $service_name:
-        enable => true,
+        enable => $service_enable,
       }
 
       ## NB this uses $ccs_software::user even if the service runs
