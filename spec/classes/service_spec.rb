@@ -22,6 +22,8 @@ describe 'ccs_software' do
             },
             services: {
               dev: ['comcam-mcm',
+                    { name: 'comcam-disabled',
+                      enable: false, },
                     { name: 'comcam-ih',
                       user: 'ccs-ipa', }],
             },
@@ -49,6 +51,14 @@ describe 'ccs_software' do
             is_expected.to contain_systemd__unit_file("#{svc}.service").with(
               content: %r{User=ccs-ipa}
             ).that_comes_before("Service[#{svc}]")
+          end
+        end
+
+        ['comcam-disabled'].each do |svc|
+          it do
+            is_expected.to contain_service(svc).with(
+              enable: false
+            )
           end
         end
 
