@@ -4,12 +4,22 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.2.2](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.2) (2024-05-20)
+## [v2.3.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.3.0) (2024-07-05)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.2.2...v2.3.0)
+
+**Implemented enhancements:**
+
+- Allow control over the enable state of services [\#60](https://github.com/lsst-it/puppet-ccs_software/pull/60) ([glennmorris](https://github.com/glennmorris))
+- Added code to cleanup dev-package-list clone after installation [\#59](https://github.com/lsst-it/puppet-ccs_software/pull/59) ([mxturri](https://github.com/mxturri))
+
+## [v2.2.2](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.2) (2024-05-21)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.2.1...v2.2.2)
 
 **Implemented enhancements:**
 
+- \(files/install/installCCS.sh\) update CCS install script for use on summit [\#58](https://github.com/lsst-it/puppet-ccs_software/pull/58) ([glennmorris](https://github.com/glennmorris))
 - \(puppet-ccs-software\) add license file [\#56](https://github.com/lsst-it/puppet-ccs_software/pull/56) ([dtapiacl](https://github.com/dtapiacl))
 
 ## [v2.2.1](https://github.com/lsst-it/puppet-ccs_software/tree/v2.2.1) (2024-03-19)
