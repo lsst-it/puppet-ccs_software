@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.4.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.4.0) (2024-08-07)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.3.0...v2.4.0)
+
+**Implemented enhancements:**
+
+- allow puppet/systemd 7.x [\#63](https://github.com/lsst-it/puppet-ccs_software/pull/63) ([jhoblitt](https://github.com/jhoblitt))
+
 ## [v2.3.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.3.0) (2024-07-05)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.2.2...v2.3.0)
