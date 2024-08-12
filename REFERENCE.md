@@ -39,6 +39,10 @@ The following parameters are available in the `ccs_software` class:
 * [`group`](#-ccs_software--group)
 * [`adm_user`](#-ccs_software--adm_user)
 * [`adm_group`](#-ccs_software--adm_group)
+* [`influx_url`](#-ccs_software--influx_url)
+* [`influx_name`](#-ccs_software--influx_name)
+* [`influx_username`](#-ccs_software--influx_username)
+* [`influx_password`](#-ccs_software--influx_password)
 * [`service_email`](#-ccs_software--service_email)
 * [`pkglist_repo_url`](#-ccs_software--pkglist_repo_url)
 * [`release_repo_url`](#-ccs_software--release_repo_url)
@@ -151,6 +155,38 @@ Data type: `String`
 Name of the admin role group
 
 Default value: `'ccsadm'`
+
+##### <a name="-ccs_software--influx_url"></a>`influx_url`
+
+Data type: `String[1]`
+
+String giving URL of the influxDB server.
+
+Default value: `'https://camera-influxdb.dev.lsst.org:443'`
+
+##### <a name="-ccs_software--influx_name"></a>`influx_name`
+
+Data type: `String[1]`
+
+String giving name of the influxDB instance.
+
+Default value: `'grafana'`
+
+##### <a name="-ccs_software--influx_username"></a>`influx_username`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving influxDB username.
+
+Default value: `Sensitive('user')`
+
+##### <a name="-ccs_software--influx_password"></a>`influx_password`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving influxDB password.
+
+Default value: `Sensitive('pass')`
 
 ##### <a name="-ccs_software--service_email"></a>`service_email`
 
