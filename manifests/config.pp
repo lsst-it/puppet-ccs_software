@@ -21,6 +21,14 @@ class ccs_software::config {
       'hostname' => $trusted['certname'],
       'udp_properties' => $udp_properties,
     },
+    ## File needs to be readable by anyone who can run a CCS process,
+    ## ie anyone who can login.
+    'influxDb.properties' => {
+      'url'      => $ccs_software::influx_url,
+      'name'     => $ccs_software::influx_name,
+      'username' => $ccs_software::influx_username,
+      'password' => $ccs_software::influx_password,
+    },
   }
 
   $etc_files.each |$file, $epp_vars| {
