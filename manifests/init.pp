@@ -52,6 +52,18 @@
 # @param adm_group
 #   Name of the admin role group
 #
+# @param influx_url
+#   String giving URL of the influxDB server.
+#
+# @param influx_name
+#   String giving name of the influxDB instance.
+#
+# @param influx_username
+#   Sensitive string giving influxDB username.
+#
+# @param influx_password
+#   Sensitive string giving influxDB password.
+#
 # @param service_email
 #   String giving email address (or comma separated addresses) to
 #   receive change of service status emails from systemd.
@@ -97,6 +109,10 @@ class ccs_software (
   String                      $group                   = 'ccs',
   String                      $adm_user                = 'ccsadm',
   String                      $adm_group               = 'ccsadm',
+  String[1]                   $influx_url              = 'https://camera-influxdb.dev.lsst.org:443',
+  String[1]                   $influx_name             = 'grafana',
+  Sensitive[String[1]]        $influx_username         = Sensitive('user'),
+  Sensitive[String[1]]        $influx_password         = Sensitive('pass'),
   String                      $service_email           = 'root@localhost',
   Stdlib::HTTPUrl             $pkglist_repo_url        = 'https://github.com/lsst-camera-dh/dev-package-lists',
   Stdlib::HTTPUrl             $release_repo_url        = 'https://github.com/lsst-it/release',

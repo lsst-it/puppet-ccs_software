@@ -1,0 +1,10 @@
+<%- | String[1] $url,
+      String[1] $name,
+      Sensitive[String[1]] $username,
+      Sensitive[String[1]] $password
+| -%>
+# This file is managed by Puppet; changes may be overwritten
+org.lsst.ccs.influx.db.url = <%= $url %>
+org.lsst.ccs.influx.db.name = <%= $name %>
+org.lsst.ccs.influx.db.username = <%= $username %>
+org.lsst.ccs.influx.db.password = <%= $password %>
