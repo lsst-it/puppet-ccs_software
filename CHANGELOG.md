@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.5.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.5.0) (2024-08-13)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.4.0...v2.5.0)
+
+**Implemented enhancements:**
+
+- Add new config file for influxDB [\#65](https://github.com/lsst-it/puppet-ccs_software/pull/65) ([glennmorris](https://github.com/glennmorris))
+
 ## [v2.4.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.4.0) (2024-08-07)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.3.0...v2.4.0)
