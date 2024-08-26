@@ -64,6 +64,19 @@
 # @param influx_password
 #   Sensitive string giving influxDB password.
 #
+# @param kafka_files
+#   Optional hash of kafka properties files and associated values. Eg:
+#     data-int:
+#       bootstrap_url: "bootstrap_url"
+#       registry_url: "registry_url"
+#
+# @param kafka_auths
+#   Optional (but required for each key of kafka_files) hash of kafka
+#   files and the associated username and password. Eg:
+#     data-int:
+#       - "user"
+#       - "pass"
+#
 # @param service_email
 #   String giving email address (or comma separated addresses) to
 #   receive change of service status emails from systemd.
@@ -113,6 +126,8 @@ class ccs_software (
   String[1]                   $influx_name             = 'grafana',
   Sensitive[String[1]]        $influx_username         = Sensitive('user'),
   Sensitive[String[1]]        $influx_password         = Sensitive('pass'),
+  Hash[String, Hash]          $kafka_files             = {},
+  Hash[String, Array[Variant[Sensitive[String],String]]] $kafka_auths  = {},
   String                      $service_email           = 'root@localhost',
   Stdlib::HTTPUrl             $pkglist_repo_url        = 'https://github.com/lsst-camera-dh/dev-package-lists',
   Stdlib::HTTPUrl             $release_repo_url        = 'https://github.com/lsst-it/release',

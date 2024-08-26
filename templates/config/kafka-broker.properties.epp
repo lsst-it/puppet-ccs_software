@@ -1,0 +1,11 @@
+<%- | String[1] $bootstrap_url,
+      String[1] $registry_url,
+      Variant[Sensitive[String],String] $username,
+      Variant[Sensitive[String],String] $password
+| -%>
+# This file is managed by Puppet; changes may be overwritten
+org.lsst.ccs.kafka.bootstrap.url=<%= $bootstrap_url %>
+org.lsst.ccs.kafka.registry.url=<%= $registry_url %>
+org.lsst.ccs.kafka.security.protocol=SASL_SSL
+org.lsst.ccs.kafka.username=<%= $username %>
+org.lsst.ccs.kafka.password=<%= $password %>
