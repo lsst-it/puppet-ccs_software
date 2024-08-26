@@ -43,6 +43,8 @@ The following parameters are available in the `ccs_software` class:
 * [`influx_name`](#-ccs_software--influx_name)
 * [`influx_username`](#-ccs_software--influx_username)
 * [`influx_password`](#-ccs_software--influx_password)
+* [`kafka_files`](#-ccs_software--kafka_files)
+* [`kafka_auths`](#-ccs_software--kafka_auths)
 * [`service_email`](#-ccs_software--service_email)
 * [`pkglist_repo_url`](#-ccs_software--pkglist_repo_url)
 * [`release_repo_url`](#-ccs_software--release_repo_url)
@@ -187,6 +189,29 @@ Data type: `Sensitive[String[1]]`
 Sensitive string giving influxDB password.
 
 Default value: `Sensitive('pass')`
+
+##### <a name="-ccs_software--kafka_files"></a>`kafka_files`
+
+Data type: `Hash[String, Hash]`
+
+Optional hash of kafka properties files and associated values. Eg:
+  data-int:
+    bootstrap_url: "bootstrap_url"
+    registry_url: "registry_url"
+
+Default value: `{}`
+
+##### <a name="-ccs_software--kafka_auths"></a>`kafka_auths`
+
+Data type: `Hash[String, Array[Variant[Sensitive[String],String]]]`
+
+Optional (but required for each key of kafka_files) hash of kafka
+files and the associated username and password. Eg:
+  data-int:
+    - "user"
+    - "pass"
+
+Default value: `{}`
 
 ##### <a name="-ccs_software--service_email"></a>`service_email`
 

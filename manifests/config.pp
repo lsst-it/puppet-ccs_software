@@ -31,13 +31,32 @@ class ccs_software::config {
     },
   }
 
+  $attributes = {
+    ensure => file,
+    owner  => $ccs_software::adm_user,
+    group  => $ccs_software::adm_group,
+    mode   => '0664',
+  }
+
   $etc_files.each |$file, $epp_vars| {
     file { "${etc_path}/${file}":
-      ensure  => file,
-      owner   => $ccs_software::adm_user,
-      group   => $ccs_software::adm_group,
-      mode    => '0664',
       content => epp("${module_name}/config/${file}.epp", $epp_vars),
+      *       => $attributes,
+    }
+  }
+
+  $ccs_software::kafka_files.each |$name, $hash| {
+    $file = "kafka-broker-${name}.properties"
+    $auth = $ccs_software::kafka_auths[$name]
+    $username = $auth[0]
+    $password = $auth[1]
+    $epp_vars = $hash + {
+      'username' => $username,
+      'password' => $password,
+    }
+    file { "${etc_path}/${file}":
+      content => epp("${module_name}/config/kafka-broker.properties.epp", $epp_vars),
+      *       => $attributes,
     }
   }
 }
