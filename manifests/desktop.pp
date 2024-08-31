@@ -60,4 +60,29 @@ class ccs_software::desktop {
       }
     }
   }
+
+  include 'dconf'
+
+  ## The dconf module is silent on how one defines a list value,
+  ## but by experiment it seems a literal string is needed.
+  $faves = [
+    'lsst.ccs.console.prod.desktop',
+    'lsst.ccs.shell.prod.desktop',
+    'firefox.desktop',
+    'org.gnome.Nautilus.desktop',
+    'yelp.desktop',
+    'org.gnome.Terminal.desktop',
+  ]
+
+  ## Would be nice if the dconf module did this internally, but no.
+  $value = String($faves, '%[a')
+
+  dconf::settings { '00-favorite-apps':
+    profile       => 'local',
+    settings_hash => {
+      'org/gnome/shell' => {
+        'favorite-apps' => { 'value' => $value, 'lock' => false },
+      },
+    },
+  }
 }
