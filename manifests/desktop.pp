@@ -61,7 +61,9 @@ class ccs_software::desktop {
     }
   }
 
-  include 'dconf'
+  class { 'dconf':
+    tidy => false,
+  }
 
   ## The dconf module is silent on how one defines a list value,
   ## but by experiment it seems a literal string is needed.
