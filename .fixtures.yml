@@ -7,3 +7,7 @@ fixtures:
     vcsrepo: "puppetlabs/vcsrepo"
     systemd: "puppet/systemd"
     sudo: "saz/sudo"
+    concat: "puppetlabs/concat"
+    inifile: "puppetlabs/inifile"
+    simplib: "simp/simplib"
+    dconf: "simp/dconf"
