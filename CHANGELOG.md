@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.6.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.6.0) (2024-08-26)
+## [v2.7.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.7.0) (2024-09-04)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.6.0...v2.7.0)
+
+**Implemented enhancements:**
+
+- Add CCS desktops apps to default gnome favorites [\#69](https://github.com/lsst-it/puppet-ccs_software/pull/69) ([glennmorris](https://github.com/glennmorris))
+
+## [v2.6.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.6.0) (2024-08-27)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.5.0...v2.6.0)
 
@@ -18,7 +26,6 @@ These should not affect the functionality of the module.
 
 **Implemented enhancements:**
 
-- Version 2.5.0 [\#66](https://github.com/lsst-it/puppet-ccs_software/pull/66) ([glennmorris](https://github.com/glennmorris))
 - Add new config file for influxDB [\#65](https://github.com/lsst-it/puppet-ccs_software/pull/65) ([glennmorris](https://github.com/glennmorris))
 
 ## [v2.4.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.4.0) (2024-08-07)
