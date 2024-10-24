@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.8.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.8.0) (2024-10-24)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.7.0...v2.8.0)
+
+**Implemented enhancements:**
+
+- bump version constraint for saz/sudo to allow 9.0.0 [\#75](https://github.com/lsst-it/puppet-ccs_software/pull/75) ([badenerb](https://github.com/badenerb))
+
 ## [v2.7.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.7.0) (2024-09-04)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.6.0...v2.7.0)
