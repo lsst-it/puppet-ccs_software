@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.8.1](https://github.com/lsst-it/puppet-ccs_software/tree/v2.8.1) (2024-11-12)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.8.0...v2.8.1)
+
+**Implemented enhancements:**
+
+- Removed git status check from installCCS.sh [\#77](https://github.com/lsst-it/puppet-ccs_software/pull/77) ([mxturri](https://github.com/mxturri))
+
 ## [v2.8.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.8.0) (2024-10-24)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.7.0...v2.8.0)
