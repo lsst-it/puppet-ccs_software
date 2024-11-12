@@ -44,11 +44,6 @@ then
 	echo "Something went wrong when updating $DEV_PACKAGE_DIR: $?: $gitPull"
 	exit
     fi
-    gitStatus=$(git status)
-    if [[ $gitStatus != *"nothing to commit, working tree clean"* ]]; then
-	echo Directory "$DEV_PACKAGE_DIR" is not up to date. Exiting.
-	exit
-    fi
 
     # Check that the install script exists. If not abort.
     if [ ! -f "$RELEASE_INSTALL_SCRIPT" ]; then
