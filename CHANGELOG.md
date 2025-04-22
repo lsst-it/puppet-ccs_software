@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.10.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.10.0) (2025-04-22)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.9.0...v2.10.0)
+
+**Implemented enhancements:**
+
+- \(metadata.json\) bump vcsrepo to include v7 [\#82](https://github.com/lsst-it/puppet-ccs_software/pull/82) ([badenerb](https://github.com/badenerb))
+- Update dependency puppet\_metadata to v5 [\#81](https://github.com/lsst-it/puppet-ccs_software/pull/81) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [v2.9.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.9.0) (2024-12-18)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.8.1...v2.9.0)
