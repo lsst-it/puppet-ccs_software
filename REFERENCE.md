@@ -43,6 +43,9 @@ The following parameters are available in the `ccs_software` class:
 * [`influx_name`](#-ccs_software--influx_name)
 * [`influx_username`](#-ccs_software--influx_username)
 * [`influx_password`](#-ccs_software--influx_password)
+* [`apc_pdu`](#-ccs_software--apc_pdu)
+* [`apc_pdu_username`](#-ccs_software--apc_pdu_username)
+* [`apc_pdu_password`](#-ccs_software--apc_pdu_password)
 * [`kafka_files`](#-ccs_software--kafka_files)
 * [`kafka_auths`](#-ccs_software--kafka_auths)
 * [`service_email`](#-ccs_software--service_email)
@@ -187,6 +190,30 @@ Default value: `Sensitive('user')`
 Data type: `Sensitive[String[1]]`
 
 Sensitive string giving influxDB password.
+
+Default value: `Sensitive('pass')`
+
+##### <a name="-ccs_software--apc_pdu"></a>`apc_pdu`
+
+Data type: `Boolean`
+
+True to install APC PDU configuration.
+
+Default value: `false`
+
+##### <a name="-ccs_software--apc_pdu_username"></a>`apc_pdu_username`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving APC PDU username.
+
+Default value: `Sensitive('user')`
+
+##### <a name="-ccs_software--apc_pdu_password"></a>`apc_pdu_password`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving APC PDU password.
 
 Default value: `Sensitive('pass')`
 

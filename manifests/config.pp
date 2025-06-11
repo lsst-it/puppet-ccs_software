@@ -29,6 +29,10 @@ class ccs_software::config {
       'username' => $ccs_software::influx_username,
       'password' => $ccs_software::influx_password,
     },
+    'apc-pdu.properties' => {
+      'username' => $ccs_software::apc_pdu_username,
+      'password' => $ccs_software::apc_pdu_password,
+    },
   }
 
   $attributes = {
@@ -39,6 +43,9 @@ class ccs_software::config {
   }
 
   $etc_files.each |$file, $epp_vars| {
+    if ($file == 'apc-pdu.properties') and !$ccs_software::apc_pdu {
+      next()
+    }
     file { "${etc_path}/${file}":
       content => epp("${module_name}/config/${file}.epp", $epp_vars),
       *       => $attributes,

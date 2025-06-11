@@ -64,6 +64,15 @@
 # @param influx_password
 #   Sensitive string giving influxDB password.
 #
+# @param apc_pdu
+#   True to install APC PDU configuration.
+#
+# @param apc_pdu_username
+#   Sensitive string giving APC PDU username.
+#
+# @param apc_pdu_password
+#   Sensitive string giving APC PDU password.
+#
 # @param kafka_files
 #   Optional hash of kafka properties files and associated values. Eg:
 #     data-int:
@@ -126,6 +135,9 @@ class ccs_software (
   String[1]                   $influx_name             = 'grafana',
   Sensitive[String[1]]        $influx_username         = Sensitive('user'),
   Sensitive[String[1]]        $influx_password         = Sensitive('pass'),
+  Boolean                     $apc_pdu                 = false,
+  Sensitive[String[1]]        $apc_pdu_username        = Sensitive('user'),
+  Sensitive[String[1]]        $apc_pdu_password        = Sensitive('pass'),
   Hash[String, Hash]          $kafka_files             = {},
   Hash[String, Array[Variant[Sensitive[String],String]]] $kafka_auths  = {},
   String                      $service_email           = 'root@localhost',

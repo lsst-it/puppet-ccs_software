@@ -29,6 +29,23 @@ describe 'ccs_software' do
           end
         end
       end
+
+      context 'with apc_pdu' do
+        let(:params) do
+          {
+            apc_pdu: true,
+            apc_pdu_username: sensitive('someuser'),
+            apc_pdu_password: sensitive('somepass'),
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/ccs/apc-pdu.properties').with_content(sensitive("# This file is managed by Puppet; changes may be overwritten
+org.lsst.ccs.apc.passwd = somepass
+org.lsst.ccs.apc.user = someuser
+"))
+        end
+      end
     end
   end
 end

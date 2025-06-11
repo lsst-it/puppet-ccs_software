@@ -1,0 +1,6 @@
+<%- | Sensitive[String[1]] $username,
+      Sensitive[String[1]] $password
+| -%>
+# This file is managed by Puppet; changes may be overwritten
+org.lsst.ccs.apc.passwd = <%= $password %>
+org.lsst.ccs.apc.user = <%= $username %>
