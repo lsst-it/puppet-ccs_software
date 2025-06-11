@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.11.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.11.0) (2025-06-11)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.10.0...v2.11.0)
+
+**Implemented enhancements:**
+
+- Add option for apc-pdu config file [\#87](https://github.com/lsst-it/puppet-ccs_software/pull/87) ([glennmorris](https://github.com/glennmorris))
+
 ## [v2.10.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.10.0) (2025-04-22)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.9.0...v2.10.0)
