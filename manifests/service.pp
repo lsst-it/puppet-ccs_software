@@ -62,14 +62,20 @@ class ccs_software::service {
     }
   }
 
-  $email_helper = 'systemd-email'
+  $helpers = [
+    '/usr/local/bin/ccs-systemctl',
+    '/usr/local/libexec/systemd-email',
+  ]
 
-  file { "/usr/local/libexec/${email_helper}":
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => "puppet:///modules/${module_name}/service/${email_helper}",
+  $helpers.each |$helper| {
+    $src = basename($helper)
+    file { $helper:
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      source => "puppet:///modules/${module_name}/service/${src}",
+    }
   }
 
   $email_config = 'systemd-email'
