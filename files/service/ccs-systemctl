@@ -1,0 +1,15 @@
+#!/bin/sh
+## This file is managed by Puppet; changes may be overwritten.
+
+## If you are the ccs user, this is equivalent to "sudo systemctl".
+## Otherwise, to "sudo -u ccs sudo systemctl".
+
+user=ccs
+
+if [ "$(id -un)" = $user ]; then
+    prefix=
+else
+    prefix="sudo -u $user"
+fi
+
+exec $prefix sudo systemctl "$@"
