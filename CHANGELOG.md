@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.12.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.12.0) (2025-06-16)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.11.0...v2.12.0)
+
+**Implemented enhancements:**
+
+- install new helper script, ccs-systemctl [\#91](https://github.com/lsst-it/puppet-ccs_software/pull/91) ([glennmorris](https://github.com/glennmorris))
+
 ## [v2.11.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.11.0) (2025-06-11)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.10.0...v2.11.0)
