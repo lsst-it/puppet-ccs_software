@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.12.1](https://github.com/lsst-it/puppet-ccs_software/tree/v2.12.1) (2025-07-01)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.12.0...v2.12.1)
+
+**Implemented enhancements:**
+
+- \(metadata.json\) bump simp/dconf to include 1.x.x [\#93](https://github.com/lsst-it/puppet-ccs_software/pull/93) ([badenerb](https://github.com/badenerb))
+- Update dependency voxpupuli-test to v11 [\#90](https://github.com/lsst-it/puppet-ccs_software/pull/90) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [v2.12.0](https://github.com/lsst-it/puppet-ccs_software/tree/v2.12.0) (2025-06-16)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.11.0...v2.12.0)
