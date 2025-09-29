@@ -37,31 +37,31 @@ class ccs_software::install {
   # the base path should be owned by root
   # try to be nice about sharing the base path with other mods
   ensure_resources('file', {
-      $base_path => {
-        ensure => directory,
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0755',
-        backup => false,
-      },
-      '/lsst'    => {
-        ensure => symlink,
-        group  => 'root',
-        owner  => 'root',
-        target => $base_path,
-      },
-      $etc_path  => {
-        ensure => directory,
-        owner  => $adm_user,
-        group  => $adm_group,
-        mode   => '2775',
-      },
-      $log_path  => {
-        ensure => directory,
-        owner  => 'root',
-        group  => $group,
-        mode   => '2777',
-      },
+    $base_path => {
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      backup => false,
+    },
+    '/lsst'    => {
+      ensure => symlink,
+      group  => 'root',
+      owner  => 'root',
+      target => $base_path,
+    },
+    $etc_path  => {
+      ensure => directory,
+      owner  => $adm_user,
+      group  => $adm_group,
+      mode   => '2775',
+    },
+    $log_path  => {
+      ensure => directory,
+      owner  => 'root',
+      group  => $group,
+      mode   => '2777',
+    },
   })
 
   # need to allow manual installs owned by the ccs user
@@ -127,13 +127,13 @@ class ccs_software::install {
 
     # ensure the vcsrepo to allow the same clone path to be path of multiple installations
     ensure_resource('vcsrepo', $clone_path, {
-        ensure   => latest,
-        provider => git,
-        source   => $repo,
-        revision => $ref,
-        user     => $adm_user,
-        force    => $git_force,
-        require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
+      ensure   => latest,
+      provider => git,
+      source   => $repo,
+      revision => $ref,
+      user     => $adm_user,
+      force    => $git_force,
+      require  => File[$pkglist_path],  # vcsrepo doesn't autorequire its parent dir
     })
     # ordering can't be declared directly on the vcsrepo when a clone is shared
     # by multiple installations
