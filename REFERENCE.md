@@ -221,7 +221,9 @@ Default value: `Sensitive('pass')`
 
 Data type: `Hash[String, Hash]`
 
-Optional hash of kafka properties files and associated values. Eg:
+Optional hash of kafka properties files and associated values.
+The special key "properties" is omitted from the resulting file name.
+Eg:
   data-int:
     bootstrap_url: "bootstrap_url"
     registry_url: "registry_url"
