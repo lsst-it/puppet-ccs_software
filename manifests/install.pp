@@ -176,7 +176,7 @@ class ccs_software::install {
       tries     => 3,
       logoutput => true,
       cwd       => $base_path,
-      timeout   => 900,
+      timeout   => 1800,
     }
     ~> exec { $exec_chown_title:
       command   => "${pre_script} chown -R -H ${user}:${group} \${PDIR}",
