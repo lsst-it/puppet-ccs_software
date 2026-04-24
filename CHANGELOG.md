@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.0.0](https://github.com/lsst-it/puppet-ccs_software/tree/v3.0.0) (2026-04-23)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.12.1...v3.0.0)
+
+**Breaking changes:**
+
+- \(metadata\) drop puppet 7 [\#107](https://github.com/lsst-it/puppet-ccs_software/pull/107) ([glennmorris](https://github.com/glennmorris))
+
+**Implemented enhancements:**
+
+- \(install\) increase timeout on install.py command [\#106](https://github.com/lsst-it/puppet-ccs_software/pull/106) ([glennmorris](https://github.com/glennmorris))
+- Update actions/checkout action to v6 [\#102](https://github.com/lsst-it/puppet-ccs_software/pull/102) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/labeler action to v6 [\#97](https://github.com/lsst-it/puppet-ccs_software/pull/97) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [v2.12.1](https://github.com/lsst-it/puppet-ccs_software/tree/v2.12.1) (2025-07-01)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.12.0...v2.12.1)
