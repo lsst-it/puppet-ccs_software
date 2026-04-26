@@ -25,7 +25,7 @@ describe 'ccs_software' do
                     { name: 'comcam-disabled',
                       enable: false, },
                     { name: 'comcam-ih',
-                      user: 'ccs-ipa', }],
+                      user: 'ccs-ipa', },],
             },
           }
         end
@@ -35,13 +35,13 @@ describe 'ccs_software' do
         %w[comcam-mcm comcam-ih].each do |svc|
           it do
             is_expected.to contain_systemd__unit_file("#{svc}.service").with(
-              content: %r{WorkingDirectory=/home/ccs}
+              content: %r{WorkingDirectory=/home/ccs},
             ).that_comes_before("Service[#{svc}]")
           end
 
           it do
             is_expected.to contain_service(svc).with(
-              enable: true
+              enable: true,
             )
           end
         end
@@ -49,7 +49,7 @@ describe 'ccs_software' do
         ['comcam-ih'].each do |svc|
           it do
             is_expected.to contain_systemd__unit_file("#{svc}.service").with(
-              content: %r{User=ccs-ipa}
+              content: %r{User=ccs-ipa},
             ).that_comes_before("Service[#{svc}]")
           end
         end
@@ -57,7 +57,7 @@ describe 'ccs_software' do
         ['comcam-disabled'].each do |svc|
           it do
             is_expected.to contain_service(svc).with(
-              enable: false
+              enable: false,
             )
           end
         end
@@ -70,7 +70,7 @@ describe 'ccs_software' do
           ['comcam-mcm'].each do |svc|
             it do
               is_expected.to contain_systemd__unit_file("#{svc}.service").with(
-                content: %r{WorkingDirectory=/foo/bar}
+                content: %r{WorkingDirectory=/foo/bar},
               )
             end
           end
