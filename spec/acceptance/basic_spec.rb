@@ -2,6 +2,8 @@
 
 require 'spec_helper_acceptance'
 
+BASEDIR = default.tmpdir('ccs')
+
 describe 'ccs_software class' do
   describe 'prepare host' do
     let(:manifest) do
@@ -17,19 +19,17 @@ describe 'ccs_software class' do
   end
 
   context 'with trivial case without installations' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path => '#{basedir}',
+        base_path => '#{BASEDIR}',
       }
       PP
     end
 
     it_behaves_like 'an idempotent resource'
 
-    describe file(basedir) do
+    describe file(BASEDIR) do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'root' }
@@ -37,7 +37,7 @@ describe 'ccs_software class' do
 
     describe file('/lsst') do
       it { is_expected.to be_symlink }
-      it { is_expected.to be_linked_to basedir }
+      it { is_expected.to be_linked_to BASEDIR }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'root' }
     end
@@ -70,7 +70,7 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccs",
+      "#{BASEDIR}/ccs",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -81,10 +81,10 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccsadm",
-      "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/release",
-      "#{basedir}/ccsadm/scripts",
+      "#{BASEDIR}/ccsadm",
+      "#{BASEDIR}/ccsadm/package-lists",
+      "#{BASEDIR}/ccsadm/release",
+      "#{BASEDIR}/ccsadm/scripts",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -111,7 +111,7 @@ describe 'ccs_software class' do
       updateServiceFile.sh
       verifyUser.sh
     ].each do |s|
-      describe file("#{basedir}/ccsadm/scripts/#{s}") do
+      describe file("#{BASEDIR}/ccsadm/scripts/#{s}") do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
@@ -144,12 +144,10 @@ describe 'ccs_software class' do
   end
 
   context 'with installations' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
@@ -162,24 +160,24 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
-    describe file(basedir) do
+    describe file(BASEDIR) do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'root' }
     end
 
     [
-      "#{basedir}/ccs/comcam-software-2.2.7",
-      "#{basedir}/ccs/comcam-software-2.2.7/bin",
-      "#{basedir}/ccs/cb1f1e2",
-      "#{basedir}/ccs/cb1f1e2/bin",
-      "#{basedir}/ccsadm",
-      "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/comcam-software-2.2.7",
-      "#{basedir}/ccsadm/package-lists/comcam-software-2.2.7/.git",
-      "#{basedir}/ccsadm/package-lists/cb1f1e2",
-      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
-      "#{basedir}/ccsadm/release",
+      "#{BASEDIR}/ccs/comcam-software-2.2.7",
+      "#{BASEDIR}/ccs/comcam-software-2.2.7/bin",
+      "#{BASEDIR}/ccs/cb1f1e2",
+      "#{BASEDIR}/ccs/cb1f1e2/bin",
+      "#{BASEDIR}/ccsadm",
+      "#{BASEDIR}/ccsadm/package-lists",
+      "#{BASEDIR}/ccsadm/package-lists/comcam-software-2.2.7",
+      "#{BASEDIR}/ccsadm/package-lists/comcam-software-2.2.7/.git",
+      "#{BASEDIR}/ccsadm/package-lists/cb1f1e2",
+      "#{BASEDIR}/ccsadm/package-lists/cb1f1e2/.git",
+      "#{BASEDIR}/ccsadm/release",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -190,22 +188,20 @@ describe 'ccs_software class' do
   end
 
   context 'with complex installations' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         installations => {
           test1 => {
-            repo_path => "#{basedir}/ccsadm/package-lists/test1.foo",
+            repo_path => "#{BASEDIR}/ccsadm/package-lists/test1.foo",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
           test42 => {
-            repo_path => "#{basedir}/ccsadm/package-lists/test42.bar",
+            repo_path => "#{BASEDIR}/ccsadm/package-lists/test42.bar",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
@@ -218,24 +214,24 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
-    describe file(basedir) do
+    describe file(BASEDIR) do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'root' }
     end
 
     [
-      "#{basedir}/ccs/test1",
-      "#{basedir}/ccs/test1/bin",
-      "#{basedir}/ccs/test42",
-      "#{basedir}/ccs/test42/bin",
-      "#{basedir}/ccsadm",
-      "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/test1.foo",
-      "#{basedir}/ccsadm/package-lists/test1.foo/.git",
-      "#{basedir}/ccsadm/package-lists/test42.bar",
-      "#{basedir}/ccsadm/package-lists/test42.bar/.git",
-      "#{basedir}/ccsadm/release",
+      "#{BASEDIR}/ccs/test1",
+      "#{BASEDIR}/ccs/test1/bin",
+      "#{BASEDIR}/ccs/test42",
+      "#{BASEDIR}/ccs/test42/bin",
+      "#{BASEDIR}/ccsadm",
+      "#{BASEDIR}/ccsadm/package-lists",
+      "#{BASEDIR}/ccsadm/package-lists/test1.foo",
+      "#{BASEDIR}/ccsadm/package-lists/test1.foo/.git",
+      "#{BASEDIR}/ccsadm/package-lists/test42.bar",
+      "#{BASEDIR}/ccsadm/package-lists/test42.bar/.git",
+      "#{BASEDIR}/ccsadm/release",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -246,22 +242,20 @@ describe 'ccs_software class' do
   end
 
   context 'with shared git clones' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         installations => {
           test-mcm => {
-            repo_path => "#{basedir}/ccsadm/package-lists/cb1f1e2",
+            repo_path => "#{BASEDIR}/ccsadm/package-lists/cb1f1e2",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
             hostname  => 'comcam-mcm',
           },
           test-fp => {
-            repo_path => "#{basedir}/ccsadm/package-lists/cb1f1e2",
+            repo_path => "#{BASEDIR}/ccsadm/package-lists/cb1f1e2",
             repo_url  => 'https://github.com/lsst-camera-dh/dev-package-lists',
             repo_ref  => 'cb1f1e2',
             env       => 'ComCam',
@@ -275,10 +269,10 @@ describe 'ccs_software class' do
     it_behaves_like 'an idempotent resource'
 
     [
-      "#{basedir}/ccsadm",
-      "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/cb1f1e2",
-      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
+      "#{BASEDIR}/ccsadm",
+      "#{BASEDIR}/ccsadm/package-lists",
+      "#{BASEDIR}/ccsadm/package-lists/cb1f1e2",
+      "#{BASEDIR}/ccsadm/package-lists/cb1f1e2/.git",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -288,8 +282,8 @@ describe 'ccs_software class' do
     end
 
     [
-      "#{basedir}/ccsadm/package-lists/test-mcm",
-      "#{basedir}/ccsadm/package-lists/test-fp",
+      "#{BASEDIR}/ccsadm/package-lists/test-mcm",
+      "#{BASEDIR}/ccsadm/package-lists/test-fp",
     ].each do |d|
       describe file(d) do
         it { is_expected.not_to exist }
@@ -298,12 +292,10 @@ describe 'ccs_software class' do
   end
 
   context 'with aliases' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         env           => 'ComCam',
         hostname      => 'comcam-mcm',
         installations => {
@@ -321,26 +313,26 @@ describe 'ccs_software class' do
     it_behaves_like 'an idempotent resource'
 
     [
-      "#{basedir}/ccs/foo",
-      "#{basedir}/ccs/bar",
-      "#{basedir}/ccs/baz",
+      "#{BASEDIR}/ccs/foo",
+      "#{BASEDIR}/ccs/bar",
+      "#{BASEDIR}/ccs/baz",
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to "#{basedir}/ccs/comcam-software-2.2.7" }
+        it { is_expected.to be_linked_to "#{BASEDIR}/ccs/comcam-software-2.2.7" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
     end
 
     [
-      "#{basedir}/ccs/a",
-      "#{basedir}/ccs/b",
-      "#{basedir}/ccs/c",
+      "#{BASEDIR}/ccs/a",
+      "#{BASEDIR}/ccs/b",
+      "#{BASEDIR}/ccs/c",
     ].each do |f|
       describe file(f) do
         it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to "#{basedir}/ccs/cb1f1e2" }
+        it { is_expected.to be_linked_to "#{BASEDIR}/ccs/cb1f1e2" }
         it { is_expected.to be_owned_by 'ccsadm' }
         it { is_expected.to be_grouped_into 'ccsadm' }
       end
@@ -348,12 +340,10 @@ describe 'ccs_software class' do
   end
 
   context 'with etc symlink' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         hostname      => 'comcam-fp01',
         env           => 'ComCam',
         installations => {
@@ -365,20 +355,20 @@ describe 'ccs_software class' do
 
     it_behaves_like 'an idempotent resource'
 
-    describe file(basedir) do
+    describe file(BASEDIR) do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'root' }
       it { is_expected.to be_grouped_into 'root' }
     end
 
     [
-      "#{basedir}/ccs/comcam-software-1.0.6",
-      "#{basedir}/ccs/comcam-software-1.0.6/bin",
-      "#{basedir}/ccsadm",
-      "#{basedir}/ccsadm/package-lists",
-      "#{basedir}/ccsadm/package-lists/comcam-software-1.0.6",
-      "#{basedir}/ccsadm/package-lists/comcam-software-1.0.6/.git",
-      "#{basedir}/ccsadm/release",
+      "#{BASEDIR}/ccs/comcam-software-1.0.6",
+      "#{BASEDIR}/ccs/comcam-software-1.0.6/bin",
+      "#{BASEDIR}/ccsadm",
+      "#{BASEDIR}/ccsadm/package-lists",
+      "#{BASEDIR}/ccsadm/package-lists/comcam-software-1.0.6",
+      "#{BASEDIR}/ccsadm/package-lists/comcam-software-1.0.6/.git",
+      "#{BASEDIR}/ccsadm/release",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -388,7 +378,7 @@ describe 'ccs_software class' do
     end
 
     # symlink created by install.py
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/etc") do
+    describe file("#{BASEDIR}/ccs/comcam-software-1.0.6/etc") do
       it { is_expected.to be_symlink }
       # link is relative
       it { is_expected.to be_linked_to 'ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01' }
@@ -398,9 +388,9 @@ describe 'ccs_software class' do
 
     [
       # symlink target dir
-      "#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01",
+      "#{BASEDIR}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6/ComCam/comcam-fp01",
       # package containing symlink target dir
-      "#{basedir}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6",
+      "#{BASEDIR}/ccs/comcam-software-1.0.6/ccs-prod-configurations-comcam-software-1.0.6",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
@@ -410,7 +400,7 @@ describe 'ccs_software class' do
     end
 
     # file in chown'd etc dir
-    describe file("#{basedir}/ccs/comcam-software-1.0.6/etc/comcam-fp_safe_DAQ.properties") do
+    describe file("#{BASEDIR}/ccs/comcam-software-1.0.6/etc/comcam-fp_safe_DAQ.properties") do
       it { is_expected.to be_file }
       it { is_expected.to be_owned_by 'ccs' }
       it { is_expected.to be_grouped_into 'ccs' }
@@ -418,8 +408,6 @@ describe 'ccs_software class' do
   end
 
   context 'with services' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       # java is only needed to start services
@@ -434,7 +422,7 @@ describe 'ccs_software class' do
       -> Class['ccs_software']
 
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         installations => {
@@ -470,12 +458,10 @@ describe 'ccs_software class' do
   end
 
   context 'with desktop' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path => '#{basedir}',
+        base_path => '#{BASEDIR}',
         desktop   => true,
       }
       PP
@@ -501,12 +487,10 @@ describe 'ccs_software class' do
   end
 
   context 'with git_force' do
-    basedir = default.tmpdir('ccs')
-
     let(:manifest) do
       <<-PP
       class { 'ccs_software':
-        base_path     => '#{basedir}',
+        base_path     => '#{BASEDIR}',
         hostname      => 'comcam-mcm',
         env           => 'ComCam',
         git_force     => true,
@@ -520,10 +504,10 @@ describe 'ccs_software class' do
     it_behaves_like 'an idempotent resource'
 
     [
-      "#{basedir}/ccsadm/package-lists/cb1f1e2",
-      "#{basedir}/ccsadm/package-lists/cb1f1e2/.git",
-      "#{basedir}/ccsadm/release",
-      "#{basedir}/ccsadm/release/.git",
+      "#{BASEDIR}/ccsadm/package-lists/cb1f1e2",
+      "#{BASEDIR}/ccsadm/package-lists/cb1f1e2/.git",
+      "#{BASEDIR}/ccsadm/release",
+      "#{BASEDIR}/ccsadm/release/.git",
     ].each do |dir|
       describe file(dir) do
         it { is_expected.to be_directory }
