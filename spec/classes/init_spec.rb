@@ -19,7 +19,7 @@ describe 'ccs_software' do
             ensure: 'symlink',
             owner: 'root',
             group: 'root',
-            target: '/opt/lsst'
+            target: '/opt/lsst',
           )
         end
 
@@ -27,7 +27,7 @@ describe 'ccs_software' do
           is_expected.to contain_file('/opt/lsst').with(
             ensure: 'directory',
             owner: 'root',
-            group: 'root'
+            group: 'root',
           )
         end
 
@@ -36,7 +36,7 @@ describe 'ccs_software' do
             ensure: 'directory',
             owner: 'ccsadm',
             group: 'ccsadm',
-            mode: '2775'
+            mode: '2775',
           )
         end
 
@@ -45,7 +45,7 @@ describe 'ccs_software' do
             ensure: 'directory',
             owner: 'root',
             group: 'ccs',
-            mode: '2777'
+            mode: '2777',
           )
         end
 
@@ -57,7 +57,7 @@ describe 'ccs_software' do
               ensure: 'directory',
               owner: 'ccsadm',
               group: 'ccs',
-              mode: '1775'
+              mode: '1775',
             )
           end
         end
@@ -72,7 +72,7 @@ describe 'ccs_software' do
               ensure: 'directory',
               owner: 'ccsadm',
               group: 'ccsadm',
-              mode: '0755'
+              mode: '0755',
             )
           end
         end
@@ -83,7 +83,7 @@ describe 'ccs_software' do
             provider: 'git',
             user: 'ccsadm',
             force: false,
-            require: 'File[/opt/lsst/ccsadm]'
+            require: 'File[/opt/lsst/ccsadm]',
           )
         end
 
@@ -119,13 +119,13 @@ describe 'ccs_software' do
               revision: c,
               user: 'ccsadm',
               force: false,
-              require: 'File[/opt/lsst/ccsadm/package-lists]'
+              require: 'File[/opt/lsst/ccsadm/package-lists]',
             )
           end
 
           it do
-            is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").
-              that_notifies("Exec[install.py #{c}]")
+            is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
+              .that_notifies("Exec[install.py #{c}]")
           end
         end
       end
@@ -160,13 +160,13 @@ describe 'ccs_software' do
               revision: c,
               user: 'ccsadm',
               force: false,
-              require: 'File[/opt/lsst/ccsadm/package-lists]'
+              require: 'File[/opt/lsst/ccsadm/package-lists]',
             )
           end
 
           it do
-            is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}").
-              that_notifies("Exec[install.py #{c}]")
+            is_expected.to contain_vcsrepo("/opt/lsst/ccsadm/package-lists/#{c}")
+              .that_notifies("Exec[install.py #{c}]")
           end
 
           it do
@@ -176,13 +176,13 @@ describe 'ccs_software' do
               user: 'ccsadm',
               group: 'ccsadm',
               tries: 3,
-              logoutput: true
+              logoutput: true,
             )
           end
 
           it do
-            is_expected.to contain_exec("install.py #{c}").
-              that_notifies("Exec[chown #{c}]")
+            is_expected.to contain_exec("install.py #{c}")
+              .that_notifies("Exec[chown #{c}]")
           end
 
           it do
@@ -190,7 +190,7 @@ describe 'ccs_software' do
               path: '/bin:/usr/bin',
               provider: 'shell',
               logoutput: true,
-              cwd: '/opt/lsst'
+              cwd: '/opt/lsst',
             )
           end
         end
@@ -252,7 +252,7 @@ describe 'ccs_software' do
             revision: 'master',
             user: 'ccsadm',
             force: false,
-            require: 'File[/opt/lsst/ccsadm/package-lists]'
+            require: 'File[/opt/lsst/ccsadm/package-lists]',
           )
         end
 
@@ -277,7 +277,7 @@ describe 'ccs_software' do
               ensure: 'link',
               owner: 'ccsadm',
               group: 'ccsadm',
-              target: '/opt/lsst/ccs/test'
+              target: '/opt/lsst/ccs/test',
             )
           end
         end
@@ -300,7 +300,7 @@ describe 'ccs_software' do
             provider: 'git',
             user: 'ccsadm',
             force: true,
-            require: 'File[/opt/lsst/ccsadm]'
+            require: 'File[/opt/lsst/ccsadm]',
           )
         end
 
@@ -312,7 +312,7 @@ describe 'ccs_software' do
             revision: 'master',
             user: 'ccsadm',
             force: true,
-            require: 'File[/opt/lsst/ccsadm/package-lists]'
+            require: 'File[/opt/lsst/ccsadm/package-lists]',
           )
         end
       end
