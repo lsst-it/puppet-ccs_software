@@ -23,7 +23,7 @@ if [ "$webhook" != "0" ]; then
     header="Content-Type: application/json"
 
     icon=":red_circle:"
-    systemctl -q is-active $service && icon=":large_green_circle:"
+    systemctl -q is-active "$service" && icon=":large_green_circle:"
 
     text="$icon *${subject}*
 $text"

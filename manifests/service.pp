@@ -86,14 +86,16 @@ class ccs_software::service {
     content => epp("${module_name}/service/${email_service}.epp", { 'envfile' => $envfile }),
   }
 
+  $webhook = $ccs_software::webhook ? { true => '1', default => '0' }
+
   file { $envfile:
     ensure  => file,
     owner   => $ccs_software::adm_user,
     group   => $ccs_software::adm_group,
     mode    => '0644',
     content => epp("${module_name}/service/${email_config}.epp",
-      { 'email' => $ccs_software::service_email,
-        'webhook' => $ccs_software::webhook ? { true => '1', default => '0' },
+      { 'email'       => $ccs_software::service_email,
+        'webhook'     => $webhook,
         'webhook_url' => $ccs_software::webhook_url.unwrap,
       }
     ),
