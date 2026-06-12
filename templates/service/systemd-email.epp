@@ -1,3 +1,5 @@
-<%- | String $email | -%>
+<%- | String $email, String $webhook, String $webhook_url | -%>
 # This file is managed by Puppet; changes may be overwritten.
 EMAIL=<%= $email %>
+WEBHOOK=<%= $webhook %>
+WEBHOOK_URL=<%= $webhook_url %>

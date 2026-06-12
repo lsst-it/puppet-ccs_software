@@ -4,5 +4,5 @@ Description=status email for %i
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/libexec/systemd-email $EMAIL %i
+ExecStart=/usr/local/libexec/systemd-email $EMAIL $WEBHOOK_URL $WEBHOOK %i
 EnvironmentFile=<%= $envfile %>

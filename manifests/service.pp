@@ -91,6 +91,11 @@ class ccs_software::service {
     owner   => $ccs_software::adm_user,
     group   => $ccs_software::adm_group,
     mode    => '0644',
-    content => epp("${module_name}/service/${email_config}.epp", { 'email' => $ccs_software::service_email }),
+    content => epp("${module_name}/service/${email_config}.epp",
+      { 'email' => $ccs_software::service_email,
+        'webhook' => $ccs_software::webhook ? { true => '1', default => '0' },
+        'webhook_url' => $ccs_software::webhook_url.unwrap,
+      }
+    ),
   }
 }
