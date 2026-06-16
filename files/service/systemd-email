@@ -1,14 +1,40 @@
 #!/bin/bash
+# This file is managed by Puppet; changes may be overwritten.
 
 to=$1
-service=$2
+webhook_url=$2
+webhook=$3
+service=$4
 
-mail -Ssendwait -s "systemd status change: $service" "$to" <<EOF
 
+subject="systemd status change: $service"
+
+
+status=$(systemctl status "$service")
+
+
+text="
 Status of service $service:
 
-$(systemctl status "$service")
+$status
+"
 
+if [ "$webhook" != "0" ]; then
+    header="Content-Type: application/json"
+
+    icon=":red_circle:"
+    systemctl -q is-active "$service" && icon=":large_green_circle:"
+
+    text="$icon *${subject}*
+$text"
+
+    /usr/bin/curl -X POST -H "$header" -d "{ \"text\": \"$text\" }" "$webhook_url"
+else
+
+    mail -Ssendwait -s "$subject" "$to" <<EOF
+$text
 EOF
+
+fi
 
 exit 0

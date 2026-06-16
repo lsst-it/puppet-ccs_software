@@ -90,6 +90,12 @@
 #   String giving email address (or comma separated addresses) to
 #   receive change of service status emails from systemd.
 #
+# @param webhook
+#   If true, send status messages via webhook.
+#
+# @param webhook_url
+#   Sensitive string giving URL to use for webhook.
+#
 # @param pkglist_repo_url
 #   URL of the git repo to use for `install.py` package lists by default.  This
 #   may be overriden in a `installations` hash with the `repo_url` key.
@@ -141,6 +147,8 @@ class ccs_software (
   Hash[String, Hash]          $kafka_files             = {},
   Hash[String, Array[Variant[Sensitive[String],String]]] $kafka_auths  = {},
   String                      $service_email           = 'root@localhost',
+  Boolean                     $webhook                 = false,
+  Sensitive[String[1]]        $webhook_url             = Sensitive('http://localhost'),
   Stdlib::HTTPUrl             $pkglist_repo_url        = 'https://github.com/lsst-camera-dh/dev-package-lists',
   Stdlib::HTTPUrl             $release_repo_url        = 'https://github.com/lsst-it/release',
   String                      $release_repo_ref        = 'IT-4348/python3',

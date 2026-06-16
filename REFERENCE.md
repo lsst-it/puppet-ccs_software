@@ -49,6 +49,8 @@ The following parameters are available in the `ccs_software` class:
 * [`kafka_files`](#-ccs_software--kafka_files)
 * [`kafka_auths`](#-ccs_software--kafka_auths)
 * [`service_email`](#-ccs_software--service_email)
+* [`webhook`](#-ccs_software--webhook)
+* [`webhook_url`](#-ccs_software--webhook_url)
 * [`pkglist_repo_url`](#-ccs_software--pkglist_repo_url)
 * [`release_repo_url`](#-ccs_software--release_repo_url)
 * [`release_repo_ref`](#-ccs_software--release_repo_ref)
@@ -248,6 +250,22 @@ String giving email address (or comma separated addresses) to
 receive change of service status emails from systemd.
 
 Default value: `'root@localhost'`
+
+##### <a name="-ccs_software--webhook"></a>`webhook`
+
+Data type: `Boolean`
+
+If true, send status messages via webhook.
+
+Default value: `false`
+
+##### <a name="-ccs_software--webhook_url"></a>`webhook_url`
+
+Data type: `Sensitive[String[1]]`
+
+Sensitive string giving URL to use for webhook.
+
+Default value: `Sensitive('http://localhost')`
 
 ##### <a name="-ccs_software--pkglist_repo_url"></a>`pkglist_repo_url`
 
