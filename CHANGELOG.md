@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v3.0.0](https://github.com/lsst-it/puppet-ccs_software/tree/v3.0.0) (2026-04-23)
+## [v3.1.0](https://github.com/lsst-it/puppet-ccs_software/tree/v3.1.0) (2026-06-16)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Add option to send systemd status messages by webhook [\#109](https://github.com/lsst-it/puppet-ccs_software/pull/109) ([glennmorris](https://github.com/glennmorris))
+- Update dependency voxpupuli-test to v14 [\#105](https://github.com/lsst-it/puppet-ccs_software/pull/105) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency puppet\_metadata to v6 [\#104](https://github.com/lsst-it/puppet-ccs_software/pull/104) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [v3.0.0](https://github.com/lsst-it/puppet-ccs_software/tree/v3.0.0) (2026-04-24)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v2.12.1...v3.0.0)
 
