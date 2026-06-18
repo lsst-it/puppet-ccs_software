@@ -53,7 +53,8 @@ class ccs_software::config {
   }
 
   $ccs_software::kafka_files.each |$name, $hash| {
-    $file = "kafka-broker-${name}.properties"
+    $fname = $name == 'properties' ? { true => '', default => "-${name}" }
+    $file = "kafka-broker${fname}.properties"
     $auth = $ccs_software::kafka_auths[$name]
     $username = $auth[0]
     $password = $auth[1]
