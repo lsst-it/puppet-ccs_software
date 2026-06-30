@@ -10,10 +10,11 @@ service=$4
 subject="systemd status change: $service"
 
 
-status=$(systemctl status "$service")
+## Remove characters that might cause webhook "invalid_payload" error.
+status=$(systemctl status "$service" | tr -d '"<>&')
 
 
-text="
+body="
 Status of service $service:
 
 $status
@@ -25,14 +26,17 @@ if [ "$webhook" != "0" ]; then
     icon=":red_circle:"
     systemctl -q is-active "$service" && icon=":large_green_circle:"
 
-    text="$icon *${subject}*
-$text"
+    subject="$icon *${subject}*"
 
-    /usr/bin/curl -X POST -H "$header" -d "{ \"text\": \"$text\" }" "$webhook_url"
+    ## Post body separately in case it gets rejected for problematic chars.
+    for t in "$subject" "$body"; do
+        /usr/bin/curl -X POST -H "$header" -d "{ \"text\": \"$t\" }" "$webhook_url"
+    done
+
 else
 
     mail -Ssendwait -s "$subject" "$to" <<EOF
-$text
+$body
 EOF
 
 fi
