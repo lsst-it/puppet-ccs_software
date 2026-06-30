@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.2.1](https://github.com/lsst-it/puppet-ccs_software/tree/v3.2.1) (2026-06-30)
+
+[Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v3.2.0...v3.2.1)
+
+**Implemented enhancements:**
+
+- Update actions/checkout action to v7 [\#111](https://github.com/lsst-it/puppet-ccs_software/pull/111) ([renovate[bot]](https://github.com/apps/renovate))
+
+**Fixed bugs:**
+
+- \(webhook\) take care with problematic characters [\#113](https://github.com/lsst-it/puppet-ccs_software/pull/113) ([glennmorris](https://github.com/glennmorris))
+
 ## [v3.2.0](https://github.com/lsst-it/puppet-ccs_software/tree/v3.2.0) (2026-06-18)
 
 [Full Changelog](https://github.com/lsst-it/puppet-ccs_software/compare/v3.1.0...v3.2.0)
